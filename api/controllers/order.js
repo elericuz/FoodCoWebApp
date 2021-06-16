@@ -5,10 +5,18 @@ const Detail = require('../models/details');
 const Product = require('../models/products');
 const Unit = require('../models/units');
 const PaymentMethod = require('../models/payment_method');
+const storage = require('node-sessionstorage');
+const jwt = require('jsonwebtoken');
 
 exports.listAll = (req, res, next) => {
+    let token = storage.getItem('token');
+    let tokenDecoded = jwt.decode(token);
+
     res.setHeader('Content-Type', 'text/html');
-    Order.find({status: 'completed'})
+    Order.find({
+        user: tokenDecoded.userId,
+        status: 'completed'
+    })
         .sort({'date': 'desc', 'number': 'desc'})
         .then((result) => {
             res.render('orders/list', { orders: result});
@@ -59,6 +67,10 @@ exports.removeProduct = async (req, res, next) => {
 }
 
 exports.placeOrder = async (req, res, next) => {
+
+    let token = storage.getItem('token');
+    let tokenDecoded = jwt.decode(token);
+
     let details = await getDetails(req.params.id)
 
     let body = req.body;
@@ -66,7 +78,7 @@ exports.placeOrder = async (req, res, next) => {
     body.tax = 0;
     body.subtotal = 0;
     body.total = 0;
-    body.user = '60c98ed79e913601b01c8339'
+    body.user = tokenDecoded.userId
     body.details = details.map(detail => { return detail._id; })
 
     order = await placeOrder(req.params.id, body);

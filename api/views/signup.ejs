@@ -5,9 +5,19 @@
 
 <div class="grid-container vertical-center medium-3 small-11 bordered shadow padding-3">
     <div class="grid-x grid-padding-x align-center-middle">
-        <form class="medium-8 small-11 end" method="post" action="/user/login">
-            <div class="medium-12 cell text-center">
-                <h3>Sign In</h3>
+        <div class="medium-12 cell text-center">
+            <h3>Sign Up</h3>
+        </div>
+        <form class="medium-8 small-11 end" method="post" action="/user/signup">
+            <div class="medium-12 cell">
+                <label>Name
+                    <input type="text" name="name" id="name" placeholder="Your name">
+                </label>
+            </div>
+            <div class="medium-12 cell">
+                <label>Lastname
+                    <input type="text" name="lastname" id="lastname" placeholder="Your lastname">
+                </label>
             </div>
             <div class="medium-12 cell">
                 <label>Username
@@ -20,10 +30,7 @@
                 </label>
             </div>
             <div class="medium-12 cell">
-                <button type="submit" class="button primary medium-5 small-8 float-center">Sign In</button>
-            </div>
-            <div class="medium-12 cell text-center">
-                Create an account <a href="/user/signup">here</a>
+                <button type="submit" class="button primary medium-5 small-8 float-center">Sign Up</button>
             </div>
         </form>
     </div>
