@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  app:
+    container_name: foodCoWeb
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    working_dir: /usr/src/app
+    ports:
+      - 5180:8080
+    volumes:
+      - .:/usr/src/app

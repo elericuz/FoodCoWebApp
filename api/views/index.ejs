@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+<body>
+
+<div class="grid-container vertical-center medium-5 small-11 bordered shadow padding-3">
+    <div class="grid-x grid-padding-x align-center-middle">
+        <form class="medium-8 small-11 end" method="get" action="/dashboard">
+            <div class="medium-12 cell">
+                <label>Username
+                    <input type="text" placeholder="Your email address">
+                </label>
+            </div>
+            <div class="medium-12 cell">
+                <label>Password
+                    <input type="password" placeholder="Your password">
+                </label>
+            </div>
+            <div class="medium-12 cell">
+                <button type="submit" class="button primary medium-5 small-8 float-center">Enter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include('./partials/scripts.ejs') %>
+</body>
+</html>

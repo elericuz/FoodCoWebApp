@@ -1,0 +1,32 @@
+.vertical-center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+}
+
+body {
+    font-size: 0.8em;
+}
+
+.textinput {
+    font-size: 1.1em;
+    text-align: right;
+    height: 27px;
+}
+
+.input-text-1 {
+    font-size: 1.1em;
+    text-align: right;
+    height: 27px;
+}
+
+.input-text-2 {
+    font-size: 1.1em;
+    height: 27px;
+}
+
+.text-vertical-center {
+    margin: 5px;
+}
