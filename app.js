@@ -56,6 +56,9 @@ const HomeController = require('./api/controllers/home')
 app.get('/', HomeController.index)
 app.get('/dashboard', HomeController.dashboard);
 
+const userRoutes = require('./api/routes/user');
+app.use('/user', userRoutes);
+
 // orders routes
 const orderRoutes = require('./api/routes/orders');
 app.use('/orders', orderRoutes);

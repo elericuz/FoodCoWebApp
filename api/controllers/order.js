@@ -66,7 +66,7 @@ exports.placeOrder = async (req, res, next) => {
     body.tax = 0;
     body.subtotal = 0;
     body.total = 0;
-    body.user = '60c82ece2f55d2da9a9a8dbb'
+    body.user = '60c98ed79e913601b01c8339'
     body.details = details.map(detail => { return detail._id; })
 
     order = await placeOrder(req.params.id, body);
@@ -148,9 +148,16 @@ async function getOrder(id) {
 }
 
 async function getLastOrderNumber() {
-    return Order.findOne()
+    let order = Order.findOne()
         .select('number -_id')
         .sort({number: 'desc'})
-        .then(result => { return result; })
+        .then(result => {
+            if (_.isNull(result)) {
+                return { number: 0 }
+            } else {
+                return result;
+            }
+        })
         .catch(err => console.log(err));
+    return order
 }
