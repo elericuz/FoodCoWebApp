@@ -13,13 +13,14 @@
             </div>
         </div>
     </div>
+    <hr>
     <form method="POST" action="/orders/place/<%= order._id %>" id="placeOrderForm">
         <div class="cell small-12">
             <div class="grid-x grid-margin-x">
-                <div class="cell small-2 text-right">Date</div>
-                <div class="cell small-2"><input type="text" id="date" name="date" class="input-text-1"></div>
-                <div class="cell small-2 text-right large-offset-3">Order #</div>
-                <div class="cell small-2"><input type="text" class="input-text-1" id="number" name="number"
+                <div class="cell medium-2 small-2 text-right">Date</div>
+                <div class="cell medium-2 small-4"><input type="text" id="date" name="date" class="input-text-1"></div>
+                <div class="cell medium-2 small-2 text-right large-offset-3">Order #</div>
+                <div class="cell medium-2 small-3"><input type="text" class="input-text-1" id="number" name="number"
                                                  value="<%= _.padStart(order.number, 7, '0') %>" disabled></div>
             </div>
             <div class="grid-x grid-margin-x">
@@ -29,7 +30,7 @@
             </div>
             <div class="grid-x grid-margin-x">
                 <div class="cell small-2 text-right">Payment Method</div>
-                <div class="cell small-2">
+                <div class="cell small-4 medium-2">
                     <select class="input-text-2" id="payment_method" name="payment_method">
                         <% paymentMethods.forEach(method => { %>
                             <option value="<%= method._id %>"><%= method.name %></option>
@@ -77,12 +78,12 @@
         <input type="hidden" name="order_id" id="orderId" value="<%= order._id %>">
         <h3>Select Product</h3>
         <div class="grid-x grid-margin-x">
-            <div class="cell small-2 text-right">Quantity</div>
-            <div class="cell small-2"><input type="text" id="quantity" name="quantity" class="input-text-1"></div>
+            <div class="cell small-2 medium-2 text-right">Quantity</div>
+            <div class="cell small-4 medium-2"><input type="text" id="quantity" name="quantity" class="input-text-1"></div>
         </div>
         <div class="grid-x grid-margin-x">
-            <div class="cell small-2 text-right">Unit</div>
-            <div class="cell small-2">
+            <div class="cell small-2 medium-2 text-right">Unit</div>
+            <div class="cell small-4 medium-2">
                 <select class="input-text-2" id="unit" name="unit_id">
                     <% units.forEach(unit => { %>
                         <option value="<%= unit._id %>"><%= unit.name %></option>
@@ -157,9 +158,6 @@
             "<td>" + $('#quantity').attr('value') + "</td>" +
             "<td>" +
             "<div class=\"grid-x grid-margin-x\">" +
-            "<div class=\"cell small-1 large-offset-3\">" +
-            "<div class=\"fi-pencil\"></div>" +
-            "</div>" +
             "<div class=\"cell small-1\">" +
             "<div class=\"fi-trash\" onclick=\"removeRow('" + id + "')\"></div>" +
             "</div>" +

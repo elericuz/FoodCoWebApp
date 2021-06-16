@@ -8,10 +8,10 @@
 <div class="grid-container fluid">
     <div class="cell small-12">
         <div class="grid-x">
-            <div class="cell small-10">
+            <div class="cell small-7 medium-10">
                 <h2>Orders</h2>
             </div>
-            <div class="cell small-2 text-right" style="padding-top: 15px">
+            <div class="cell small-5 medium-2 text-right" style="padding-top: 15px">
                 <a href="/orders/new" class="button secondary">Create new order</a>
             </div>
         </div>
@@ -20,10 +20,10 @@
         <table>
             <thead>
             <tr>
-                <th class="small-2">Order #</th>
-                <th class="small-4">Date</th>
-                <th class="small-4">Total</th>
-                <th class="small-2">&nbsp;</th>
+                <th class="small-3 medium-2">Order #</th>
+                <th class="small-3 medium-2">Date</th>
+                <th class="small-2 medium-2">Total</th>
+                <th class="small-4 medium-2">&nbsp;</th>
             </tr>
             </thead>
             <tbody>
@@ -32,7 +32,7 @@
                     <td><%= _.padStart(order.number, 7, '0') %></td>
                     <td><%= moment(order.date).format('MMM DD, YYYY') %></td>
                     <td>$<%= order.total %></td>
-                    <td class="text-right"><a href="/orders/view/<%= order._id %>" class="button hollow tiny" style="margin-top: 10px">View Order</td>
+                    <td class="text-right"><a href="/orders/view/<%= order._id %>" class="button hollow small" style="margin-top: 10px">View Order</td>
                 </tr>
             <% }); %>
             </tbody>

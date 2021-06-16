@@ -9,43 +9,23 @@ const PaymentMethod = require('../models/payment_method');
 exports.listAll = (req, res, next) => {
     res.setHeader('Content-Type', 'text/html');
     Order.find({status: 'completed'})
+        .sort({'date': 'desc', 'number': 'desc'})
         .then((result) => {
             res.render('orders/list', { orders: result});
         })
-        .catch((err) => {
-            console.log(err);
-        })
+        .catch((err) => console.log(err));
 };
 
 exports.view = async (req, res, next) => {
-    // var details = await getDetails(req.params.id)
-    //
-    // let update = await updateOrder(req.params.id, details)
-    // console.log(update)
+    let order = await getOrder(req.params.id);
 
-    // Order.findByIdAndUpdate(req.params.id, details)
-    //     .then(results => { console.log(results); })
-    //     .catch(err => console.log(err));
-
-    var order = await getOrder(req.params.id);
-
-    console.log(order);
     res.setHeader('Content-Type', 'text/html');
     res.render('orders/view', { order: order });
 }
 
-async function updateOrder(orderId, details) {
-    var order = await getOrder(orderId);
-    order.details = details.map(detail => { return detail.order_id; })
-
-    return Order.findByIdAndUpdate(orderId, order)
-        .then(results => { return results; })
-        .catch(err => console.log(err));
-}
-
 async function getDetails(orderId) {
     return Detail.find({ order_id: orderId})
-        .select('order_id -_id')
+        .select('_id')
         .then(result => { return result; })
         .catch(err => console.log(err));
 }
@@ -79,12 +59,15 @@ exports.removeProduct = async (req, res, next) => {
 }
 
 exports.placeOrder = async (req, res, next) => {
-    var body = req.body;
+    let details = await getDetails(req.params.id)
+
+    let body = req.body;
     body.status = 'completed';
     body.tax = 0;
     body.subtotal = 0;
     body.total = 0;
     body.user = '60c82ece2f55d2da9a9a8dbb'
+    body.details = details.map(detail => { return detail._id; })
 
     order = await placeOrder(req.params.id, body);
     res.redirect('/orders');
