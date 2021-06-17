@@ -3,6 +3,8 @@ const express = require('express');
 const Item = require('./api/models/items');
 const moment = require('moment');
 const lodash = require('lodash');
+const storage = require('node-sessionstorage');
+const jwt = require('jsonwebtoken');
 
 // App
 const app = express();
@@ -18,6 +20,19 @@ app.use(morgan('dev'));
 app.use((req, res, next) => {
     res.locals.moment = moment;
     res.locals._ = lodash;
+    next();
+})
+
+// tokan to the whole site
+app.use((req, res, next) => {
+    let token = storage.getItem('token')
+    if (!lodash.isUndefined(token)) {
+        let tokenDecoded = jwt.decode(token);
+        res.locals.user = {
+            name: tokenDecoded.name + " " + tokenDecoded.lastname,
+            email_address: tokenDecoded.email_address
+        };
+    }
     next();
 })
 

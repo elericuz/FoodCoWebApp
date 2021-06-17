@@ -8,6 +8,135 @@
 
 body {
     font-size: 0.8em;
+    color: #455A64;
+}
+
+thead {
+    background-color: #455A64;
+    color: #FFFFFF;
+}
+
+footer {
+    font-size: 0.8em;
+    color: #708690;
+}
+
+h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h4 small, .h4 small, h5 small, .h5 small, h6 small, .h6 small {
+    color: #718792;
+}
+
+.body-sign-in-up {
+    background-color: #445963;
+}
+
+.sign-in-up-box {
+    background-color: #FFFFFF;
+}
+
+.top-bar, .top-bar ul {
+    background-color: #1c313a;
+    color: #FFFFFF;
+    padding: 6px 3px;
+    font-size: 0.94em;
+}
+
+div .click-here a,
+div .click-here a:visited {
+    color: #708690;
+}
+
+div .click-here a:hover {
+    color: #1c313a;
+}
+
+.user-account {
+    background-color: #708690;
+}
+
+.user-account .logout {
+    background-color: #445963;
+}
+
+.menu .menu-text {
+    font-size: 15px;
+    padding: 0.5rem 1rem;
+}
+
+.top-bar a, a:hover, .top-bar a:focus {
+    color: #FFFFFF;
+}
+
+.dropdown.menu > li.is_active > a::after {
+    background-color: #0c3d5d;
+}
+
+.dropdown.menu > li > a {
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+}
+
+.menu .is-active > a {
+    background: #708690;
+    color: #FFFFFF; }
+
+.dropdown.menu > li.is-dropdown-submenu-parent > a {
+    color: #FFFFFF;
+}
+
+.dropdown.menu > li.is-dropdown-submenu-parent > a::after {
+    border-color: #FFFFFF transparent transparent;
+    color: #FFFFFF;
+}
+
+.is-dropdown-submenu .is-dropdown-submenu-parent.opens-left > a::after {
+    border-color: transparent #FFFFFF transparent transparent;
+}
+
+.is-dropdown-submenu {
+    min-width: 160px;
+}
+
+.tabs-title {
+    float: left; }
+.tabs-title > a {
+    color: #FFFFFF; }
+.tabs-title > a:hover {
+    background-color: #455A64;
+    color: #FFFFFF; }
+.tabs-title > a:focus, .tabs-title > a[aria-selected='true'] {
+    background-color: #455A64;
+    color: #FFFFFF;
+}
+
+.tabs-content {
+    color: #455A64;
+}
+
+.tabs {
+    background-color: #718792;
+}
+
+.button.secondary {
+    background-color: #455A64;
+}
+
+.button.secondary:hover, .button.secondary:focus {
+    background-color: #1c313a;
+}
+
+.button.hollow,
+.button.hollow.disabled,
+.button.hollow[disabled],
+.button.hollow.disabled:hover,
+.button.hollow[disabled]:hover,
+.button.hollow.disabled:focus,
+.button.hollow[disabled]:focus {
+    border: 1px solid #445963;
+    color: #445963;
+}
+
+.button.hollow:hover, .button.hollow:focus {
+    color: #1b3039;
 }
 
 .textinput {
@@ -29,4 +158,36 @@ body {
 
 .text-vertical-center {
     margin: 5px;
+}
+
+.hr-title-separator {
+    margin: 0 0 0.5rem 0;
+}
+
+.drilldown a,
+.drilldown .is-drilldown-submenu-parent > a {
+    color: #FFFFFF;
+    background-color: #445963;
+}
+
+.drilldown .js-drilldown-back > a::before {
+    border-color: transparent #FFFFFF transparent transparent;
+}
+
+.drilldown .is-drilldown-submenu-parent > a::after {
+    border-color: transparent transparent transparent #FFFFFF;
+}
+
+.drilldown .is-drilldown-submenu.is-active,
+.drilldown .nested.is-drilldown-submenu {
+    background-color: #445963;
+}
+
+#hamburguer::before {
+    padding-right: 20px;
+}
+
+.user-account a.wrapped-user-account-option{
+    background-color: #708690;
+    border-top: solid #FFF 1px;
 }

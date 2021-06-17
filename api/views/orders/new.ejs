@@ -9,11 +9,11 @@
     <div class="cell small-12">
         <div class="grid-x">
             <div class="cell small-10">
-                <h2>New Order</h2>
+                <h2 class="margin-bottom-0">New Order</h2>
             </div>
         </div>
     </div>
-    <hr>
+    <hr class="margin-bottom-1 hr-title-separator">
     <form method="POST" action="/orders/place/<%= order._id %>" id="placeOrderForm">
         <div class="cell small-12">
             <div class="grid-x grid-margin-x">
@@ -44,7 +44,7 @@
                     <span class="label warning"><%= _.capitalize(order.status) %></span>
                 </div>
             </div>
-            <hr>
+            <hr class="padding-top-1 margin-bottom-1 hr-title-separator">
             <div class="cell small-12 text-right">
                 <a href="#" class="button small" data-open="addProductModal">Add Products</a>
             </div>
@@ -61,12 +61,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                    </tr>
+                    <tr></tr>
                     </tbody>
                 </table>
             </div>
         </div>
+        <hr class="margin-bottom-1">
         <div class="cell small-2">
             <button type="submit" class="button small" id="placeOrderButton">Place Order</button>
         </div>
@@ -130,7 +130,6 @@
 
     const addButton = document.getElementById('addButton');
     addButton.addEventListener('click', (e) => {
-        console.log('aca');
         const data = new URLSearchParams();
         for (const pair of new FormData(document.getElementById('addProductForm'))) {
             data.append(pair[0], pair[1]);
@@ -149,7 +148,6 @@
     function addNewRow(id) {
         var newRow = document.getElementById('detailsTable').insertRow();
         newRow.id = id;
-        // newRow = "<td>New row text</td><td>New row 2nd cell</td>"; <-- won't work
         newRow.innerHTML = "" +
             "<td>" + $('#quantity').val() + "</td>" +
             "<td>" + $('#unit option:selected').text() + "</td>" +

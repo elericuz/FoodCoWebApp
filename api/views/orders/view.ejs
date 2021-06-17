@@ -7,28 +7,29 @@
 
 <div class="grid-container fluid">
     <div class="cell small-12">
-        <h2>Order number <small><%= _.padStart(order.number, 6, '0')%></small></h2>
+        <h2 class="margin-bottom-0">Order number <small><%= _.padStart(order.number, 6, '0')%></small></h2>
     </div>
+    <hr class="hr-title-separator">
     <div class="cell small-12">
         <div class="grid-x grid-margin-x">
-            <div class="cell small-4 medium-2 text-right">Date</div>
+            <div class="cell small-4 medium-2 text-right font-bold">Date</div>
             <div class="cell auto"><%= moment(order.date).format('MMM DD, YYYY') %></div>
         </div>
         <div class="grid-x grid-margin-x">
-            <div class="cell small-4 medium-2 text-right">Shipping Address</div>
+            <div class="cell small-4 medium-2 text-right font-bold">Shipping Address</div>
             <div class="cell auto"><%= order.shipping_address %></div>
         </div>
         <div class="grid-x grid-margin-x">
-            <div class="cell small-4 medium-2 text-right">Payment Method</div>
+            <div class="cell small-4 medium-2 text-right font-bold">Payment Method</div>
             <div class="cell auto"><%= order.payment_method.name %></div>
         </div>
         <div class="grid-x grid-margin-x">
-            <div class="cell small-4 medium-2 text-right">Created By</div>
+            <div class="cell small-4 medium-2 text-right font-bold">Created By</div>
             <div class="cell auto">
-                <%= _.capitalize(order.user.name) + " " + _.capitalize(order.user.lastname) %>
+                <%= _.capitalize(order.user.name) + " " + _.startCase(order.user.lastname) %>
             </div>
         </div>
-        <hr>
+        <hr class="padding-top-1 hr-title-separator">
         <div class="cell small-12">
             <table>
                 <thead>
