@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const storage = require('node-sessionstorage');
+const storage = require('sessionstorage')
 
 module.exports = (req, res, next) => {
     try {

@@ -2,7 +2,7 @@ const _ = require('lodash');
 const moment = require('moment');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const storage = require('node-sessionstorage');
+const storage = require('sessionstorage')
 const User = require('../models/users');
 const Address = require('../models/address')
 

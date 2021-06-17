@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const Item = require('../models/items');
-const storage = require('node-sessionstorage');
+const storage = require('sessionstorage')
 
 exports.index = (req, res, next) => {
     token = storage.getItem('token');

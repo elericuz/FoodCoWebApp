@@ -5,7 +5,7 @@ const Detail = require('../models/details');
 const Product = require('../models/products');
 const Unit = require('../models/units');
 const PaymentMethod = require('../models/payment_method');
-const storage = require('node-sessionstorage');
+const storage = require('sessionstorage')
 const jwt = require('jsonwebtoken');
 
 exports.listAll = (req, res, next) => {

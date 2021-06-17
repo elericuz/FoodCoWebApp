@@ -3,7 +3,7 @@ const express = require('express');
 const Item = require('./api/models/items');
 const moment = require('moment');
 const lodash = require('lodash');
-const storage = require('node-sessionstorage');
+const storage = require('sessionstorage')
 const jwt = require('jsonwebtoken');
 
 // App
@@ -23,10 +23,10 @@ app.use((req, res, next) => {
     next();
 })
 
-// tokan to the whole site
+// token to the whole site
 app.use((req, res, next) => {
     let token = storage.getItem('token')
-    if (!lodash.isUndefined(token)) {
+    if (!lodash.isUndefined(token) && !lodash.isNull(token)) {
         let tokenDecoded = jwt.decode(token);
         res.locals.user = {
             name: tokenDecoded.name + " " + tokenDecoded.lastname,

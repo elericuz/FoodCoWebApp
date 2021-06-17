@@ -16,4 +16,3 @@ webpack.config.js
 !.elasticbeanstalk/*.global.yml
 nodemon.json
 .dockerignore
-package-lock.json

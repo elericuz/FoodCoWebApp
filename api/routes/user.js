@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const storage = require('node-sessionstorage');
+const storage = require('sessionstorage')
 const checkAuth = require('../middleware/check-auth');
 
 const UserController = require('../controllers/user')
