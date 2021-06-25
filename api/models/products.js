@@ -6,10 +6,16 @@ const productSchema = new Schema({
         type: String,
         required: true
     },
+    spanish_name: {
+        type: String
+    },
     code: {
         type: String,
         required: true,
         default: 0
+    },
+    provider: {
+        type: String
     },
     price: {
         type: "Number",

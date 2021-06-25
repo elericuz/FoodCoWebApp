@@ -1,9 +1,8 @@
 const _ = require('lodash');
 const Item = require('../models/items');
-const storage = require('sessionstorage')
 
 exports.index = (req, res, next) => {
-    token = storage.getItem('token');
+    const token = req.cookies.userToken;
     res.setHeader('Content-Type', 'text/html');
     if (_.isUndefined(token) || _.isNull(token)) {
         res.render('index', {name: 'Eric'})

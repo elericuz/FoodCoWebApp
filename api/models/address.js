@@ -3,8 +3,10 @@ const Schema = mongoose.Schema;
 
 const addressSchema = new Schema({
     user_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
+        type: mongoose.Schema.Types.ObjectId
+    },
+    provider_id: {
+        type: mongoose.Schema.Types.ObjectId
     },
     type: {
         type: String,

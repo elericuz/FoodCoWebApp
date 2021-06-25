@@ -2,9 +2,24 @@ const _ = require('lodash');
 const moment = require('moment');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const storage = require('sessionstorage')
 const User = require('../models/users');
-const Address = require('../models/address')
+const Address = require('../models/address');
+
+const maxAge = 7 * 24 * 60 * 60;
+const createToken = (user) => {
+    return jwt.sign(
+        {
+            name: user.name,
+            lastname: user.lastname,
+            email_address: user.email_address,
+            userId: user._id
+        },
+        process.env.JWT_KEY,
+        {
+            expiresIn: maxAge
+        }
+    );
+};
 
 exports.login = (req, res, next) => {
     User.find({email_address: req.body.email_address})
@@ -21,20 +36,12 @@ exports.login = (req, res, next) => {
                     })
                 }
                 if (result) {
-                    const token = jwt.sign(
-                        {
-                            name: user[0].name,
-                            lastname: user[0].lastname,
-                            email_address: user[0].email_address,
-                            userId: user[0]._id
-                        },
-                        process.env.JWT_KEY,
-                        {
-                            expiresIn: '1d'
-                        }
-                    );
-                    storage.setItem('token', token);
-                    res.redirect('/orders');
+                    const token = createToken(user[0]);
+                    res.cookie('userToken', token, { httpOnly: true, maxAge: maxAge * 1000 });
+                    res.status(200).json({
+                        message: "success"
+                    })
+                    // res.redirect('/orders');
                 } else {
                     res.status(401).json({
                         message: 'Auth Failed'
@@ -103,7 +110,7 @@ exports.delete = (req, res, next) => {
 }
 
 exports.profile = async (req, res, next) => {
-    let token = storage.getItem('token');
+    const token = req.cookies.userToken;
     let tokenDecoded = jwt.decode(token);
     let user = await getUser(tokenDecoded.userId);
     let addresses = await getAddresses(tokenDecoded.userId);
@@ -124,7 +131,7 @@ async function getAddresses(user_id) {
 }
 
 exports.updatePersonalInfo = async (req, res, next) => {
-    let token = storage.getItem('token');
+    const token = req.cookies.userToken;
     let tokenDecoded = jwt.decode(token);
 
     User.findByIdAndUpdate(tokenDecoded.userId, req.body)
@@ -145,7 +152,7 @@ exports.updatePersonalInfo = async (req, res, next) => {
 }
 
 exports.addAddress = async (req, res, next) => {
-    let token = storage.getItem('token');
+    const token = req.cookies.userToken;
     let tokenDecoded = jwt.decode(token);
 
     req.body.user_id = tokenDecoded.userId;
@@ -210,7 +217,7 @@ async function getUser(userId) {
 }
 
 exports.changePassword = (req, res, next) => {
-    let token = storage.getItem('token');
+    const token = req.cookies.userToken;
     let tokenDecoded = jwt.decode(token);
 
     User.findById(tokenDecoded.userId)

@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const storage = require('sessionstorage')
 const checkAuth = require('../middleware/check-auth');
 
 const UserController = require('../controllers/user')
@@ -13,7 +12,7 @@ router.post('/signup', UserController.signup);
 router.post('/login', UserController.login);
 router.delete('/:userId', checkAuth, UserController.delete);
 router.get('/logout', (req, res, next) => {
-    storage.removeItem('token')
+    res.cookie('userToken', '', { maxAge: 1 });
     res.redirect('/');
 })
 router.get('/profile', checkAuth, UserController.profile);

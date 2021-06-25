@@ -3,11 +3,13 @@ const express = require('express');
 const Item = require('./api/models/items');
 const moment = require('moment');
 const lodash = require('lodash');
-const storage = require('sessionstorage')
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 // App
 const app = express();
+
+app.use(cookieParser());
 
 // ejs as view engine
 app.set('view engine', 'ejs');
@@ -25,7 +27,7 @@ app.use((req, res, next) => {
 
 // token to the whole site
 app.use((req, res, next) => {
-    let token = storage.getItem('token')
+    let token = req.cookies.userToken;
     if (!lodash.isUndefined(token) && !lodash.isNull(token)) {
         let tokenDecoded = jwt.decode(token);
         res.locals.user = {
@@ -78,10 +80,11 @@ app.use('/user', userRoutes);
 const orderRoutes = require('./api/routes/orders');
 app.use('/orders', orderRoutes);
 
-
 const productRoutes = require('./api/routes/products');
 app.use('/products', productRoutes);
 
+const providerRoutes = require('./api/routes/providers');
+app.use('/providers', providerRoutes);
 
 // error page
 app.use((req, res) => {
