@@ -1,0 +1,132 @@
+<div class="tabs-panel" id="specificPanel">
+    <div class="grid-x grid-margin-x">
+        <div class="cell small-2 medium-2 text-right text-vertical-center">UPC</div>
+        <div class="cell small-4 medium-3">
+            <input type="text" name="upc" id="upc" class="input-text-2" placeholder="UPC">
+        </div>
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Warning</div>
+        <div class="cell small-4 medium-3">
+            <input type="text" name="warning_text" id="warning_text" class="input-text-2 display-inline width-75" placeholder="Warning">
+            <input type="checkbox" name="warning" id="warning" value="true">
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x">
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Pack Size</div>
+        <div class="cell small-4 medium-3">
+            <input type="text" name="pack_size" id="pack_size" class="input-text-2" placeholder="Pack Size">
+        </div>
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Pallet</div>
+        <div class="cell small-2 medium-3">
+            <input type="text" name="pallet" id="pallet" class="input-text-2" placeholder="Pallet">
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x">
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Gross lbs</div>
+        <div class="cell small-4 medium-3">
+            <input type="text" name="gross_lbs" id="gross_lbs" class="input-text-2" placeholder="Gross lbs">
+        </div>
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Net lbs</div>
+        <div class="cell small-2 medium-3">
+            <input type="text" name="net_lbs" id="net_lbs" class="input-text-2" placeholder="Net lbs">
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x">
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Equiv</div>
+        <div class="cell small-4 medium-3">
+            <input type="text" name="equiv" id="equiv" class="input-text-2" placeholder="Equiv">
+        </div>
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Cube</div>
+        <div class="cell small-2 medium-3">
+            <input type="text" name="cube" id="cube" class="input-text-2" placeholder="Cube">
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x">
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Expire Item</div>
+        <div class="cell small-4 medium-3">
+            <input type="checkbox" name="expire_item" id="expire_item" class="input-text-2" value="true">
+        </div>
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Shelf Life</div>
+        <div class="cell small-2 medium-3">
+            <input type="number" id="shelf_life" name="shelf_life" min="1" max="10" class="input-text-2">
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x">
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Max. Temp</div>
+        <div class="cell small-2 medium-3">
+            <input type="number" id="max_temp" name="max_temp" min="1" max="10" class="input-text-2">
+        </div>
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Tie</div>
+        <div class="cell small-4 medium-3">
+            <input type="text" name="tie" id="tie" class="input-text-2" placeholder="Tie">
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x">
+        <div class="cell small-2 medium-2 text-right text-vertical-center">High</div>
+        <div class="cell small-4 medium-3">
+            <input type="text" name="high" id="high" class="input-text-2" placeholder="High">
+        </div>
+        <div class="cell small-2 medium-2 text-right text-vertical-center">COOL</div>
+        <div class="cell small-2 medium-3">
+            <select id="cool" name="cool" class="input-text-2">
+                <option value="US">US</option>
+            </select>
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x">
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Sales</div>
+        <div class="cell small-4 medium-3">
+            <input type="text" name="sales" id="sales" class="input-text-2" placeholder="Sales">
+        </div>
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Cogs</div>
+        <div class="cell small-2 medium-3">
+            <input type="text" name="cogs" id="cogs" class="input-text-2" placeholder="Cogs">
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x">
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Invt</div>
+        <div class="cell small-4 medium-3">
+            <input type="text" name="invt" id="invt" class="input-text-2" placeholder="Invt">
+        </div>
+    </div>
+    <hr>
+    <div class="grid-x grid-margin-x">
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Buyer</div>
+        <div class="cell small-2 medium-3">
+            <select id="buyer" name="buyer" class="input-text-2"></select>
+        </div>
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Misc</div>
+        <div class="cell small-2 medium-3">
+            <select id="misc" name="misc" class="input-text-2"></select>
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x">
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Group</div>
+        <div class="cell small-2 medium-3">
+            <select id="group" name="group" class="input-text-2"></select>
+        </div>
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Class</div>
+        <div class="cell small-2 medium-3">
+            <select id="class" name="class" class="input-text-2"></select>
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x">
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Misc 1</div>
+        <div class="cell small-2 medium-3">
+            <select id="misc_one" name="misc_one" class="input-text-2"></select>
+        </div>
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Misc 2</div>
+        <div class="cell small-2 medium-3">
+            <select id="misc_two" name="misc_two" class="input-text-2"></select>
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x">
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Other Picks</div>
+        <div class="cell small-4 medium-3">
+            <input type="text" name="other_pick" id="other_pick" class="input-text-2" placeholder="Other Picks">
+        </div>
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Max. Label Weight</div>
+        <div class="cell small-2 medium-3">
+            <input type="text" name="max_label_weight" id="max_label_weight" class="input-text-2" placeholder="Max. Label Weight">
+        </div>
+    </div>
+</div>
