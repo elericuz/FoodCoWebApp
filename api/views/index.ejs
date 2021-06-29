@@ -3,14 +3,19 @@
 <%- include('./partials/head.ejs') %>
 <body class="body-sign-in-up">
 
-<div class="grid-container vertical-center medium-4 small-11 bordered shadow padding-3 sign-in-up-box">
-    <div class="callout alert" data-closable id="alertContainer" style="display:none;">
-        <span id="message"></span>
-        <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
-            <span aria-hidden="true">&times;</span>
-        </button>
+<div class="grid-container vertical-center medium-6 large-5 small-11 sign-in-up-box">
+    <div class="grid-x grid-padding-x align-center-middle logo-container">
+        <div class="cell medium-8">
+            <img src="/assets/img/logo-hays-produce.png">
+        </div>
     </div>
-    <div class="grid-x grid-padding-x align-center-middle">
+    <div class="grid-x grid-padding-x align-center-middle bordered shadow padding-3">
+        <div class="callout alert" data-closable id="alertContainer" style="display:none;">
+            <span id="message"></span>
+            <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         <form class="medium-8 small-11 end" method="post" id="loginForm" action="/user/login" onsubmit="return false">
             <div class="medium-12 cell text-center">
                 <h3>Sign In</h3>

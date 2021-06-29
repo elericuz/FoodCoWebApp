@@ -8,53 +8,65 @@
 
 body {
     font-size: 0.8em;
-    color: #455A64;
+    color: #0D0D0D;
 }
 
 thead {
-    background-color: #455A64;
+    background-color: #ba5a00;
     color: #FFFFFF;
 }
 
 footer {
     font-size: 0.8em;
-    color: #708690;
+    color: #bfbfbf;
 }
 
 h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h4 small, .h4 small, h5 small, .h5 small, h6 small, .h6 small {
-    color: #718792;
+    color: #bfbfbf;
 }
 
 .body-sign-in-up {
-    background-color: #445963;
-}
-
-.sign-in-up-box {
     background-color: #FFFFFF;
 }
 
+.sign-in-up-box {
+    background-color: #ffbb5e;
+}
+
+.sign-in-up-box h3 {
+    color: #0D0D0D;
+}
+
 .top-bar, .top-bar ul {
-    background-color: #1c313a;
+    background-color: #f2882c;
     color: #FFFFFF;
     padding: 6px 3px;
     font-size: 0.94em;
 }
 
+.sign-in-up-box .click-here {
+    color: #0D0D0D;
+}
+
+.sign-in-up-box .logo-container {
+    background-color: #FFFFFF;
+}
+
 div .click-here a,
 div .click-here a:visited {
-    color: #708690;
+    color: #ba5c00;
 }
 
 div .click-here a:hover {
-    color: #1c313a;
+    color: #ba5c00;
 }
 
 .user-account {
-    background-color: #708690;
+    background-color: #ffb95c;
 }
 
 .user-account .logout {
-    background-color: #445963;
+    background-color: #ba5a00;
 }
 
 .menu .menu-text {
@@ -67,7 +79,7 @@ div .click-here a:hover {
 }
 
 .dropdown.menu > li.is_active > a::after {
-    background-color: #0c3d5d;
+    background-color: #ba5c00;
 }
 
 .dropdown.menu > li > a {
@@ -76,7 +88,7 @@ div .click-here a:hover {
 }
 
 .menu .is-active > a {
-    background: #708690;
+    background: #ffb95c;
     color: #FFFFFF; }
 
 .dropdown.menu > li.is-dropdown-submenu-parent > a {
@@ -101,10 +113,10 @@ div .click-here a:hover {
 .tabs-title > a {
     color: #FFFFFF; }
 .tabs-title > a:hover {
-    background-color: #455A64;
+    background-color: #ba5c00;
     color: #FFFFFF; }
 .tabs-title > a:focus, .tabs-title > a[aria-selected='true'] {
-    background-color: #455A64;
+    background-color: #ba5c00;
     color: #FFFFFF;
 }
 
@@ -113,15 +125,15 @@ div .click-here a:hover {
 }
 
 .tabs {
-    background-color: #718792;
+    background-color: #f28a2e;
 }
 
 .button.secondary {
-    background-color: #455A64;
+    background-color: #f2882c;
 }
 
 .button.secondary:hover, .button.secondary:focus {
-    background-color: #1c313a;
+    background-color: #ffb95c;
 }
 
 .button.hollow,
@@ -131,12 +143,12 @@ div .click-here a:hover {
 .button.hollow[disabled]:hover,
 .button.hollow.disabled:focus,
 .button.hollow[disabled]:focus {
-    border: 1px solid #445963;
-    color: #445963;
+    border: 1px solid #ba5c00;
+    color: #ba5c00;
 }
 
 .button.hollow:hover, .button.hollow:focus {
-    color: #1b3039;
+    color: #ffb95c;
 }
 
 .textinput {
@@ -167,7 +179,7 @@ div .click-here a:hover {
 .drilldown a,
 .drilldown .is-drilldown-submenu-parent > a {
     color: #FFFFFF;
-    background-color: #445963;
+    background-color: #ba5a00;
 }
 
 .drilldown .js-drilldown-back > a::before {
@@ -180,7 +192,7 @@ div .click-here a:hover {
 
 .drilldown .is-drilldown-submenu.is-active,
 .drilldown .nested.is-drilldown-submenu {
-    background-color: #445963;
+    background-color: #ba5a00;
 }
 
 #hamburguer::before {
