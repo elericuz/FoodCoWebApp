@@ -1,0 +1,28 @@
+<form method="POST" onsubmit="return false;" id="clientForm">
+    <input type="hidden" name="idClient" id="idClient" value="">
+    <h3>Add Client</h3>
+    <hr>
+    <div class="grid-x grid-margin-x">
+        <div class="cell small-12">
+            <ul class="tabs" data-tabs id="dashboard-tabs">
+                <li class="tabs-title is-active"><a href="#generalPanel" aria-selected="true">General</a></li>
+                <li class="tabs-title"><a href="#addressPanel">Address</a></li>
+                <li class="tabs-title"><a data-tabs-target="warehousesPanel" href="#warehousesPanel">Warehouses</a></li>
+            </ul>
+            <div class="tabs-content" data-tabs-content="dashboard-tabs">
+                <%- include('./panel-general.ejs') %>
+                <%- include('./panel-address.ejs') %>
+                <%- include('./panel-warehouses.ejs') %>
+            </div>
+        </div>
+    </div>
+    <div class="grid-x">
+        <div class="cell small-2 small-offset-8 text-right padding-right-1">
+            <a href="#" class="button alert small" data-close aria-label="Close modal">Cancel</a>
+        </div>
+        <div class="cell small-2"><a href="#" id="saveButton" class="button small secondary">Save</a></div>
+    </div>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</form>

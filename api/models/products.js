@@ -249,6 +249,11 @@ const productSchema = new Schema({
         type: "Number",
         required: false,
         default: 0
+    },
+    status: {
+        type: Boolean,
+        required: true,
+        default: true
     }
 }, {
     timestamps: true

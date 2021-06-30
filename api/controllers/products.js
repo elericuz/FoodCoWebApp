@@ -125,7 +125,7 @@ async function saveProduct(data) {
 }
 
 async function getProducts() {
-    return Product.find()
+    return Product.find({ status: true })
         .sort({manufacturer_name: 'asc'})
         .then(result => {
             return result;
@@ -134,7 +134,7 @@ async function getProducts() {
 }
 
 async function removeProduct(id) {
-    return Product.findByIdAndDelete(id)
+    return Product.findByIdAndUpdate(id, { status: false })
         .then(result => { return result; })
         .catch(err => { return err; })
 }
