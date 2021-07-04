@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const Client = require('../models/clients');
 const Address = require('../models/address');
+const Warehouse = require('../models/warehouses');
 
 exports.listAll = async (req, res, next) => {
     const clients = await getClients();
@@ -32,11 +33,16 @@ exports.save = async (req, res, next) => {
 }
 
 exports.get = async (req, res, next) => {
+    let warehouses = await getWarehouses(req.params.id);
+
     await getClient(req.params.id)
         .then(result => {
             res.status(200).json({
                 message: 'success',
-                data: result
+                data: {
+                    'client': result,
+                    'warehouses': warehouses
+                }
             });
         })
         .catch(err => {
@@ -94,6 +100,114 @@ exports.remove = async (req, res, next) => {
         })
 }
 
+exports.saveWarehouse = async (req, res, next) => {
+    let data = req.body;
+    // console.log(data.listIdWarehouses);
+    // const list = _.trim(data.listIdWarehouses, ',').split(',')
+    // console.log(list);
+
+    // const address = {
+    //     street: data.street,
+    //     type: "Warehouse",
+    //     city: data.city,
+    //     state: data.state,
+    //     zipcode: data.zipcode
+    // };
+    // console.log(address);
+
+    const warehouse = {
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
+        contact: data.contact
+    };
+    console.log(warehouse);
+
+    await saveAddress(data, null, 'Warehouse')
+        .then(async (response) => {
+            data.addressId = response._id;
+
+            await saveWarehouse(data)
+                .then((result) => {
+                    res.status(200).json({
+                        message: "Warehouse added.",
+                        data: result
+                    })
+                })
+                .catch(err => {
+                    res.status(500).json({
+                        message: "Something went wrong",
+                        data: err
+                    })
+                });
+        });
+}
+
+exports.removeWarehouse = async (req, res, next) => {
+    await removeWarehouse(req.params.id)
+        .then((response) => {
+            res.status(200).json({
+                message: "Warehouse deleted.",
+                data: response
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "Something went wrong",
+                data: err
+            });
+        })
+}
+
+exports.getWarehouse = async (req, res, next) => {
+    await getWarehouse(req.params.id)
+        .then(result => {
+            res.status(200).json({
+                message: 'success',
+                data: result
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: 'Something went wrong',
+                data: err
+            });
+        })
+}
+
+exports.updateWarehouse = async (req, res, next) => {
+    let data = req.body;
+
+    console.log(data);
+
+    await saveAddress(data, data.idAddressWarehouse, 'Warehouse')
+        .then((result) => {
+            return result;
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "Something went wrong",
+                data: err
+            })
+        });
+
+    const warehouse = await saveWarehouse(data, data.idWarehouse)
+        .then(async (response) => {
+            return response
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: "Something went wrong",
+                data: error
+            })
+        });
+
+    res.status(200).json({
+        message: "Warehouse updated.",
+        data: data
+    })
+}
+
 async function getClients() {
     return Client.find({status: true})
         .populate({
@@ -107,9 +221,9 @@ async function getClients() {
         .catch(err => console.log(err));
 }
 
-async function saveAddress(data, id = null) {
+async function saveAddress(data, id = null, type = 'Client') {
     let addressData = {
-        type: 'Client',
+        type: type,
         street: data.street,
         city: data.city,
         state: data.state,
@@ -142,9 +256,23 @@ async function saveClient(data, id = null) {
     }
 
     if (id == null) {
+        if (!_.isEmpty(_.trim(data.idWarehousesList, ','))) {
+            clientData.warehouses = _.trim(data.idWarehousesList, ',').split(',');
+        }
         let client = new Client(clientData);
         return client.save()
-            .then(result => { return result })
+            .then(result => {
+                if (!_.isEmpty(_.trim(data.idWarehousesList, ','))) {
+                    clientData.warehouses.forEach((warehouse) => {
+                        Warehouse.findByIdAndUpdate(warehouse, {client_id: result._id})
+                            .then(response => {
+                                return response;
+                            })
+                            .catch(error => console.log(error));
+                    })
+                }
+                return result;
+            })
             .catch(err => console.log(err));
     } else {
         return Client.findByIdAndUpdate(id, clientData)
@@ -153,12 +281,56 @@ async function saveClient(data, id = null) {
             })
             .catch(err => console.log(err));
     }
+}
 
+async function saveWarehouse(data, id = null) {
+    const warehouseData = {
+        name: data.name,
+        address: _.isNull(id) ? data.addressId : data.idAddressWarehouse,
+        phone: data.phone,
+        email: data.email,
+        contact: data.contact
+    };
+    console.log(warehouseData);
 
+    if (id == null) {
+        let warehouse = new Warehouse(warehouseData);
+        return warehouse.save()
+            .then(result => { return result })
+            .catch(err => console.log(err));
+    } else {
+        return Warehouse.findByIdAndUpdate(id, warehouseData)
+            .then(result => {
+                return result;
+            })
+            .catch(err => console.log(err));
+    }
 }
 
 async function getClient(id) {
     return Client.findById(id)
+        .populate({
+            path: 'address',
+            model: 'Address'
+        })
+        .populate([{
+            path: 'warehouse',
+            model: 'Warehouses'
+        }])
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+}
+
+async function removeClient(id) {
+    return Client.findByIdAndUpdate(id, { status: false })
+        .then(result => { return result; })
+        .catch(err => { return err; })
+}
+
+async function getWarehouses(idClient) {
+    return Warehouse.find({'client_id': idClient, 'status': true})
         .populate({
             path: 'address',
             model: 'Address'
@@ -169,8 +341,20 @@ async function getClient(id) {
         .catch(err => console.log(err));
 }
 
-async function removeClient(id) {
-    return Client.findByIdAndUpdate(id, { status: false })
+async function getWarehouse(id) {
+    return Warehouse.findById(id)
+        .populate({
+            path: 'address',
+            model: 'Address'
+        })
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+}
+
+async function removeWarehouse(id) {
+    return Warehouse.findByIdAndUpdate(id, { status: false })
         .then(result => { return result; })
         .catch(err => { return err; })
 }

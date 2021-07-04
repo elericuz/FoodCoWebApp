@@ -12,8 +12,20 @@ const warehouseSchema = new Schema({
     phone: {
         type: String
     },
+    email: {
+        type: String
+    },
     contact: {
         type: String
+    },
+    client_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false
+    },
+    status: {
+        type: Boolean,
+        required: true,
+        default: true
     }
 }, {
     timestamps: true

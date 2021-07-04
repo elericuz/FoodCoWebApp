@@ -24,6 +24,12 @@ const clientSchema = new Schema({
     phone: {
         type: String
     },
+    warehouses: {
+        type: Array(
+            mongoose.Schema.Types.ObjectId
+        ),
+        required: false
+    },
     status: {
         type: Boolean,
         required: true,
