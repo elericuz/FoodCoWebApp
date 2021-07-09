@@ -5,6 +5,7 @@ const Detail = require('../models/details');
 const Product = require('../models/products');
 const Unit = require('../models/units');
 const PaymentMethod = require('../models/payment_method');
+const ProductPrices = require('../models/product_prices');
 const jwt = require('jsonwebtoken');
 
 exports.listAll = (req, res, next) => {
@@ -28,13 +29,6 @@ exports.view = async (req, res, next) => {
 
     res.setHeader('Content-Type', 'text/html');
     res.render('orders/view', { order: order });
-}
-
-async function getDetails(orderId) {
-    return Detail.find({ order_id: orderId})
-        .select('_id')
-        .then(result => { return result; })
-        .catch(err => console.log(err));
 }
 
 exports.new = async (req, res, next) => {
@@ -71,16 +65,31 @@ exports.placeOrder = async (req, res, next) => {
 
     let details = await getDetails(req.params.id)
 
+    let total = 0;
+    details.forEach(detail => {
+        total += detail.total;
+    })
+
+    const tax = 0;
+    const subtotal = 0;
+
     let body = req.body;
     body.status = 'completed';
-    body.tax = 0;
-    body.subtotal = 0;
-    body.total = 0;
+    body.tax = tax;
+    body.subtotal = subtotal;
+    body.total = total;
     body.user = tokenDecoded.userId
     body.details = details.map(detail => { return detail._id; })
 
     providerorder = await placeOrder(req.params.id, body);
     res.redirect('/orders');
+}
+
+async function getDetails(orderId) {
+    return Detail.find({ order_id: orderId})
+        .select('_id total')
+        .then(result => { return result; })
+        .catch(err => console.log(err));
 }
 
 async function placeOrder(id, data) {
@@ -96,9 +105,22 @@ async function removeProduct(id) {
 }
 
 async function addProduct(data) {
+    const productPrice = await ProductPrices.findOne({unit_id: data.unit_id, product_id: data.product_id, status: true})
+        .select('price -_id')
+        .then(result => {
+            return result.price;
+        })
+        .catch(err => console.log(err));
+
+    const quantity = _.toInteger(data.quantity)
+    const total = quantity * productPrice;
+
+    data.unit_price = productPrice;
+    data.total = total;
+
     let detail = new Detail(data);
     return detail.save()
-        .then(result => { return result })
+        .then(result => { return result; })
         .catch(err => console.log(err));
 }
 
@@ -116,7 +138,7 @@ async function createEmptyOrder() {
 }
 
 async function getProducts() {
-    return Product.find()
+    return Product.find({status: true})
         .then((result) => { return result; })
         .catch(err => console.log('err'));
 }

@@ -47,7 +47,7 @@
                     <td><%= product.quantity %></td>
                     <td><%= product.unit_id.name %></td>
                     <td><%= product.product_id.manufacturer_name %></td>
-                    <td>$<%= product.product_id.price.toFixed(2).toLocaleString() %></td>
+                    <td>$<%= product.unit_price.toFixed(2).toLocaleString() %></td>
                     <td>$<%= product.total.toFixed(2).toLocaleString() %></td>
                 </tr>
                 <% }); %>

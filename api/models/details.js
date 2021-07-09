@@ -20,10 +20,20 @@ const detailsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Products'
     },
+    unit_price: {
+        type: Number,
+        required: true,
+        default: 0
+    },
     total: {
         type: Number,
         required: true,
         default: 0
+    },
+    status: {
+        type: Boolean,
+        required: true,
+        default: true
     }
 }, {
     timestamps: true

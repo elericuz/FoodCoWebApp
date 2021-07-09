@@ -139,21 +139,21 @@
         fetch(endpoint, {method: 'POST', body: data})
             .then(response => response.json())
             .then((result) => {
-                addNewRow(result._id)
+                addNewRow(result._id, result)
             })
             .catch(err => console.log(err));
         $('#addProductModal').foundation('close');
     });
 
-    function addNewRow(id) {
+    function addNewRow(id, data) {
         var newRow = document.getElementById('detailsTable').insertRow();
         newRow.id = id;
         newRow.innerHTML = "" +
-            "<td>" + $('#quantity').val() + "</td>" +
+            "<td>" + data.quantity + "</td>" +
             "<td>" + $('#unit option:selected').text() + "</td>" +
             "<td>" + $('#product option:selected').text() + "</td>" +
-            "<td>" + $('#quantity').attr('value') + "</td>" +
-            "<td>" + $('#quantity').attr('value') + "</td>" +
+            "<td>" + data.unit_price + "</td>" +
+            "<td>" + data.total + "</td>" +
             "<td>" +
             "<div class=\"grid-x grid-margin-x\">" +
             "<div class=\"cell small-1\">" +
