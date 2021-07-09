@@ -8,11 +8,13 @@
                 <li class="tabs-title is-active"><a href="#generalPanel" aria-selected="true">General</a></li>
                 <li class="tabs-title"><a data-tabs-target="specificPanel" href="#specificPanel">Specific</a></li>
                 <li class="tabs-title"><a data-tabs-target="attributesPanel" href="#attributesPanel">Attributes</a></li>
+                <li class="tabs-title"><a data-tabs-target="unitsPanel" href="#unitsPanel">Units</a></li>
             </ul>
             <div class="tabs-content" data-tabs-content="dashboard-tabs">
                 <%- include('./panel-general.ejs') %>
                 <%- include('./panel-specific.ejs') %>
                 <%- include('./panel-attributes.ejs') %>
+                <%- include('./panel-units.ejs') %>
             </div>
         </div>
     </div>

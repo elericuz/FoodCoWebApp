@@ -183,7 +183,7 @@ saveWarehouseButton.addEventListener('click', (e) => {
             if (method == 'POST') {
                 // addNewClient(result.data)
             } else {
-                updateWarehouse()
+                updateWarehouse();
             }
         })
         .catch(err => {

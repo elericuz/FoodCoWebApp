@@ -27,7 +27,7 @@ saveButton.addEventListener('click', (e) => {
             }
             document.getElementById('message').innerHTML = result.message;
             document.getElementById('alertContainer').style.display = 'block';
-            $('#addProductModal').foundation('close');
+            // $('#addProductModal').foundation('close');
             // resetProductForm();
         })
         .catch(err => {
@@ -143,6 +143,12 @@ function getProduct(id) {
             $('#non_commission').attr('checked', result.data.non_commission);
             $('#totes').attr('checked', result.data.totes);
             $('#driver_load').attr('checked', result.data.driver_load);
+
+            result.prices.forEach(val => {
+                $('#checkbox_'+val.unit_id).attr('checked', true);
+                document.getElementById('unit_'+val.unit_id).value = val.price;
+                $('#unit_'+val.unit_id).attr('disabled', false);
+            })
         })
         .catch(err => {
             alert('Something went wrong.');
