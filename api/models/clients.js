@@ -19,10 +19,12 @@ const clientSchema = new Schema({
         type: String
     },
     email: {
-        type: String
+        type: String,
+        default: ""
     },
     phone: {
-        type: String
+        type: String,
+        default: ""
     },
     warehouses: {
         type: Array(

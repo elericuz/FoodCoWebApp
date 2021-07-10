@@ -1,0 +1,28 @@
+<div class="cell clearfix">
+    <div class="float-left">
+        <h2 class="margin-bottom-0">Invoices</h2>
+    </div>
+    <div class="float-right">
+        <a href="#" class="button secondary small margin-top-1" onclick="$('#invoiceModal').foundation('open');">Create Invoice</a>
+    </div>
+</div>
+<hr class="hr-title-separator">
+<div class="cell small-12" id="invoicesTable">
+    <table>
+        <thead>
+        <tr>
+            <th class="small-1">Qty</th>
+            <th class="small-2">Unit</th>
+            <th class="small-7">Products</th>
+            <th class="small-1">Unit Price</th>
+            <th class="small-1">Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr></tr>
+        </tbody>
+    </table>
+</div>
+<div class="reveal large" id="invoiceModal" data-reveal>
+    <%- include('./modal-add.ejs') %>
+</div>

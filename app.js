@@ -80,6 +80,10 @@ app.use('/user', userRoutes);
 const orderRoutes = require('./api/routes/orders');
 app.use('/orders', orderRoutes);
 
+// invoices routes
+const invoicesRoutes = require('./api/routes/invoices');
+app.use('/invoices', invoicesRoutes);
+
 const productRoutes = require('./api/routes/products');
 app.use('/products', productRoutes);
 

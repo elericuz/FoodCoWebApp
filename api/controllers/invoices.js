@@ -1,5 +1,7 @@
 const _ = require('lodash');
 const moment = require('moment');
+const Invoice = require('../models/invoices');
+const InvoiceDetails = require('../models/invoicedetails');
 const Order = require('../models/orders');
 const Detail = require('../models/details');
 const Product = require('../models/products');
@@ -7,6 +9,74 @@ const Unit = require('../models/units');
 const PaymentMethod = require('../models/payment_method');
 const ProductPrices = require('../models/product_prices');
 const jwt = require('jsonwebtoken');
+
+
+exports.save = async (req, res, next) => {
+    const nextNumber = await getLastInvoiceNumber();
+
+    const data = {
+        order_id: req.body.orderId,
+        shipping_date: req.body.date,
+        number: nextNumber.number + 1
+    }
+
+    let invoice = await new Invoice(data)
+        .save()
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+
+    let invoiceDetails = []
+    for (const value of req.body.detail.detailId) {
+        let index = req.body.detail.detailId.indexOf(value);
+        let detail = {
+            invoice_id: invoice._id,
+            order_id: req.body.orderId,
+            quantity: req.body.detail.quantity[index],
+            unit_id: req.body.detail.unitId[index],
+            product_id: req.body.detail.productId[index],
+            unit_price: req.body.detail.unitPrice[index],
+            total: req.body.detail.unitPrice[index] * req.body.detail.quantity[index]
+        };
+
+        if (req.body.detail.quantity[index] > 0) {
+            await new InvoiceDetails(detail)
+                .save()
+                .then(result => {
+                    invoiceDetails.push(result);
+                    return result;
+                })
+                .catch(err => console.log(err));
+        }
+    }
+
+    res.status(200).json({
+        message: 'ok',
+        invoice: invoice,
+        invoiceDetails: invoiceDetails
+    })
+}
+
+async function getLastInvoiceNumber() {
+    let invoice = Invoice.findOne()
+        .select('number -_id')
+        .sort({number: 'desc'})
+        .then(result => {
+            if (_.isNull(result)) {
+                return { number: 0 }
+            } else {
+                return result;
+            }
+        })
+        .catch(err => console.log(err));
+    return invoice
+}
+
+async function save() {
+
+}
+
 
 exports.listAll = (req, res, next) => {
     const token = req.cookies.userToken;

@@ -1,21 +1,16 @@
 const mongoose = require('mongoose');
-const Unit = require('./units')
-const Products = require('./products')
 
-const detailsSchema = new mongoose.Schema({
+const invoiceDetailsSchema = new mongoose.Schema({
+    invoice_id: {
+        type: mongoose.Schema.Types.ObjectId,
+    },
     order_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Orders'
     },
     quantity: {
         type: Number,
         required: true,
-        default: 1
-    },
-    quantity_pending: {
-        type: Number,
-        required: true,
-        default: 1
+        default: 0
     },
     unit_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -44,5 +39,5 @@ const detailsSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const Detail = mongoose.model('Details', detailsSchema);
-module.exports = Detail;
+const InvoiceDetail = mongoose.model('InvoiceDetails', invoiceDetailsSchema);
+module.exports = InvoiceDetail;

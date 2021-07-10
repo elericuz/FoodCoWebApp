@@ -19,7 +19,23 @@ const userSchema = new Schema({
         required: true
     },
     phonenumber: {
-        type: String
+        type: String,
+        default: ""
+    },
+    type_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'UserTypes',
+        required: true,
+        default: '60e7d49dd1ffd101c8862ce6'
+    },
+    client_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Clients'
+    },
+    status: {
+        type: Boolean,
+        required: true,
+        default: true
     }
 }, {
     timestamps: true

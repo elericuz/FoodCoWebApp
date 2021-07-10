@@ -123,28 +123,6 @@ function updateClient(data) {
 
 const saveWarehouseButton = document.getElementById('saveWarehouseButton');
 saveWarehouseButton.addEventListener('click', (e) => {
-
-    // document.getElementById('idWarehousesList').value = '';
-    // let listIdWarehouses = (document.getElementById('idWarehousesList').value).split(',');
-    // listIdWarehouses.push('hola');
-    // listIdWarehouses.push('que tal');
-    // listIdWarehouses.push('chao');
-    //
-    //
-    // console.log(listIdWarehouses);
-    //
-    // var index = listIdWarehouses.indexOf('que tal');
-    // if (index !== -1) {
-    //     listIdWarehouses.splice(index, 1);
-    // }
-    //
-    //
-    //
-    // listIdWarehouses = listIdWarehouses.join(',').replace(/^(\,)/gim, '')
-    // console.log(listIdWarehouses);
-    // document.getElementById('idWarehousesList').value = listIdWarehouses;
-
-
     const dataWarehouse = new URLSearchParams();
     dataWarehouse.append('idClient', document.getElementById('idClient').value);
     dataWarehouse.append('idWarehouse', document.getElementById('idWarehouse').value);

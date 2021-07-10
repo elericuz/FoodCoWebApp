@@ -21,4 +21,9 @@ router.post('/add-address', checkAuth, UserController.addAddress);
 router.delete('/remove-address/:id', checkAuth, UserController.removeAddress);
 router.post('/change-password', checkAuth, UserController.changePassword);
 
+router.get('/', UserController.listAll);
+router.get('/get/:id', checkAuth, UserController.get);
+router.post('/save', checkAuth, UserController.save);
+router.put('/save', checkAuth, UserController.update);
+
 module.exports = router;

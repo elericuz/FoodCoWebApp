@@ -203,3 +203,7 @@ div .click-here a:hover {
     background-color: #708690;
     border-top: solid #FFF 1px;
 }
+
+.datepicker th {
+    background-color: inherit !important;
+}

@@ -29,6 +29,10 @@
                 <%= _.capitalize(order.user.name) + " " + _.startCase(order.user.lastname) %>
             </div>
         </div>
+        <div class="grid-x grid-margin-x">
+            <div class="cell small-4 medium-2 text-right font-bold">Status</div>
+            <div class="cell auto"><%= _.upperCase(order.status) %></div>
+        </div>
         <hr class="padding-top-1 hr-title-separator">
         <div class="cell small-12">
             <table>
@@ -55,9 +59,104 @@
             </table>
         </div>
     </div>
+    <%- include('../invoices/list.ejs') %>
 </div>
 
 <%- include('../partials/footer.ejs') %>
 <%- include('../partials/scripts.ejs') %>
+<script>
+    $(function () {
+        $('#date').fdatepicker({
+            format: 'mm-dd-yyyy',
+            disableDblClickSelection: true,
+            leftArrow: '<<',
+            rightArrow: '>>',
+            closeIcon: 'X',
+            closeButton: false
+        });
+    });
+
+    const saveButton = document.getElementById('saveButton');
+    saveButton.addEventListener('click', (e) => {
+        const data = new URLSearchParams();
+        const form = document.getElementById('invoiceForm');
+        for (const pair of new FormData(form)) {
+            data.append(pair[0], pair[1]);
+        }
+
+        const endpoint = '/invoices/save';
+        method = 'POST';
+
+        fetch(endpoint, {method: method, body: data})
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Something went wrong.');
+                }
+            })
+            .then(result => {
+                console.log(result);
+                addNewInvoiceRow(result.invoice, result.invoiceDetails)
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    });
+
+    function addNewInvoiceRow(invoice, details) {
+        let invoiceNumberRow = document.createElement("div");
+        invoiceNumberRow.setAttribute("class", "float-left");
+        invoiceNumberRow.innerHTML = "<h6>Invoice Number: <small><b>" + invoice.number + "</b></small></h6>";
+        document.getElementById("invoicesTable").appendChild(invoiceNumberRow);
+
+        let shippingDateRow = document.createElement("div");
+        shippingDateRow.setAttribute("class", "float-right");
+        shippingDateRow.innerHTML = "<h6>Shipping Date: <small><b>" + invoice.shipping_date + "</b></small></h6>";
+        document.getElementById("invoicesTable").appendChild(shippingDateRow);
+
+        let table = document.createElement("table");
+        let thead = document.createElement("thead");
+        let headRow = document.createElement("tr");
+        let headCol1 = document.createElement("th");
+        let headCol2 = document.createElement("th");
+        let headCol3 = document.createElement("th");
+        let headCol4 = document.createElement("th");
+        let headCol5 = document.createElement("th");
+        headCol1.innerHTML = "Qty";
+        headCol2.innerHTML = "Unit";
+        headCol3.innerHTML = "Product";
+        headCol4.innerHTML = "Unit Price";
+        headCol5.innerHTML = "Price";
+        headCol1.setAttribute("class", "small-1");
+        headCol2.setAttribute("class", "small-2");
+        headCol3.setAttribute("class", "small-7");
+        headCol4.setAttribute("class", "small-1");
+        headCol5.setAttribute("class", "small-1");
+        headRow.appendChild(headCol1);
+        headRow.appendChild(headCol2);
+        headRow.appendChild(headCol3);
+        headRow.appendChild(headCol4);
+        headRow.appendChild(headCol5);
+        thead.appendChild(headRow);
+        table.appendChild(thead);
+
+        let tbody = document.createElement("tbody");
+        details.forEach(detail => {
+            let newRow = tbody.insertRow();
+            newRow.innerHTML = "" +
+                "<td>" + detail.quantity + "</td>" +
+                "<td>" + detail.unit_id + "</td>" +
+                "<td>" + detail.product_id + "</td>" +
+                "<td>$" + detail.unit_price + "</td>" +
+                "<td>$" + detail.total + "</td>"
+        });
+        table.appendChild(tbody);
+        document.getElementById("invoicesTable").appendChild(table);
+
+        let hrSeparator = document.createElement("hr");
+        document.getElementById("invoicesTable").appendChild(hrSeparator);
+    }
+</script>
 </body>
 </html>

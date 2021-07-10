@@ -3,7 +3,9 @@ const moment = require('moment');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/users');
+const UserType = require('../models/usertype');
 const Address = require('../models/address');
+const Client = require('../models/clients');
 
 const maxAge = 7 * 24 * 60 * 60;
 const createToken = (user) => {
@@ -123,13 +125,6 @@ exports.profile = async (req, res, next) => {
     });
 }
 
-async function getAddresses(user_id) {
-    return Address.find({ user_id: user_id })
-        .sort({'createdAt': 'asc'})
-        .then(result => { return result; })
-        .catch(err => console.log(err));
-}
-
 exports.updatePersonalInfo = async (req, res, next) => {
     const token = req.cookies.userToken;
     let tokenDecoded = jwt.decode(token);
@@ -191,31 +186,6 @@ exports.removeAddress = async (req, res, next) => {
         });
 }
 
-async function removeAddress(id) {
-    return Address.findByIdAndDelete(id)
-        .then(result => { return result; })
-        .catch(err => { return err; });
-}
-
-async function addAddress(data) {
-    let address = new Address(data);
-    return address.save()
-        .then(result => { return result; })
-        .catch(err => { return err; });
-}
-
-async function updateUserInfo(userID, data) {
-    return User.findByIdAndUpdate(userID, data)
-        .then(result => { return result; })
-        .catch(err => console.log(err));
-}
-
-async function getUser(userId) {
-    return User.findById(userId)
-        .then(result => { return result; })
-        .catch(err => console.log(err));
-}
-
 exports.changePassword = (req, res, next) => {
     const token = req.cookies.userToken;
     let tokenDecoded = jwt.decode(token);
@@ -270,4 +240,139 @@ exports.changePassword = (req, res, next) => {
                 data: err
             })
         });
+}
+
+exports.listAll = async (req, res, next) => {
+    const userTypes = await getUserTypes();
+    const clients = await getClients();
+    const users = await getUsers()
+    res.render('users/list', { users: users, userTypes: userTypes, clients: clients });
+}
+
+exports.get = async (req, res, next) => {
+    const user = await getUser(req.params.id, true);
+    res.status(200).json({
+        data: user
+    });
+}
+
+exports.save = async (req, res, next) => {
+    res.status(200).json({
+        message: 'ok'
+    })
+}
+
+exports.update = async (req, res, next) => {
+
+    console.log(req.body);
+    const password = req.body.password
+    if (!_.isEmpty(_.trim(password))) {
+
+    }
+
+    const userId = req.body.idUser
+    const data = {
+        name: req.body.name,
+        lastname: req.body.lastname,
+        email_address: req.body.email_address,
+        phonenumber: req.body.phonenumber,
+        type_id: req.body.type_id,
+        client_id: _.isUndefined(req.body.client_id) ? null : req.body.client_id,
+        status: req.body.status
+    }
+
+    await updateUserInfo(userId, data)
+        .then(result => {
+            res.status(200).json({
+                message: 'ok',
+                data: result
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "Something went wrong",
+                data: err
+            })
+        });
+}
+
+async function getClients() {
+    return Client.find({status: true})
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+}
+
+async function getUserTypes() {
+    return UserType.find()
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err))
+}
+
+async function getAddresses(user_id) {
+    return Address.find({ user_id: user_id })
+        .sort({'createdAt': 'asc'})
+        .then(result => { return result; })
+        .catch(err => console.log(err));
+}
+
+async function removeAddress(id) {
+    return Address.findByIdAndDelete(id)
+        .then(result => { return result; })
+        .catch(err => { return err; });
+}
+
+async function addAddress(data) {
+    let address = new Address(data);
+    return address.save()
+        .then(result => { return result; })
+        .catch(err => { return err; });
+}
+
+async function updateUserInfo(userId, data) {
+    console.log(userId);
+    console.log(data);
+    return User.findByIdAndUpdate(userId, data)
+        .then(result => {
+            console.log(result);
+            return result;
+        })
+        .catch(err => console.log(err));
+}
+
+async function getUser(userId, admin=false) {
+    if (admin) {
+        return User.findById(userId)
+            .populate({
+                path: 'type_id',
+                model: 'UserTypes'
+            })
+            .populate({
+                path: 'client_id',
+                model: 'Clients'
+            })
+            .then(result => { return result; })
+            .catch(err => console.log(err));
+    } else {
+        return User.findById(userId)
+            .select('-type_id')
+            .then(result => { return result; })
+            .catch(err => console.log(err));
+    }
+}
+
+async function getUsers() {
+    return User.find({status: true})
+        .sort({'lastname': 'asc'})
+        .populate({
+            path: 'type_id',
+            model: 'UserTypes'
+        })
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
 }

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head.ejs') %>
+<body>
+
+<%- include('../partials/nav.ejs') %>
+
+<div class="grid-container fluid">
+    <div class="cell small-12">
+        <div class="grid-x">
+            <div class="cell small-7 medium-10">
+                <h2 class="margin-bottom-0">Users</h2>
+            </div>
+            <div class="cell small-5 medium-2 text-right padding-top-1">
+                <a href="#" onclick="return false;" class="button secondary small">Create new order</a>
+            </div>
+        </div>
+    </div>
+    <hr class="hr-title-separator">
+    <div class="cell small-12">
+        <table class="stack">
+            <thead>
+            <tr>
+                <th class="medium-3">Name</th>
+                <th class="medium-3">Lastname</th>
+                <th class="medium-3">Email Address</th>
+                <th class="medium-2">Type</th>
+                <th class="medium-1">&nbsp</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr></tr>
+            <% users.forEach(user => { %>
+            <tr id="<%= user._id %>">
+                <td><%= user.name %></td>
+                <td><%= user.lastname %></td>
+                <td><%= user.email_address %></td>
+                <td><%= user.type_id.name %></td>
+                <td>
+                    <a href="#" class="button secondary small fi-page-edit" style="margin-top: 10px" onclick="$('#userModal').foundation('open'); getUser('<%= user._id %>')"> View
+                </td>
+            </tr>
+            <% }); %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="reveal large" id="userModal" data-reveal>
+    <%- include('./modal-user.ejs') %>
+</div>
+
+<%- include('../partials/footer.ejs') %>
+<script src="/assets/js/user.js"></script>
+<%- include('../partials/scripts.ejs') %>
+</body>
+</html>

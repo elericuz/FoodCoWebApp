@@ -4,11 +4,22 @@ const User = require('./users')
 const orderSchema = new mongoose.Schema({
     date: {
         type: Date,
+        required: true,
+        default: Date.now
+    },
+    shipping_date: {
+        type: Date,
         default: Date.now
     },
     number: {
         type: Number,
         required: true
+    },
+    contact: {
+        type: String,
+    },
+    phone: {
+        type: String
     },
     shipping_address: {
         type: String
