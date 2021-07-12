@@ -21,22 +21,22 @@
             </thead>
             <tbody>
             <% order.details.forEach(product => { %>
-            <tr>
-                <input type="hidden" name="detail[detailId]" value="<%= product._id %>">
-                <input type="hidden" name="detail[unitId]" value="<%= product.unit_id._id %>">
-                <input type="hidden" name="detail[productId]" value="<%= product.product_id._id %>">
-                <input type="hidden" name="detail[unitPrice]" value="<%= product.unit_price %>">
-                <input type="hidden" name="detail[total]" value="<%= product.total %>">
+            <tr id="<%= product._id %>">
+                <input type="hidden" id="detail-<%= product._id %>" name="detail[detailId]" value="<%= product._id %>">
+                <input type="hidden" id="unit-<%= product._id %>" name="detail[unitId]" value="<%= product.unit_id._id %>">
+                <input type="hidden" id="product-<%= product._id %>" name="detail[productId]" value="<%= product.product_id._id %>">
+                <input type="hidden" id="price-<%= product._id %>" name="detail[unitPrice]" value="<%= product.unit_price %>">
+                <input type="hidden" id="total-<%= product._id %>" name="detail[total]" value="<%= product.total %>">
                 <td><%= product.product_id.manufacturer_name %></td>
                 <td><%= product.unit_id.name %></td>
                 <td>
-                    <input type="text" name="detail[quantity]" value="<%= product.quantity %>" class="input-text-2 text-vertical-center">
+                    <input type="text" id="quantity-<%= product._id %>" name="detail[quantity]" value="<%= product.quantity_pending %>" class="input-text-2 text-vertical-center">
                 </td>
                 <td>
                     $<%= product.unit_price.toFixed(2).toLocaleString() %>
                 </td>
                 <td>
-                    $<%= product.total.toFixed(2).toLocaleString() %>
+                    <span id="totaltext-<%= product._id %>">aa$<%= product.total.toFixed(2).toLocaleString() %></span>
                 </td>
             </tr>
             <% }) %>

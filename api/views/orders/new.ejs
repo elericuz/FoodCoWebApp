@@ -17,19 +17,34 @@
     <form method="POST" action="/orders/place/<%= order._id %>" id="placeOrderForm">
         <div class="cell small-12">
             <div class="grid-x grid-margin-x">
-                <div class="cell medium-2 small-2 text-right">Date</div>
+                <div class="cell medium-2 small-2 text-right text-vertical-center">Date</div>
                 <div class="cell medium-2 small-4"><input type="text" id="date" name="date" class="input-text-1"></div>
-                <div class="cell medium-2 small-2 text-right large-offset-3">Order #</div>
+                <div class="cell medium-2 small-2 text-right large-offset-3 text-vertical-center">Order #</div>
                 <div class="cell medium-2 small-3"><input type="text" class="input-text-1" id="number" name="number"
                                                  value="<%= _.padStart(order.number, 7, '0') %>" disabled></div>
             </div>
             <div class="grid-x grid-margin-x">
-                <div class="cell small-2 text-right">Shipping Address</div>
-                <div class="cell small-9"><input type="text" id="shipping_address" name="shipping_address"
-                                                 class="input-text-2"></div>
+                <div class="cell medium-2 small-2 text-right text-vertical-center">Shipping Date</div>
+                <div class="cell medium-2 small-4">
+                    <input type="text" id="shipping_date" name="shipping_date" class="input-text-1">
+                </div>
             </div>
             <div class="grid-x grid-margin-x">
-                <div class="cell small-2 text-right">Payment Method</div>
+                <div class="cell small-2 text-right text-vertical-center">Shipping Address</div>
+                <div class="cell small-9"><input type="text" id="shipping_address" name="shipping_address" class="input-text-2" placeholder="Shipping Address"></div>
+            </div>
+            <div class="grid-x grid-margin-x">
+                <div class="cell small-2 text-right text-vertical-center">Contact</div>
+                <div class="cell small-4">
+                    <input type="text" id="contact" name="contact" class="input-text-2" placeholder="Contact Person">
+                </div>
+                <div class="cell small-2 text-right text-vertical-center">Phone Number</div>
+                <div class="cell small-4">
+                    <input type="text" id="phone" name="phone" class="input-text-2" placeholder="Phone number">
+                </div>
+            </div>
+            <div class="grid-x grid-margin-x">
+                <div class="cell small-2 text-right text-vertical-center">Payment Method</div>
                 <div class="cell small-4 medium-2">
                     <select class="input-text-2" id="payment_method" name="payment_method">
                         <% paymentMethods.forEach(method => { %>
@@ -118,6 +133,16 @@
 <script>
     $(function () {
         $('#date').fdatepicker({
+            initialDate: '<%= today %>',
+            format: 'mm-dd-yyyy',
+            disableDblClickSelection: true,
+            leftArrow: '<<',
+            rightArrow: '>>',
+            closeIcon: 'X',
+            closeButton: false
+        });
+
+        $('#shipping_date').fdatepicker({
             initialDate: '<%= today %>',
             format: 'mm-dd-yyyy',
             disableDblClickSelection: true,

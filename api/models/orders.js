@@ -9,6 +9,7 @@ const orderSchema = new mongoose.Schema({
     },
     shipping_date: {
         type: Date,
+        required: true,
         default: Date.now
     },
     number: {

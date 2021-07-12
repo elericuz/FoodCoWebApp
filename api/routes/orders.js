@@ -10,5 +10,6 @@ router.get('/view/:id', checkAuth, OrderController.view);
 router.post('/add-product', checkAuth, OrderController.addProduct);
 router.delete('/remove-product/:id', checkAuth, OrderController.removeProduct);
 router.post('/place/:id', checkAuth, OrderController.placeOrder);
+router.get('/get-details/:id', checkAuth, OrderController.get);
 
 module.exports = router;

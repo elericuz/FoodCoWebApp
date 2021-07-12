@@ -3,11 +3,18 @@
         <h2 class="margin-bottom-0">Invoices</h2>
     </div>
     <div class="float-right">
-        <a href="#" class="button secondary small margin-top-1" onclick="$('#invoiceModal').foundation('open');">Create Invoice</a>
+        <a href="#" class="button secondary small margin-top-1" onclick="$('#invoiceModal').foundation('open'); getOrder('<%= order._id %>');">Create Invoice</a>
     </div>
 </div>
 <hr class="hr-title-separator">
 <div class="cell small-12" id="invoicesTable">
+    <% invoices.forEach((invoice, index) => { %>
+    <div class="float-left">
+        <h6>Invoice Number: <small><b><%= _.padStart(invoice.number, 6, '0') %></b></small></h6>
+    </div>
+    <div class="float-right">
+        <h6>Shipping Date: <small><b><%= moment(invoice.shipping_date).format('MMM Do, YYYY') %></b></small></h6>
+    </div>
     <table>
         <thead>
         <tr>
@@ -19,9 +26,18 @@
         </tr>
         </thead>
         <tbody>
-        <tr></tr>
+        <% invoicesDetails[index].forEach(detail => { %>
+        <tr>
+            <td><%= detail.quantity %></td>
+            <td><%= detail.unit_id.name %></td>
+            <td><%= detail.product_id.manufacturer_name %></td>
+            <td><%= detail.unit_price %></td>
+            <td><%= detail.total %></td>
+        </tr>
+        <% }) %>
         </tbody>
     </table>
+    <% }) %>
 </div>
 <div class="reveal large" id="invoiceModal" data-reveal>
     <%- include('./modal-add.ejs') %>

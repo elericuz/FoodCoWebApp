@@ -2,20 +2,22 @@ const _ = require('lodash');
 const moment = require('moment');
 const Order = require('../models/orders');
 const Detail = require('../models/details');
+const Invoice = require('../models/invoices');
+const InvoiceDetails = require('../models/invoicedetails');
 const Product = require('../models/products');
 const Unit = require('../models/units');
 const PaymentMethod = require('../models/payment_method');
 const ProductPrices = require('../models/product_prices');
 const jwt = require('jsonwebtoken');
 
-exports.listAll = (req, res, next) => {
+exports.listAll = async (req, res, next) => {
     const token = req.cookies.userToken;
     let tokenDecoded = jwt.decode(token);
 
     res.setHeader('Content-Type', 'text/html');
     Order.find({
-        user: tokenDecoded.userId,
-        status: 'completed'
+        // user: tokenDecoded.userId,
+        // status: 'open'
     })
         .sort({'date': 'desc', 'number': 'desc'})
         .then((result) => {
@@ -26,9 +28,15 @@ exports.listAll = (req, res, next) => {
 
 exports.view = async (req, res, next) => {
     let order = await getOrder(req.params.id);
+    let invoices = await getInvoices(order._id)
+    let invoicesDetails = [];
+
+    for (const invoice of invoices) {
+        invoicesDetails.push(await getInvoiceDetails(invoice._id));
+    }
 
     res.setHeader('Content-Type', 'text/html');
-    res.render('orders/view', { order: order });
+    res.render('orders/view', { order: order, invoices: invoices, invoicesDetails: invoicesDetails });
 }
 
 exports.new = async (req, res, next) => {
@@ -59,6 +67,11 @@ exports.removeProduct = async (req, res, next) => {
     res.status(201).json(result);
 }
 
+exports.get = async (req, res, next) => {
+    const details = await getDetails(req.params.id)
+    res.status(201).json(details);
+}
+
 exports.placeOrder = async (req, res, next) => {
     const token = req.cookies.userToken;
     let tokenDecoded = jwt.decode(token);
@@ -87,9 +100,35 @@ exports.placeOrder = async (req, res, next) => {
 
 async function getDetails(orderId) {
     return Detail.find({ order_id: orderId})
-        .select('_id total')
+        .select('_id unit_price total quantity_pending')
         .then(result => { return result; })
         .catch(err => console.log(err));
+}
+
+async function getInvoices(orderId) {
+    let invoices = await Invoice.find({order_id: orderId})
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+
+    return invoices;
+}
+
+async function getInvoiceDetails(invoiceId) {
+    return await InvoiceDetails.find({invoice_id: invoiceId})
+        .populate({
+            path: 'unit_id',
+            model: 'Units'
+        })
+        .populate({
+            path: 'product_id',
+            model: 'Products'
+        })
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err))
 }
 
 async function placeOrder(id, data) {
@@ -117,6 +156,7 @@ async function addProduct(data) {
 
     data.unit_price = productPrice;
     data.total = total;
+    data.quantity_pending = quantity
 
     let detail = new Detail(data);
     return detail.save()
