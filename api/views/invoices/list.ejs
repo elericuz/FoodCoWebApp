@@ -1,6 +1,6 @@
 <div class="cell clearfix">
     <div class="float-left">
-        <h2 class="margin-bottom-0">Invoices</h2>
+        <h3 class="margin-bottom-0">Invoices</h3>
     </div>
     <div class="float-right">
         <a href="#" class="button secondary small margin-top-1" onclick="$('#invoiceModal').foundation('open'); getOrder('<%= order._id %>');">Create Invoice</a>
@@ -37,6 +37,12 @@
         <% }) %>
         </tbody>
     </table>
+        <% if (invoice.user) { %>
+    <div class="float-right">
+        <h7>Attended by <%= invoice.user.name %> <%= invoice.user.lastname %></h7>
+    </div>
+        <% } %>
+    <hr class="margin-top-3">
     <% }) %>
 </div>
 <div class="reveal large" id="invoiceModal" data-reveal>

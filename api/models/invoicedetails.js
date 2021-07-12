@@ -34,6 +34,10 @@ const invoiceDetailsSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: true
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 }, {
     timestamps: true

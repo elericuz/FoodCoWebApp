@@ -15,7 +15,7 @@
             <div class="cell small-4 medium-2 text-right font-bold">Date</div>
             <div class="cell auto"><%= moment(order.date).format('MMM Do, YYYY') %></div>
         </div>
-        <div class="grid-x grid-margin-x">
+        <div class="grid-x grid-margin-x margin-top-1">
             <div class="cell small-4 medium-2 text-right font-bold">Shipping Date</div>
             <div class="cell auto"><%= moment(order.shipping_date).format('MMM Do, YYYY') %></div>
         </div>
@@ -25,11 +25,11 @@
         </div>
         <div class="grid-x grid-margin-x">
             <div class="cell small-4 medium-2 text-right font-bold">Contact Person</div>
-            <div class="cell small-4 medium-3"><%= order.contact %></div>
-            <div class="cell small-4 medium-2 text-right font-bold">Phone number</div>
-            <div class="cell auto"><%= order.phone %></div>
+            <div class="cell small-2 medium-3"><%= order.contact %></div>
+            <div class="cell small-3 medium-2 text-right font-bold">Phone number</div>
+            <div class="cell small-2 medium-3"><%= order.phone %></div>
         </div>
-        <div class="grid-x grid-margin-x">
+        <div class="grid-x grid-margin-x margin-top-1">
             <div class="cell small-4 medium-2 text-right font-bold">Payment Method</div>
             <div class="cell auto"><%= order.payment_method.name %></div>
         </div>
@@ -39,12 +39,15 @@
                 <%= _.capitalize(order.user.name) + " " + _.startCase(order.user.lastname) %>
             </div>
         </div>
-        <div class="grid-x grid-margin-x">
+        <div class="grid-x grid-margin-x margin-top-1">
             <div class="cell small-4 medium-2 text-right font-bold">Status</div>
             <div class="cell auto"><%= _.upperCase(order.status) %></div>
         </div>
         <hr class="padding-top-1 hr-title-separator">
         <div class="cell small-12">
+            <div class="float-left">
+                <h3 class="margin-bottom-0">Products Ordered</h3>
+            </div>
             <table>
                 <thead>
                 <tr>
@@ -69,7 +72,9 @@
             </table>
         </div>
     </div>
-    <%- include('../invoices/list.ejs') %>
+    <div class="small-12 margin-top-3">
+        <%- include('../invoices/list.ejs') %>
+    </div>
 </div>
 
 <%- include('../partials/footer.ejs') %>
@@ -110,7 +115,7 @@
                 if (result.status === "error") {
                     alert(result.message);
                 } else {
-                    addNewInvoiceRow(result.invoice, result.invoiceDetails)
+                    addNewInvoiceRow(result.invoice, result.invoiceDetails, result.attended)
                     $('#invoiceModal').foundation('close');
                 }
             })
@@ -120,7 +125,7 @@
             });
     });
 
-    function addNewInvoiceRow(invoice, details) {
+    function addNewInvoiceRow(invoice, details, attended) {
         let invoiceNumberRow = document.createElement("div");
         invoiceNumberRow.setAttribute("class", "float-left");
         invoiceNumberRow.innerHTML = "<h6>Invoice Number: <small><b>" + _.padStart(invoice.number, 6, '0') + "</b></small></h6>";
@@ -170,7 +175,13 @@
         table.appendChild(tbody);
         document.getElementById("invoicesTable").appendChild(table);
 
+        let attendedRow = document.createElement("div");
+        attendedRow.setAttribute("class", "float-right");
+        attendedRow.innerHTML = "<h6>Attended by <small><b>" + attended + "</b></small></h6>";
+        document.getElementById("invoicesTable").appendChild(attendedRow);
+
         let hrSeparator = document.createElement("hr");
+        hrSeparator.setAttribute("class", "margin-top-3");
         document.getElementById("invoicesTable").appendChild(hrSeparator);
     }
 

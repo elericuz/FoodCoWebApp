@@ -4,10 +4,9 @@ const InvoiceDetails = require('../models/invoicedetails');
 const Detail = require('../models/details');
 const Product = require('../models/products');
 const Unit = require('../models/units');
+const jwt = require('jsonwebtoken');
 
 exports.save = async (req, res, next) => {
-    let totalProducts = 0;
-
     if (_.isUndefined(req.body.detail)) {
         return res.status(400).json({
             status: 'error',
@@ -24,6 +23,7 @@ exports.save = async (req, res, next) => {
         req.body.detail.quantity = [req.body.detail.quantity]
     }
 
+    let totalProducts = 0;
     for (const value of req.body.detail.detailId) {
         let index = req.body.detail.detailId.indexOf(value);
         if (_.toInteger(req.body.detail.quantity[index]) > 0) {
@@ -46,11 +46,14 @@ exports.save = async (req, res, next) => {
         })
     }
 
+    const token = req.cookies.userToken;
+    const tokenDecoded = jwt.decode(token);
     const nextNumber = await getLastInvoiceNumber();
     const data = {
         order_id: req.body.orderId,
         shipping_date: req.body.date,
-        number: nextNumber.number + 1
+        number: nextNumber.number + 1,
+        user: tokenDecoded.userId
     }
 
     let invoice = await new Invoice(data)
@@ -73,7 +76,8 @@ exports.save = async (req, res, next) => {
             unit_id: req.body.detail.unitId[index],
             product_id: req.body.detail.productId[index],
             unit_price: req.body.detail.unitPrice[index],
-            total: req.body.detail.unitPrice[index] * req.body.detail.quantity[index]
+            total: req.body.detail.unitPrice[index] * req.body.detail.quantity[index],
+            user: tokenDecoded.userId
         };
 
         if (req.body.detail.quantity[index] > 0) {
@@ -108,7 +112,8 @@ exports.save = async (req, res, next) => {
     res.status(201).json({
         status: 'ok',
         invoice: invoice,
-        invoiceDetails: invoiceDetails
+        invoiceDetails: invoiceDetails,
+        attended: tokenDecoded.name + " " + tokenDecoded.lastname
     })
 }
 
