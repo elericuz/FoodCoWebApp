@@ -14,11 +14,17 @@ exports.listAll = async (req, res, next) => {
     const token = req.cookies.userToken;
     let tokenDecoded = jwt.decode(token);
 
+    let criteria = { status: 'open' };
+    if (req.userType !== 'admin' &&
+        req.userType !== 'seller' &&
+        req.userType !== 'manager' &&
+        req.userType !== 'supervisor' &&
+        req.userType !== 'developer') {
+        criteria = {...criteria, user: tokenDecoded.userId};
+    }
+
     res.setHeader('Content-Type', 'text/html');
-    Order.find({
-        // user: tokenDecoded.userId,
-        // status: 'open'
-    })
+    Order.find(criteria)
         .sort({'date': 'desc', 'number': 'desc'})
         .then((result) => {
             res.render('orders/list', { orders: result});
@@ -29,7 +35,6 @@ exports.listAll = async (req, res, next) => {
 exports.view = async (req, res, next) => {
     let order = await getOrder(req.params.id);
     let invoices = await getInvoices(order._id)
-    console.log(invoices);
     let invoicesDetails = [];
 
     for (const invoice of invoices) {
@@ -114,7 +119,6 @@ async function getInvoices(orderId) {
             select: '-_id name lastname'
         })
         .then(result => {
-            // console.log(result);
             return result;
         })
         .catch(err => console.log(err));
