@@ -33,6 +33,15 @@ exports.listAll = async (req, res, next) => {
 };
 
 exports.view = async (req, res, next) => {
+    let allowed = false;
+    if (req.userType === 'admin' ||
+        req.userType === 'seller' ||
+        req.userType === 'manager' ||
+        req.userType === 'supervisor' ||
+        req.userType === 'developer') {
+        allowed = true;
+    }
+
     let order = await getOrder(req.params.id);
     let invoices = await getInvoices(order._id)
     let invoicesDetails = [];
@@ -41,8 +50,15 @@ exports.view = async (req, res, next) => {
         invoicesDetails.push(await getInvoiceDetails(invoice._id));
     }
 
+    const response = {
+        order: order,
+        invoices: invoices,
+        invoicesDetails: invoicesDetails,
+        allowed: allowed
+    };
+
     res.setHeader('Content-Type', 'text/html');
-    res.render('orders/view', { order: order, invoices: invoices, invoicesDetails: invoicesDetails });
+    res.render('orders/view', response);
 }
 
 exports.new = async (req, res, next) => {

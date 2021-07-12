@@ -2,9 +2,11 @@
     <div class="float-left">
         <h3 class="margin-bottom-0">Invoices</h3>
     </div>
+    <% if (allowed) { %>
     <div class="float-right">
         <a href="#" class="button secondary small margin-top-1" onclick="$('#invoiceModal').foundation('open'); getOrder('<%= order._id %>');">Create Invoice</a>
     </div>
+    <% } %>
 </div>
 <hr class="hr-title-separator">
 <div class="cell small-12" id="invoicesTable">
