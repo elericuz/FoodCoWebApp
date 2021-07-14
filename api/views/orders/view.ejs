@@ -81,14 +81,19 @@
 <%- include('../partials/scripts.ejs') %>
 <script>
     $(function () {
+        $('input:text').val('');
+
         $('#date').fdatepicker({
-            initialDate: moment().format('L'),
-            format: 'mm-dd-yyyy',
+            initialDate: moment('<%= order.shipping_date %>').format('MM-DD-YYYY, HH:mm'),
+            startDate: moment().format('MM-DD-YYYY, HH:mm'),
+            format: 'mm-dd-yyyy, hh:ii',
             disableDblClickSelection: true,
-            leftArrow: '<<',
-            rightArrow: '>>',
-            closeIcon: 'X',
-            closeButton: false
+            leftArrow:'<<',
+            rightArrow:'>>',
+            closeIcon:'X',
+            closeButton: false,
+            language: 'vi',
+            pickTime: true
         });
     });
 

@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
     const token = req.cookies.userToken;
+    let adminUser = false;
 
     // check json web token exists & is verified
     if (token) {
@@ -21,6 +22,16 @@ module.exports = (req, res, next) => {
                     .catch(err => console.log(err));
 
                 req.userType = userType;
+
+                if (userType === 'admin' ||
+                    userType === 'seller' ||
+                    userType === 'manager' ||
+                    userType === 'supervisor' ||
+                    userType === 'developer') {
+                    adminUser = true;
+                }
+
+                res.locals.adminUser = adminUser;
 
                 next();
             }
