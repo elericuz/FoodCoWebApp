@@ -205,7 +205,8 @@ async function createEmptyOrder() {
 }
 
 async function getProducts() {
-    return Product.find({status: true})
+    return Product.find({status: true, inactive: false})
+        .sort({manufacturer_name: 'asc'})
         .then((result) => { return result; })
         .catch(err => console.log('err'));
 }

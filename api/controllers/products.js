@@ -150,6 +150,28 @@ exports.update = async (req, res, next) => {
         })
 }
 
+exports.getUnits = async (req, res, next) => {
+    const productId = req.params.id
+    let prices = await ProductPrices.find({
+        product_id: productId,
+        status: true
+    })
+        .select('-_id -product_id -createdAt -updatedAt')
+        .populate({
+            path: 'unit_id',
+            model: 'Units',
+            select: 'name'
+        })
+        .select('-status')
+        .then(result => { return result; })
+        .catch(err => console.log(err));
+
+    res.status(200).json({
+        message: "ok",
+        units: prices
+    })
+}
+
 async function saveProduct(data) {
     let lastCodeNumber = await getLastCodeNumber();
     let nextCodeNumber = lastCodeNumber.code + 1;

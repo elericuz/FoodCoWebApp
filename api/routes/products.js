@@ -9,5 +9,6 @@ router.post('/save', checkAuth, ProductController.save);
 router.put('/save', checkAuth, ProductController.update);
 router.delete('/remove/:id', checkAuth, ProductController.remove);
 router.post('/get/:id', checkAuth, ProductController.get);
+router.get('/units/:id', checkAuth, ProductController.getUnits);
 
 module.exports = router;
