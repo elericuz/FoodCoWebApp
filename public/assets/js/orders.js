@@ -1,8 +1,8 @@
 $(function () {
     $('#date').fdatepicker({
-        initialDate: '<%= today %>',
-        endDate: '<%= today %>',
-        startDate: '<%= today %>',
+        initialDate: moment().format('L'),
+        endDate: moment().format('L'),
+        startDate: moment().format('L'),
         format: 'mm-dd-yyyy',
         disableDblClickSelection: true,
         leftArrow: '<<',
@@ -12,8 +12,8 @@ $(function () {
     });
 
     $('#shipping_date').fdatepicker({
-        initialDate: '<%= today %>',
-        startDate: '<%= today %>',
+        initialDate: moment().format('L'),
+        startDate: moment().format('L'),
         format: 'mm-dd-yyyy, hh:ii',
         disableDblClickSelection: true,
         leftArrow: '<<',
