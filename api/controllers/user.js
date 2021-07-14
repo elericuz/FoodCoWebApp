@@ -24,7 +24,7 @@ const createToken = (user) => {
 };
 
 exports.login = (req, res, next) => {
-    User.find({email_address: req.body.email_address})
+    User.find({email_address: req.body.email_address, status: true})
         .then((user) => {
             if (user.length < 1) {
                 return res.status(401).json({
@@ -257,20 +257,71 @@ exports.get = async (req, res, next) => {
 }
 
 exports.save = async (req, res, next) => {
-    res.status(200).json({
-        message: 'ok'
-    })
+    const password = req.body.password
+    if (_.isEmpty(_.trim(password))) {
+        return res.status(400).json({
+            status: 'error',
+            message: 'The password can not be empty,'
+        });
+    }
+
+    bcrypt.hash(req.body.password, 10, async (err, hash) => {
+        if (err) {
+            return res.status(500).json({
+                error: err
+            });
+        } else {
+            const user = new User({
+                name: req.body.name,
+                lastname: req.body.lastname,
+                email_address: req.body.email_address,
+                password: hash,
+                phonenumber: req.body.phonenumber,
+                type_id: req.body.type_id,
+                client_id: _.isUndefined(req.body.client_id) ? null : req.body.client_id,
+                status: req.body.status
+            })
+
+            await user.save()
+                .then(async result => {
+                    let data = await getUser(result._id, true)
+                    res.status(201).json({
+                        message: 'ok',
+                        data: data
+                    });
+                })
+                .catch(err => {
+                    res.status(500).json({
+                        message: "Something went wrong",
+                        data: err
+                    })
+                });
+        }
+    });
 }
 
 exports.update = async (req, res, next) => {
-
-    console.log(req.body);
+    const userId = req.body.idUser
     const password = req.body.password
     if (!_.isEmpty(_.trim(password))) {
-
+        await bcrypt.hash(password, 10, async (err, hash) => {
+            if (err) {
+                console.log(err);
+            } else {
+                await User.findByIdAndUpdate(userId, {password: hash})
+                    .then(result => {
+                        return result
+                    })
+                    .catch(err => {
+                        res.status(500).json({
+                            error: err,
+                            message: 'Something went wrong'
+                        });
+                    });
+            }
+        });
     }
 
-    const userId = req.body.idUser
     const data = {
         name: req.body.name,
         lastname: req.body.lastname,
@@ -281,12 +332,9 @@ exports.update = async (req, res, next) => {
         status: req.body.status
     }
 
-    await updateUserInfo(userId, data)
-        .then(result => {
-            res.status(200).json({
-                message: 'ok',
-                data: result
-            });
+    const user = await updateUserInfo(userId, data)
+        .then(async result => {
+            return await getUser(result._id, true)
         })
         .catch(err => {
             res.status(500).json({
@@ -294,6 +342,27 @@ exports.update = async (req, res, next) => {
                 data: err
             })
         });
+
+    res.status(201).json({
+        message: 'ok',
+        data: user
+    });
+}
+
+exports.delete = async (req, res, next) => {
+    await User.findByIdAndUpdate(req.params.id, { status: false })
+        .then(result => {
+            res.status(201).json({
+                status: 'success',
+                message: 'User deleted'
+            })
+        })
+        .catch(err => {
+            res.status(400).json({
+                status: 'failed',
+                message: 'Can not delete the user'
+            })
+        })
 }
 
 async function getClients() {
@@ -333,11 +402,8 @@ async function addAddress(data) {
 }
 
 async function updateUserInfo(userId, data) {
-    console.log(userId);
-    console.log(data);
     return User.findByIdAndUpdate(userId, data)
         .then(result => {
-            console.log(result);
             return result;
         })
         .catch(err => console.log(err));
@@ -375,4 +441,14 @@ async function getUsers() {
             return result;
         })
         .catch(err => console.log(err));
+}
+
+async function savePassword(password) {
+    bcrypt.hash(password, 10, (err, hash) => {
+        if (err) {
+            return err;
+        } else {
+            return hash;
+        }
+    });
 }

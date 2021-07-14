@@ -21,9 +21,10 @@ router.post('/add-address', checkAuth, UserController.addAddress);
 router.delete('/remove-address/:id', checkAuth, UserController.removeAddress);
 router.post('/change-password', checkAuth, UserController.changePassword);
 
-router.get('/', UserController.listAll);
+router.get('/', checkAuth, UserController.listAll);
 router.get('/get/:id', checkAuth, UserController.get);
 router.post('/save', checkAuth, UserController.save);
 router.put('/save', checkAuth, UserController.update);
+router.delete('/delete/:id', checkAuth, UserController.delete);
 
 module.exports = router;
