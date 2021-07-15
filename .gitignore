@@ -9,6 +9,7 @@ CAS.pub
 public/dist/bundle.js
 src/
 webpack.config.js
+public/pdf/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
