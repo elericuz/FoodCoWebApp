@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const User = require('./users')
 
 const orderSchema = new mongoose.Schema({
     date: {
@@ -25,6 +24,15 @@ const orderSchema = new mongoose.Schema({
     shipping_address: {
         type: String
     },
+    city: {
+        type: String
+    },
+    state: {
+        type: String
+    },
+    zipcode: {
+        type: String
+    },
     payment_method: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'PaymentMethods'
@@ -37,18 +45,23 @@ const orderSchema = new mongoose.Schema({
         type: Number
     },
     tax: {
-        type: Number
+        type: Number,
+        default: 0,
+        required: true
     },
     total: {
         type: Number
     },
-    status: {
-        type: String,
-        default: 'pending'
-    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    },
+    client: {
+        type: mongoose.Schema.Types.ObjectId,
+    },
+    status: {
+        type: String,
+        default: 'pending'
     }
 }, {
     timestamps: true

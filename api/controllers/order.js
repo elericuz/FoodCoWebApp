@@ -8,6 +8,7 @@ const Product = require('../models/products');
 const Unit = require('../models/units');
 const PaymentMethod = require('../models/payment_method');
 const ProductPrices = require('../models/product_prices');
+const User = require('../models/users');
 const jwt = require('jsonwebtoken');
 
 exports.listAll = async (req, res, next) => {
@@ -26,6 +27,10 @@ exports.listAll = async (req, res, next) => {
     res.setHeader('Content-Type', 'text/html');
     Order.find(criteria)
         .sort({'date': 'desc', 'number': 'desc'})
+        .populate({
+            path: 'client',
+            model: 'Clients'
+        })
         .then((result) => {
             res.render('orders/list', { orders: result});
         })
@@ -62,8 +67,31 @@ exports.view = async (req, res, next) => {
 }
 
 exports.new = async (req, res, next) => {
-    today = moment().format('L');
+    const token = req.cookies.userToken;
+    let tokenDecoded = jwt.decode(token);
+    let userId = tokenDecoded.userId;
 
+    const user = await User.findById(userId)
+        .select('client_id -_id')
+        .populate({
+            path: 'client_id',
+            model: 'Clients',
+            select: '_id name warehouses',
+            populate: [
+                {
+                    path: 'warehouses',
+                    model: 'Warehouses',
+                    select: 'name'
+                }
+            ]
+        })
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+
+    let client = user.client_id;
+    let warehouses = user.client_id.warehouses;
     let paymentMethods = await getPaymentMethods();
     let products = await getProducts();
     let units = await getUnits();
@@ -72,8 +100,10 @@ exports.new = async (req, res, next) => {
     res.setHeader('Content-Type', 'text/html');
     res.render('orders/new', {
         order: order,
-        today: today,
+        today: moment().format('L'),
         units: units,
+        clientData: client,
+        warehouses: warehouses,
         products: products,
         paymentMethods: paymentMethods
     });
@@ -242,6 +272,10 @@ async function getOrder(id) {
         .populate({
             path: 'payment_method',
             model: 'PaymentMethods'
+        })
+        .populate({
+            path: 'client',
+            model: 'Clients'
         })
         .then((result) => { return result; })
         .catch((err) => { console.log(err); });

@@ -18,20 +18,30 @@
     </div>
     <hr class="hr-title-separator">
     <div class="cell small-12">
-        <table>
+        <table class="stack">
             <thead>
             <tr>
-                <th class="small-3 medium-2">Order #</th>
-                <th class="small-3 medium-4">Date</th>
-                <th class="small-2 medium-4">Total</th>
-                <th class="small-4 medium-2">&nbsp</th>
+                <th class="medium-2">Order #</th>
+                <th class="medium-2">Client</th>
+                <th class="medium-2">Order Date</th>
+                <th class="medium-2">Due Date</th>
+                <th class="medium-2">Total</th>
+                <th class="medium-2">&nbsp</th>
             </tr>
             </thead>
             <tbody>
             <% orders.forEach(order => { %>
+                <%
+                    let client = "";
+                    if (order.client?.name) {
+                        client = order.client.name;
+                    }
+                %>
                 <tr>
                     <td><%= _.padStart(order.number, 7, '0') %></td>
+                    <td><%= client %></td>
                     <td><%= moment(order.date).format('MMM DD, YYYY') %></td>
+                    <td><%= moment(order.shipping_date).format('MMM DD, YYYY') %></td>
                     <td>$<%= order.total %></td>
                     <td class="text-right"><a href="/orders/view/<%= order._id %>" class="button hollow small" style="margin-top: 10px">View Order</td>
                 </tr>

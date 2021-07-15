@@ -11,8 +11,6 @@ saveButton.addEventListener('click', async (e) => {
         method = 'POST';
     }
 
-    console.log(endpoint);
-
     await fetch(endpoint, {method: method, body: data})
         .then(response => {
             if (response.ok) {
@@ -102,14 +100,20 @@ function getUser(id) {
 
 function updateUser(data) {
     let row = document.getElementById(data._id);
+    let client = '&nbsp;'
+    if (data.client_id.name) {
+        client = data.client_id.name;
+    }
+
     row.innerHTML = "" +
         "<td>" + data.name + "</td>" +
         "<td>" + data.lastname + "</td>" +
         "<td>" + data.email_address + "</td>" +
         "<td>" + data.type_id.name + "</td>" +
+        "<td>" + client + "</td>" +
         "<td><a href=\"#\" class=\"fi-page-edit\" " +
         "       style=\"margin-top: 10px\"" +
-        "       onclick=\"$('#userModal').foundation('open'); getUser('" + data._id + "')\"> View" +
+        "       onclick=\"$('#userModal').foundation('open'); getUser('" + data._id + "')\">" +
         "   <a href=\"#\" class=\"fi-trash\" style=\"margin-top: 10px\" onclick=\"deleteUser('" + data._id + "')\">" +
         "</td>" +
         "</td>";

@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const User = require('../models/users');
 const jwt = require('jsonwebtoken');
 
@@ -23,11 +24,11 @@ module.exports = (req, res, next) => {
 
                 req.userType = userType;
 
-                if (userType === 'admin' ||
-                    userType === 'seller' ||
-                    userType === 'manager' ||
-                    userType === 'supervisor' ||
-                    userType === 'developer') {
+                if (_.lowerCase(userType) === _.lowerCase('admin') ||
+                    _.lowerCase(userType) === _.lowerCase('seller') ||
+                    _.lowerCase(userType) === _.lowerCase('manager') ||
+                    _.lowerCase(userType) === _.lowerCase('supervisor') ||
+                    _.lowerCase(userType) === _.lowerCase('developer')) {
                     adminUser = true;
                 }
 

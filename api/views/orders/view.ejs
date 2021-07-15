@@ -12,35 +12,47 @@
     <hr class="hr-title-separator">
     <div class="cell small-12">
         <div class="grid-x grid-margin-x">
-            <div class="cell small-4 medium-2 text-right font-bold">Date</div>
+            <div class="cell small-4 medium-2 text-right font-bold">Date:</div>
             <div class="cell auto"><%= moment(order.date).format('MMM Do, YYYY') %></div>
         </div>
         <div class="grid-x grid-margin-x margin-top-1">
-            <div class="cell small-4 medium-2 text-right font-bold">Shipping Date</div>
+            <div class="cell small-4 medium-2 text-right font-bold">Client:</div>
+            <div class="cell small-8 medium-10 font-bold">
+                <%
+                let client = "N/A";
+                if (order.client?.name) {
+                    client = order.client.name;
+                }
+                %>
+                <%= client %>
+            </div>
+            <div class="cell small-4 medium-2 text-right font-bold">Shipping Date:</div>
             <div class="cell auto"><%= moment(order.shipping_date).format('MMM Do, YYYY, HH:mm') %></div>
         </div>
         <div class="grid-x grid-margin-x">
-            <div class="cell small-4 medium-2 text-right font-bold">Shipping Address</div>
-            <div class="cell auto"><%= order.shipping_address %></div>
+            <div class="cell small-4 medium-2 text-right font-bold">Shipping Address:</div>
+            <div class="cell auto">
+                <%= order.shipping_address %>, <%= order.city %>, <%= _.upperCase(order.state) %>, <%= order.zipcode %>
+            </div>
         </div>
         <div class="grid-x grid-margin-x">
-            <div class="cell small-4 medium-2 text-right font-bold">Contact Person</div>
+            <div class="cell small-4 medium-2 text-right font-bold">Contact Person:</div>
             <div class="cell small-2 medium-3"><%= order.contact %></div>
-            <div class="cell small-3 medium-2 text-right font-bold">Phone number</div>
+            <div class="cell small-3 medium-2 text-right font-bold">Phone number:</div>
             <div class="cell small-2 medium-3"><%= order.phone %></div>
         </div>
         <div class="grid-x grid-margin-x margin-top-1">
-            <div class="cell small-4 medium-2 text-right font-bold">Payment Method</div>
+            <div class="cell small-4 medium-2 text-right font-bold">Payment Method:</div>
             <div class="cell auto"><%= order.payment_method.name %></div>
         </div>
         <div class="grid-x grid-margin-x">
-            <div class="cell small-4 medium-2 text-right font-bold">Created By</div>
+            <div class="cell small-4 medium-2 text-right font-bold">Created By:</div>
             <div class="cell auto">
                 <%= _.capitalize(order.user.name) + " " + _.startCase(order.user.lastname) %>
             </div>
         </div>
         <div class="grid-x grid-margin-x margin-top-1">
-            <div class="cell small-4 medium-2 text-right font-bold">Status</div>
+            <div class="cell small-4 medium-2 text-right font-bold">Status:</div>
             <div class="cell auto"><%= _.upperCase(order.status) %></div>
         </div>
         <hr class="padding-top-1 hr-title-separator">

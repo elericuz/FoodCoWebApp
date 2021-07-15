@@ -93,6 +93,9 @@ app.use('/providers', providerRoutes);
 const clientRoutes = require('./api/routes/clients');
 app.use('/clients', clientRoutes);
 
+const warehouseRoutes = require('./api/routes/warehouses');
+app.use('/warehouses', warehouseRoutes);
+
 // error page
 app.use((req, res) => {
     res.status(404).render('404')

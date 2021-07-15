@@ -21,20 +21,28 @@
         <table class="stack" id="userTable">
             <thead>
             <tr>
-                <th class="medium-3">Name</th>
-                <th class="medium-3">Lastname</th>
+                <th class="medium-2">Name</th>
+                <th class="medium-2">Lastname</th>
                 <th class="medium-3">Email Address</th>
                 <th class="medium-2">Type</th>
+                <th class="medium-2">Client</th>
                 <th class="medium-1">&nbsp</th>
             </tr>
             </thead>
             <tbody>
             <tr></tr>
             <% users.forEach(user => { %>
+                <%
+                let client = "";
+                if (user.client_id?.name) {
+                    client = user.client_id.name;
+                }
+                %>
             <tr id="<%= user._id %>">
                 <td><%= user.name %></td>
                 <td><%= user.lastname %></td>
                 <td><%= user.email_address %></td>
+                <td><%= client %></td>
                 <td><%= user.type_id.name %></td>
                 <td>
                     <a href="#" class="fi-page-edit" style="margin-top: 10px" onclick="resetUserForm(); $('#userModal').foundation('open'); getUser('<%= user._id %>')">
