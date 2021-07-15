@@ -35,7 +35,8 @@
     <div class="cell clearfix"></div>
     <div class="float-right medium-4">
         <h3 class="margin-bottom-0">Invoice <%= data.number %></h3>
-        <p><span>Customer</span> 000000/000000</p>
+        <p><span>Customer:</span> <%= data.client.code %> / <%= data.client.name %></p>
+        <p><span>Contact:</span> <%= data.contact %></p>
         <p>Route: 000</p>
     </div>
     <div class="cell clearfix"></div>
@@ -51,12 +52,18 @@
     <div class="grid-x grid-margin-x">
         <div class="cell medium-4 medium-offset-2">
             <b>Bill To:</b><br>
-            <%= data.bill_to %><br>
+            <%= data.bill_to.street %><br>
+            <%= data.bill_to.city %><br>
+            <%= data.bill_to.state %><br>
+            <%= data.bill_to.zipcode %><br>
             <%= data.phone %>
         </div>
         <div class="cell medium-4">
             <b>Ship To:</b><br>
-            <%= data.shipping_address %><br>
+            <%= data.shipping_address.street %><br>
+            <%= data.shipping_address.city %><br>
+            <%= data.shipping_address.state %><br>
+            <%= data.shipping_address.zipcode %><br>
             <%= data.phone %>
         </div>
         <div class="cell medium-2">&nbsp;</div>

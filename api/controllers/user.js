@@ -437,6 +437,10 @@ async function getUsers() {
             path: 'type_id',
             model: 'UserTypes'
         })
+        .populate({
+            path: 'client_id',
+            model: 'Clients'
+        })
         .then(result => {
             return result;
         })

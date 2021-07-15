@@ -1,4 +1,7 @@
 $(function () {
+    $(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio').val('');
+    $(':checkbox, :radio').prop('checked', false);
+
     $('#date').fdatepicker({
         initialDate: moment().format('L'),
         endDate: moment().format('L'),
@@ -40,6 +43,22 @@ function getUnits() {
                     .text(this.unit_id.name));
                 document.getElementById('unitPrice').innerHTML = 'Price: $' + this.price.toFixed(2);
             });
+        })
+        .catch(err => console.log(err));
+}
+
+function getWarehouse() {
+    let selected = $('#warehouse').val();
+    const endpoint = '/warehouses/get/' + selected;
+    fetch(endpoint, {method: 'GET'})
+        .then(response => response.json())
+        .then((result) => {
+            $('#shipping_address').val(result.data.address.street);
+            $('#city').val(result.data.address.city);
+            $('#state').val(result.data.address.state);
+            $('#zipcode').val(result.data.address.zipcode);
+            $('#contact').val(result.data.contact);
+            $('#phone').val(result.data.phone);
         })
         .catch(err => console.log(err));
 }

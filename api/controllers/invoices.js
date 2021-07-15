@@ -145,11 +145,19 @@ exports.downloadInvoice = async (req, res, next) => {
         .catch(err => console.log(err));
 
     let order = await Order.findById(invoice.order_id)
-        .select('shipping_address shipping_date date user number phone')
+        .select('shipping_address city state zipcode shipping_date date user number phone client contact')
         .populate({
             path: 'user',
             model: 'User',
             select: 'name lastname -_id'
+        })
+        .populate({
+            path: 'client',
+            model: 'Clients',
+            populate: {
+                path: 'address',
+                model: 'Address'
+            }
         })
         .then(result => {
             return result;
@@ -195,9 +203,24 @@ exports.downloadInvoice = async (req, res, next) => {
 
     let orderData = {
         number: _.padStart(invoice.number, 6, '0'),
-        bill_to: _.upperCase(order.shipping_address),
-        shipping_address: _.upperCase(order.shipping_address),
+        bill_to: {
+            street: _.upperCase(order.client.address.street),
+            city: _.upperCase(order.client.address.city),
+            state: _.upperCase(order.client.address.state),
+            zipcode: _.upperCase(order.client.address.zipcode)
+        },
+        shipping_address: {
+            street: _.upperCase(order.shipping_address),
+            city: _.upperCase(order.city),
+            state: _.upperCase(order.state),
+            zipcode: _.upperCase(order.zipcode)
+        },
         phone: order.phone,
+        client: {
+            code: order.client.code,
+            name: order.client.name
+        },
+        contact: order.contact,
         date: moment(invoice.date).format('L'),
         due_date: moment(order.shipping_date).format('L'),
         order_date: moment(order.date).format('L'),
@@ -230,7 +253,7 @@ exports.downloadInvoice = async (req, res, next) => {
         </div>`,
         margin: {
             top: '10px',
-            bottom: '70px'
+            bottom: '270px'
         },
         printBackground: true,
         path: pdfPath
