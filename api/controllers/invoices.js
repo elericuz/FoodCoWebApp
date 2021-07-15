@@ -1,10 +1,16 @@
 const _ = require('lodash');
 const Invoice = require('../models/invoices');
 const InvoiceDetails = require('../models/invoicedetails');
+const Order = require('../models/orders');
 const Detail = require('../models/details');
 const Product = require('../models/products');
 const Unit = require('../models/units');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const path = require('path');
+const ejs = require('ejs');
+const puppeteer = require('puppeteer');
+const moment = require('moment');
 
 exports.save = async (req, res, next) => {
     if (_.isUndefined(req.body.detail)) {
@@ -114,6 +120,140 @@ exports.save = async (req, res, next) => {
         invoice: invoice,
         invoiceDetails: invoiceDetails,
         attended: tokenDecoded.name + " " + tokenDecoded.lastname
+    })
+}
+
+exports.downloadInvoice = async (req, res, next) => {
+    var items = [];
+
+    let invoice = await Invoice.findById(req.params.id)
+        .select('number order_id date user')
+        .populate({
+            path: 'user',
+            model: 'User',
+            select: 'name lastname -_id'
+        })
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+
+    let invoiceDetails = await InvoiceDetails.find({invoice_id: invoice._id})
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+
+    let order = await Order.findById(invoice.order_id)
+        .select('shipping_address shipping_date date user number phone')
+        .populate({
+            path: 'user',
+            model: 'User',
+            select: 'name lastname -_id'
+        })
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+
+    let total = 0;
+    for (const invoiceDetail of invoiceDetails) {
+        let details = await Detail.findOne({
+            order_id: invoiceDetail.order_id,
+            product_id: invoiceDetail.product_id,
+            unit_id: invoiceDetail.unit_id,
+            status: true
+        })
+            .select('quantity unit_id product_id unit_price total')
+            .populate({
+                path: 'product_id',
+                model: 'Products',
+                select: 'code manufacturer_name -_id'
+            })
+            .populate({
+                path: 'unit_id',
+                model: 'Units',
+                select: ('-_id')
+            })
+            .then(result => {
+                return result;
+            })
+            .catch(err => console.log(err));
+
+        total = total + invoiceDetail.total;
+
+        items.push({
+            ordered: details.quantity,
+            shipped: invoiceDetail.quantity,
+            pack: _.upperCase(details.unit_id.name),
+            item_code: _.padStart(details.product_id.code, 5, '0'),
+            description: _.upperCase(details.product_id.manufacturer_name),
+            unit_price: '$' + details.unit_price.toFixed(2).toLocaleString(),
+            amount: '$' + invoiceDetail.total.toFixed(2).toLocaleString()
+        });
+    }
+
+    let orderData = {
+        number: _.padStart(invoice.number, 6, '0'),
+        bill_to: _.upperCase(order.shipping_address),
+        shipping_address: _.upperCase(order.shipping_address),
+        phone: order.phone,
+        date: moment(invoice.date).format('L'),
+        due_date: moment(order.shipping_date).format('L'),
+        order_date: moment(order.date).format('L'),
+        order_received_at: moment(order.date).format('HH:MM'),
+        salesperson: _.upperCase(invoice.user.name + ' ' + invoice.user.lastname),
+        ordertaker: _.upperCase(order.user.name + ' ' + order.user.lastname),
+        our_order_number: _.padStart(order.number, 6, '0'),
+        total: '$' + total.toFixed(2).toLocaleString()
+    }
+
+    let response = {
+        data: orderData,
+        items: items
+    }
+
+    let templateHtml = fs.readFileSync(path.join(process.cwd(), 'api/views/invoices/invoice-pdf.ejs'), 'utf8')
+    let template = ejs.compile(templateHtml);
+    let html = template(response);
+
+    let pdfPath = path.join('public/pdf', 'invoice-' + invoice.number + '.pdf');
+
+    let options = {
+        format: 'a4',
+        displayHeaderFooter: true,
+        headerTemplate: "<p></p>",
+        footerTemplate: `
+        <div style="width: 90%; text-align: right; font-size: 9px; padding: 5px 5px 0; color: #bbb; position: relative;">
+        <div style="position: absolute; left: 5px; top: 5px; margin-left: 30px;">Invoice Number: ` + _.padStart(invoice.number, 6, '0') + `</div>
+        <div style="position: absolute; right: 5px; top: 5px;"><span class="pageNumber"></span>/<span class="totalPages"></span></div>
+        </div>`,
+        margin: {
+            top: '10px',
+            bottom: '70px'
+        },
+        printBackground: true,
+        path: pdfPath
+    }
+
+    const browser = await puppeteer.launch({
+        args: ['--no-sandbox'],
+        ignoreDefaultArgs: ['--disable-extensions'],
+        headless: true
+    });
+
+    let page = await browser.newPage();
+
+    await page.goto(`data:text/html;charset=UTF-8,${html}`, {
+        waitUntil: 'networkidle0'
+    });
+
+    await page.pdf(options);
+    await browser.close();
+
+    res.status(201).json({
+        status: "success",
+        path: '/pdf/invoice-' + invoice.number + '.pdf'
     })
 }
 

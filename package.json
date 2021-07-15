@@ -19,7 +19,9 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "mongoose": "^5.12.14",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "puppeteer": "^10.1.0",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "nodemon": "^1.12.1"
