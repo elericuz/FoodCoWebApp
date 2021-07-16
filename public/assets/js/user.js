@@ -1,3 +1,14 @@
+$('#phonenumber').focusout(function() {
+    function phoneFormat() {
+        phone = phone.replace(/[^0-9]/g, '');
+        phone = phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
+        return phone;
+    }
+    let phone = $(this).val();
+    phone = phoneFormat(phone);
+    $(this).val(phone);
+});
+
 const saveButton = document.getElementById('saveButton');
 saveButton.addEventListener('click', async (e) => {
     const data = new URLSearchParams();

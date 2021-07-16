@@ -6,4 +6,28 @@
 <script src="https://momentjs.com/downloads/moment.js"></script>
 <script>
     $(document).foundation();
+
+    function getCity() {
+        let zipcode = $('#zipcode').val();
+        const endpoint = 'https://api.zippopotam.us/us/' + zipcode;
+        fetch(endpoint, {method: 'GET'})
+            .then(response => response.json())
+            .then((result) => {
+                $('#city').val(result.places[0]['place name']);
+                $('#state').val(result.places[0]['state abbreviation']);
+            })
+            .catch(err => console.log(err));
+    }
+
+    function getCityWarehouse() {
+        let zipcode = $('#zipcodeWarehouse').val();
+        const endpoint = 'https://api.zippopotam.us/us/' + zipcode;
+        fetch(endpoint, {method: 'GET'})
+            .then(response => response.json())
+            .then((result) => {
+                $('#cityWarehouse').val(result.places[0]['place name']);
+                $('#stateWarehouse').val(result.places[0]['state abbreviation']);
+            })
+            .catch(err => console.log(err));
+    }
 </script>
