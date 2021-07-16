@@ -13,15 +13,19 @@
         body {
             font-size: 0.27cm;
         }
+
         table {
             margin-bottom: 0;
         }
+
         p {
             margin-bottom: 0.1rem;
         }
+
         .table-bottom {
             margin-top: 50px;
         }
+
         .vertical-bottom {
             position: fixed;
             top: 70%;
@@ -32,12 +36,15 @@
 </head>
 <body>
 <div class="grid-container fluid">
-    <div class="cell clearfix"></div>
-    <div class="float-right medium-4">
-        <h3 class="margin-bottom-0">Invoice <%= data.number %></h3>
-        <p><span>Customer:</span> <%= data.client.code %> / <%= data.client.name %></p>
-        <p><span>Contact:</span> <%= data.contact %></p>
-        <p>Route: 000</p>
+    <div class="grid-x grid-margin-x">
+        <div class="cell medium-4 medium-offset-4">
+            <img src="http://127.0.0.1:5180/assets/img/logo-invoice.jpg" class="margin-0 padding-0">
+        </div>
+        <div class="cell medium-4">
+            <h3 class="margin-bottom-0">Invoice <%= data.number %></h3>
+            <p><span>Customer:</span> <%= data.client.code %> / <%= data.client.name %></p>
+            <p><span>Contact:</span> <%= data.contact %></p>
+        </div>
     </div>
     <div class="cell clearfix"></div>
     <div class="float-left">
@@ -119,7 +126,7 @@
                     <td class="medium-2 text-center"><%= data.order_date %></td>
                     <td class="medium-2 text-center"><%= data.salesperson %></td>
                     <td class="medium-2 text-center"><%= data.ordertaker %></td>
-                    <td class="medium-3 text-center"><%= data.our_order_number%></td>
+                    <td class="medium-3 text-center"><%= data.our_order_number %></td>
                 </tr>
                 </tbody>
             </table>
@@ -141,15 +148,16 @@
                 </thead>
                 <tbody>
                 <% items.forEach(item => { %>
-                <tr><td class="text-center"><%= item.ordered %></td>
-                    <td class="text-center"><%= item.shipped %></td>
-                    <td class="text-center"><%= item.pack %></td>
-                    <td class="text-center"><%= item.item_code %></td>
-                    <td class="text-center"><%= item.description %></td>
-                    <td class="text-center"><%= item.unit_price %></td>
-                    <td class="text-center"><%= item.amount %></td>
-                    <td class="text-center">&nbsp;</td>
-                </tr>
+                    <tr>
+                        <td class="text-center"><%= item.ordered %></td>
+                        <td class="text-center"><%= item.shipped %></td>
+                        <td class="text-center"><%= item.pack %></td>
+                        <td class="text-center"><%= item.item_code %></td>
+                        <td class="text-center"><%= item.description %></td>
+                        <td class="text-center"><%= item.unit_price %></td>
+                        <td class="text-center"><%= item.amount %></td>
+                        <td class="text-center">&nbsp;</td>
+                    </tr>
                 <% }) %>
                 </tbody>
             </table>
