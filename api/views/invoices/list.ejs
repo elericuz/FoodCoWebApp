@@ -34,8 +34,8 @@
             <td><%= detail.quantity %></td>
             <td><%= detail.unit_id.name %></td>
             <td><%= detail.product_id.manufacturer_name %></td>
-            <td>$<%= detail.unit_price %></td>
-            <td>$<%= detail.total %></td>
+            <td>$<%= detail.unit_price.toFixed(2).toLocaleString() %></td>
+            <td>$<%= detail.total.toFixed(2).toLocaleString() %></td>
         </tr>
         <% }) %>
         </tbody>

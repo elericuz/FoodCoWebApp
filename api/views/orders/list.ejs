@@ -42,7 +42,7 @@
                     <td><%= client %></td>
                     <td><%= moment(order.date).format('MMM DD, YYYY') %></td>
                     <td><%= moment(order.shipping_date).format('MMM DD, YYYY') %></td>
-                    <td>$<%= order.total %></td>
+                    <td>$<%= order.total.toFixed(2).toLocaleString() %></td>
                     <td class="text-right"><a href="/orders/view/<%= order._id %>" class="button hollow small" style="margin-top: 10px">View Order</td>
                 </tr>
             <% }); %>

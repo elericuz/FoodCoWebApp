@@ -154,7 +154,7 @@
         let shippingDateRow = document.createElement("div");
         shippingDateRow.setAttribute("class", "float-right");
         shippingDateRow.innerHTML = "" +
-            "<a href=\"#\" class=\"button secondary small\" onclick=\"downloadInvoice('" + invoice._id + "');\"><span class=\"fi-download\"></span> Download Invoice</a>";
+            "<a href=\"#\" class=\"button secondary small\" onclick=\"downloadInvoice('" + invoice._id + "'); return false;\"><span class=\"fi-download\"></span> Download Invoice</a>";
         document.getElementById("invoicesTable").appendChild(shippingDateRow);
 
         let table = document.createElement("table");
@@ -190,8 +190,8 @@
                 "<td>" + detail.quantity + "</td>" +
                 "<td>" + detail.unit + "</td>" +
                 "<td>" + detail.product + "</td>" +
-                "<td>$" + detail.unit_price + "</td>" +
-                "<td>$" + detail.total + "</td>"
+                "<td>$" + detail.unit_price.toFixed(2).toLocaleString() + "</td>" +
+                "<td>$" + detail.total.toFixed(2).toLocaleString() + "</td>"
         });
         table.appendChild(tbody);
         document.getElementById("invoicesTable").appendChild(table);
