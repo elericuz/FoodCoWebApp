@@ -14,7 +14,7 @@ const server = http.createServer(app);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-let dbUri = "mongodb://" + process.env.MONGO_USER + ":" + process.env.MONGO_ATLAS_PW + "@" + process.env.MONGO_SERVER + ":" + process.env.MONGO_PORT + "/" + process.env.MONGO_DB + "?retryWrites=true&w=majority"
+let dbUri = "mongodb://" + process.env.MONGO_USER + ":" + process.env.MONGO_PASSWORD + "@" + process.env.MONGO_SERVER + ":" + process.env.MONGO_PORT + "/" + process.env.MONGO_DB + "?retryWrites=true&w=majority"
 if (process.env.ENVIRONMENT=="DEVELOPMENT") {
     dbUri = "mongodb+srv://" + process.env.MONGO_USER_DEV + ":" + process.env.MONGO_PASSWORD_DEV + "@" + process.env.MONGO_SERVER_DEV + "/" + process.env.MONGO_DB_DEV + "?retryWrites=true&w=majority"
 }
