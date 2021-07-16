@@ -5,7 +5,7 @@
                 <%= unit.name %> <input type="checkbox" name="units[]" id="checkbox_<%= unit._id %>" value="<%= unit._id %>" onclick="document.getElementById('unit_<%= unit._id %>').disabled = !this.checked;">
             </div>
             <div class="cell small-3 medium-2">
-                <input type="number" id="unit_<%= unit._id %>" name="price[]" placeholder="Price" disabled>
+                <input type="number" min="0" id="unit_<%= unit._id %>" name="price[]" placeholder="Price" disabled>
             </div>
         <% }) %>
     </div>

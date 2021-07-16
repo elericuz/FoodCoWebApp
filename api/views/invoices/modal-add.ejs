@@ -30,7 +30,7 @@
                 <td><%= product.product_id.manufacturer_name %></td>
                 <td><%= product.unit_id.name %></td>
                 <td>
-                    <input type="text" id="quantity-<%= product._id %>" name="detail[quantity]" value="<%= product.quantity_pending %>" class="input-text-2 text-vertical-center">
+                    <input type="number" min="0" max="<%= product.quantity_pending %>" id="quantity-<%= product._id %>" name="detail[quantity]" value="<%= product.quantity_pending %>" class="input-text-2 text-vertical-center">
                 </td>
                 <td>
                     $<%= product.unit_price.toFixed(2).toLocaleString() %>

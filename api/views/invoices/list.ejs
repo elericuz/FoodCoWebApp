@@ -24,8 +24,8 @@
             <th class="small-1">Qty</th>
             <th class="small-2">Unit</th>
             <th class="small-7">Products</th>
-            <th class="small-1">Unit Price</th>
-            <th class="small-1">Price</th>
+            <th class="small-1 text-center">Unit Price</th>
+            <th class="small-1 text-center">Price</th>
         </tr>
         </thead>
         <tbody>
@@ -34,8 +34,8 @@
             <td><%= detail.quantity %></td>
             <td><%= detail.unit_id.name %></td>
             <td><%= detail.product_id.manufacturer_name %></td>
-            <td>$<%= detail.unit_price.toFixed(2).toLocaleString() %></td>
-            <td>$<%= detail.total.toFixed(2).toLocaleString() %></td>
+            <td class="text-right">$<%= detail.unit_price.toFixed(2).toLocaleString() %></td>
+            <td class="text-right">$<%= detail.total.toFixed(2).toLocaleString() %></td>
         </tr>
         <% }) %>
         </tbody>

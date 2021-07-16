@@ -154,8 +154,8 @@
                         <td class="text-center"><%= item.pack %></td>
                         <td class="text-center"><%= item.item_code %></td>
                         <td class="text-center"><%= item.description %></td>
-                        <td class="text-center"><%= item.unit_price %></td>
-                        <td class="text-center"><%= item.amount %></td>
+                        <td class="text-center text-right"><%= item.unit_price %></td>
+                        <td class="text-center text-right"><%= item.amount %></td>
                         <td class="text-center">&nbsp;</td>
                     </tr>
                 <% }) %>
@@ -204,8 +204,8 @@
                         ORDER RECV'D VIA EMAIL AT <%= data.order_received_at %> CGS<br>
                         SIGNATURE ONLY, DELIVERED BY <%= data.ordertaker; %>
                     </td>
-                    <td class="medium-2 text-center"><b>Total Invoice</b></td>
-                    <td class="medium-2 text-center"><b><%= data.total %></b></td>
+                    <td class="medium-2 text-right"><b>Total Invoice</b></td>
+                    <td class="medium-2 text-left"><b><%= data.total %></b></td>
                 </tr>
                 </tbody>
             </table>

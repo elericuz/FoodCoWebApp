@@ -66,8 +66,8 @@
                     <th class="small-1">Qty</th>
                     <th class="small-2">Unit</th>
                     <th class="small-7">Products</th>
-                    <th class="small-1">Unit Price</th>
-                    <th class="small-1">Price</th>
+                    <th class="small-1 text-center">Unit Price</th>
+                    <th class="small-1 text-center">Price</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -76,8 +76,8 @@
                     <td><%= product.quantity %></td>
                     <td><%= product.unit_id.name %></td>
                     <td><%= product.product_id.manufacturer_name %></td>
-                    <td>$<%= product.unit_price.toFixed(2).toLocaleString() %></td>
-                    <td>$<%= product.total.toFixed(2).toLocaleString() %></td>
+                    <td class="text-right">$<%= product.unit_price.toFixed(2).toLocaleString() %></td>
+                    <td class="text-right">$<%= product.total.toFixed(2).toLocaleString() %></td>
                 </tr>
                 <% }); %>
                 </tbody>
@@ -173,8 +173,8 @@
         headCol1.setAttribute("class", "small-1");
         headCol2.setAttribute("class", "small-2");
         headCol3.setAttribute("class", "small-7");
-        headCol4.setAttribute("class", "small-1");
-        headCol5.setAttribute("class", "small-1");
+        headCol4.setAttribute("class", "small-1 text-center");
+        headCol5.setAttribute("class", "small-1 text-center");
         headRow.appendChild(headCol1);
         headRow.appendChild(headCol2);
         headRow.appendChild(headCol3);
@@ -190,8 +190,8 @@
                 "<td>" + detail.quantity + "</td>" +
                 "<td>" + detail.unit + "</td>" +
                 "<td>" + detail.product + "</td>" +
-                "<td>$" + detail.unit_price.toFixed(2).toLocaleString() + "</td>" +
-                "<td>$" + detail.total.toFixed(2).toLocaleString() + "</td>"
+                "<td class=\"text-right\">$" + detail.unit_price.toFixed(2).toLocaleString() + "</td>" +
+                "<td class=\"text-right\">$" + detail.total.toFixed(2).toLocaleString() + "</td>"
         });
         table.appendChild(tbody);
         document.getElementById("invoicesTable").appendChild(table);
