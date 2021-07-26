@@ -263,6 +263,7 @@ async function getLastCodeNumber() {
 
 async function getUnits() {
     return Unit.find()
+        .sort({name: 'asc'})
         .then(result => { return result; })
         .catch(err => console.log(err));
 }
