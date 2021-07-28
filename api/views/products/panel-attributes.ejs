@@ -1,9 +1,5 @@
 <div class="tabs-panel" id="attributesPanel">
     <div class="grid-x grid-margin-x">
-        <div class="cell small-2 medium-2 text-right text-vertical-center">Inactive</div>
-        <div class="cell small-2 medium-2">
-            <input type="checkbox" name="inactive" id="inactive" class="input-text-2" value="true">
-        </div>
         <div class="cell small-2 medium-2 text-right text-vertical-center">Exclusive Item</div>
         <div class="cell small-2 medium-2">
             <input type="checkbox" name="exclusive_item" id="exclusive_item" class="input-text-2" value="true">
@@ -30,7 +26,7 @@
     <div class="grid-x grid-margin-x">
         <div class="cell small-2 small-offset-8 medium-2 medium-offset-8 text-right text-vertical-center">Days</div>
         <div class="cell small-2 medium-2">
-            <input type="number" id="adv_purchase_days" name="adv_purchase_days" min="1" max="30" class="input-text-2 width-75">
+            <input type="number" id="adv_purchase_days" name="adv_purchase_days" min="1" max="30" onchange="if (this.value < 1 || this.value > 30) { this.value = 1; }" class="input-text-2 width-75">
         </div>
     </div>
     <div class="grid-x grid-margin-x">

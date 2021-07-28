@@ -1,5 +1,10 @@
 const saveButton = document.getElementById('saveButton');
 saveButton.addEventListener('click', (e) => {
+    let validator = $( "#productForm" ).validate();
+    if (validator.form() === false) {
+        return false;
+    }
+
     const data = new URLSearchParams();
     const form = document.getElementById('productForm');
     for (const pair of new FormData(form)) {
@@ -27,8 +32,8 @@ saveButton.addEventListener('click', (e) => {
             }
             document.getElementById('message').innerHTML = result.message;
             document.getElementById('alertContainer').style.display = 'block';
-            // $('#addProductModal').foundation('close');
-            // resetProductForm();
+            $('#addProductModal').foundation('close');
+            resetProductForm();
         })
         .catch(err => {
             document.getElementById('message').innerHTML = err.message;
@@ -92,6 +97,7 @@ function getProduct(id) {
             document.getElementById('manufacturer_id').value = result.data.manufacturer_id;
             document.getElementById('manufacturer_name').value = result.data.manufacturer_name;
             document.getElementById('spanish_name').value = result.data.spanish_name;
+            document.getElementById('manufacturer_brand_name').value = result.data.manufacturer_brand_name;
             document.getElementById('manufacturer_part_number').value = result.data.manufacturer_part_number;
             document.getElementById('upc').value = result.data.upc;
             document.getElementById('warning_text').value = result.data.warning_text;
@@ -117,13 +123,13 @@ function getProduct(id) {
             document.getElementById('misc_two').value = result.data.misc_two;
             document.getElementById('other_pick').value = result.data.other_pick;
             document.getElementById('max_label_weight').value = result.data.max_label_weight;
-            $('#inactive').attr('checked', result.data.inactive);
+            $('#inactive').val(_.toString(result.data.inactive));
             $('#exclusive_item').attr('checked', result.data.exclusive_item);
             $('#catch_wt_sgl').attr('checked', result.data.catch_wt_sgl);
             $('#catch_wt_mutli').attr('checked', result.data.catch_wt_mutli);
             $('#par_item').attr('checked', result.data.par_item);
             $('#adv_purchase').attr('checked', result.data.adv_purchase);
-            $('#adv_purchase_days').attr('checked', result.data.adv_purchase_days);
+            $('#adv_purchase_days').attr('value', result.data.adv_purchase_days);
             $('#expense').attr('checked', result.data.expense);
             $('#misc_item').attr('checked', result.data.misc_item);
             $('#non_stock').attr('checked', result.data.non_stock);

@@ -94,14 +94,13 @@ exports.get = async (req, res, next) => {
 exports.update = async (req, res, next) => {
     let data = req.body;
     data.updated_by = await getCurrentUser(req.cookies.userToken);
-
     data.inactive = (_.isUndefined(data.inactive)) ? false : true
     data.exclusive_item = (_.isUndefined(data.exclusive_item)) ? false : true;
     data.catch_wt_sgl = (_.isUndefined(data.catch_wt_sgl)) ? false : true;
     data.catch_wt_mutli = (_.isUndefined(data.catch_wt_mutli)) ? false : true;
     data.par_item = (_.isUndefined(data.par_item)) ? false : true;
     data.adv_purchase = (_.isUndefined(data.adv_purchase)) ? false : true;
-    data.adv_purchase_days = (_.isUndefined(data.adv_purchase_days)) ? false : true;
+    data.adv_purchase_days = (_.isUndefined(data.adv_purchase_days)) ? false : data.adv_purchase_days;
     data.expense = (_.isUndefined(data.expense)) ? false : true;
     data.misc_item = (_.isUndefined(data.misc_item)) ? false : true;
     data.non_stock = (_.isUndefined(data.non_stock)) ? false : true;
@@ -124,6 +123,10 @@ exports.update = async (req, res, next) => {
 
     let units = data.units;
     let prices = data.price;
+
+    data.price = null;
+    data.units = null;
+
     let productId = data.idProduct
 
     await updateProduct(data.idProduct, data)
@@ -263,8 +266,10 @@ async function removeProduct(id) {
 }
 
 async function updateProduct(id, data) {
-    return Product.findByIdAndUpdate(id, data)
-        .then(result => { return result; })
+    return await Product.findByIdAndUpdate(id, data)
+        .then(result => {
+            return result;
+        })
         .catch(err => { return err; })
 }
 

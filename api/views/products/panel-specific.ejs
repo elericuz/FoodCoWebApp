@@ -47,13 +47,13 @@
         </div>
         <div class="cell small-2 medium-2 text-right text-vertical-center">Shelf Life</div>
         <div class="cell small-2 medium-3">
-            <input type="number" id="shelf_life" name="shelf_life" min="1" max="10" class="input-text-2">
+            <input type="number" id="shelf_life" name="shelf_life" min="1" max="10" class="input-text-2" onchange="if (this.value < 1 || this.value > 10) { this.value = 1; }">
         </div>
     </div>
     <div class="grid-x grid-margin-x">
         <div class="cell small-2 medium-2 text-right text-vertical-center">Max. Temp</div>
         <div class="cell small-2 medium-3">
-            <input type="number" id="max_temp" name="max_temp" min="1" max="10" class="input-text-2">
+            <input type="number" id="max_temp" name="max_temp" min="1" max="10" class="input-text-2" onchange="if (this.value < 1 || this.value > 10) { this.value = 1; }">
         </div>
         <div class="cell small-2 medium-2 text-right text-vertical-center">Tie</div>
         <div class="cell small-4 medium-3">

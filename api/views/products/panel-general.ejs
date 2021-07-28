@@ -2,13 +2,13 @@
     <div class="grid-x grid-margin-x">
         <div class="cell small-2 medium-2 text-right text-vertical-center">Manufacturer Id</div>
         <div class="cell small-2 medium-2">
-            <input type="text" name="manufacturer_id" id="manufacturer_id" class="input-text-2" placeholder="Manufacturer Id">
+            <input type="text" name="manufacturer_id" id="manufacturer_id" class="input-text-2" placeholder="Manufacturer Id" required>
         </div>
     </div>
     <div class="grid-x grid-margin-x">
         <div class="cell small-2 medium-2 text-right text-vertical-center">Manufacturer Name</div>
         <div class="cell small-4 medium-9">
-            <input type="text" name="manufacturer_name" id="manufacturer_name" class="input-text-2" placeholder="Manufacturer Name">
+            <input type="text" name="manufacturer_name" id="manufacturer_name" class="input-text-2" placeholder="Manufacturer Name" required>
         </div>
     </div>
     <div class="grid-x grid-margin-x">
@@ -20,11 +20,20 @@
     <div class="grid-x grid-margin-x">
         <div class="cell small-2 medium-2 text-right text-vertical-center">Manufacturer Brand Name</div>
         <div class="cell small-4 medium-4">
-            <input type="text" name="manufacturer_brand_name" id="manufacturer_brand_name" class="input-text-2" placeholder="Manufacturer Brand Name">
+            <input type="text" name="manufacturer_brand_name" id="manufacturer_brand_name" class="input-text-2" placeholder="Manufacturer Brand Name" required>
         </div>
         <div class="cell small-2 medium-2 text-right text-vertical-center">Manufacturer Part No.</div>
         <div class="cell small-4 medium-3">
             <input type="text" name="manufacturer_part_number" id="manufacturer_part_number" class="input-text-2" placeholder="Manufacturer Part No.">
+        </div>
+    </div>
+    <div class="grid-x grid-margin-x">
+        <div class="cell small-2 medium-2 text-right text-vertical-center">Status</div>
+        <div class="cell small-2 medium-2">
+            <select id="inactive" name="inactive" class="input-text-2" required>
+                <option value="false" selected>Active</option>
+                <option value="true">Inactive</option>
+            </select>
         </div>
     </div>
 </div>
