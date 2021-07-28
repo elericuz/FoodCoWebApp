@@ -129,7 +129,7 @@
             <div class="cell small-2 text-right text-vertical-center">Products</div>
             <div class="cell small-10 fix-default-cell-margin">
                 <select class="input-text-2" id="product" name="product_id" onselect="getUnits(this);" onchange="getUnits();" required data-msg="Please select a product">
-                    <option selected disabled>Select a product</option>
+                    <option selected disabled>Select One Product</option>
                     <% products.forEach(product => { %>
                         <option value="<%= product._id %>"><%= product.manufacturer_name %></option>
                     <% }) %>
