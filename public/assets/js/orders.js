@@ -40,7 +40,24 @@ $(function () {
     });
 });
 
+function validateOrder() {
+    let validator = $( "#placeOrderForm" ).validate();
+    if (validator.form() === false) {
+        return false;
+    }
+
+    let rowCount = $("#detailsTable tbody tr").length;
+    if (rowCount >= 2) {
+        document.getElementById('placeOrderForm').submit();
+    } else {
+        alert("Your order is empty. You must add some product before place the order.");
+    }
+
+    return false;
+}
+
 function getUnits() {
+    document.getElementById('unitPrice').innerHTML = "";
     let selected = $('#product').val();
     const endpoint = '/products/units/' + selected;
     fetch(endpoint, {method: 'GET'})
@@ -48,12 +65,24 @@ function getUnits() {
         .then((result) => {
             let $dropdownUnits = $("#unit");
             $dropdownUnits.empty();
+            $dropdownUnits.append($("<option selected disabled>Select Unit</option>"));
             $.each(result.units, function() {
                 $dropdownUnits.append($("<option />")
                     .val(this.unit_id._id)
                     .text(this.unit_id.name));
-                document.getElementById('unitPrice').innerHTML = 'Price: $' + this.price.toFixed(2);
             });
+        })
+        .catch(err => console.log(err));
+}
+
+function getPrice() {
+    let productId = $('#product').val();
+    let selected = $('#unit').val();
+    const endpoint = '/products/get_price/' + productId + '/' + selected;
+    fetch(endpoint, {method: 'GET'})
+        .then(response => response.json())
+        .then((result) => {
+            document.getElementById('unitPrice').innerHTML = 'Price: $' + result.price.toFixed(2);
         })
         .catch(err => console.log(err));
 }
@@ -75,7 +104,22 @@ function getWarehouse() {
 }
 
 const addButton = document.getElementById('addButton');
+
+function resetAddProductForm() {
+    $("#unit").empty();
+    document.getElementById('addProductForm').reset();
+    document.getElementById('unitPrice').innerHTML = '';
+
+    let validator = $( "#addProductForm" ).validate();
+    validator.resetForm();
+}
+
 addButton.addEventListener('click', (e) => {
+    let validator = $( "#addProductForm" ).validate();
+    if (validator.form() === false) {
+        return false;
+    }
+
     const data = new URLSearchParams();
     for (const pair of new FormData(document.getElementById('addProductForm'))) {
         data.append(pair[0], pair[1]);
@@ -86,6 +130,7 @@ addButton.addEventListener('click', (e) => {
         .then(response => response.json())
         .then((result) => {
             addNewRow(result._id, result)
+            resetAddProductForm();
         })
         .catch(err => console.log(err));
     $('#addProductModal').foundation('close');
@@ -96,8 +141,8 @@ function addNewRow(id, data) {
     newRow.id = id;
     newRow.innerHTML = "" +
         "<td>" + data.quantity + "</td>" +
-        "<td>" + $('#unit option:selected').text() + "</td>" +
-        "<td>" + $('#product option:selected').text() + "</td>" +
+        "<td>" + data.unit_id.name + "</td>" +
+        "<td>" + data.product_id.manufacturer_name + "</td>" +
         "<td>" + data.unit_price + "</td>" +
         "<td>" + data.total + "</td>" +
         "<td>" +

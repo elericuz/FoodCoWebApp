@@ -168,6 +168,19 @@ div .click-here a:hover {
     height: 27px;
 }
 
+.input-text-2.error {
+    margin-bottom: 0;
+}
+
+.fix-default-cell-margin {
+    margin: 0 0 1rem;
+}
+
+label.error {
+    color: red;
+    font-size: 11px;
+}
+
 .text-vertical-center {
     margin: 5px;
 }

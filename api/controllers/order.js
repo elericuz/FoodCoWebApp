@@ -217,7 +217,23 @@ async function addProduct(data) {
 
     let detail = new Detail(data);
     return detail.save()
-        .then(result => { return result; })
+        .then(async result => {
+            return await Detail.findOne(result._id)
+                .populate({
+                    path: 'unit_id',
+                    model: 'Units',
+                    select: '-_id name'
+                })
+                .populate({
+                    path: 'product_id',
+                    model: 'Products',
+                    select: '-_id manufacturer_name'
+                })
+                .then(res => {
+                    return res;
+                })
+                .catch(error => console.log(error))
+        })
         .catch(err => console.log(err));
 }
 

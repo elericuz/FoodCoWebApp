@@ -172,6 +172,28 @@ exports.getUnits = async (req, res, next) => {
     })
 }
 
+exports.getProductPrice = async (req, res, next) => {
+    const productId = req.params.productId;
+    const unitId = req.params.unitId;
+
+    const price = await ProductPrices.findOne({
+        product_id: productId,
+        unit_id: unitId,
+        status: true
+    })
+        .select('-_id price')
+        .then(result => {
+            console.log(result);
+            return result.price;
+        })
+        .catch(err => console.log(err));
+
+    res.status(201).json({
+        message: "ok",
+        price: price
+    })
+}
+
 async function saveProduct(data) {
     let lastCodeNumber = await getLastCodeNumber();
     let nextCodeNumber = lastCodeNumber.code + 1;

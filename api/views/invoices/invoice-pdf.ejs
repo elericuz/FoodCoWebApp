@@ -11,7 +11,7 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <style>
         body {
-            font-size: 0.27cm;
+            font-size: 0.24cm;
         }
 
         table {
@@ -49,10 +49,7 @@
     <div class="cell clearfix"></div>
     <div class="float-left">
         <p>
-            263 Big Sandy Dr<br>
-            Kyle<br>
-            Texas<br>
-            78640<br>
+            263 Big Sandy Dr, Kyle, Texas, 78640<br>
             homedelivery@haysproduce.com<br>
             Phone: (512) 667 5629
         </p>
@@ -61,18 +58,14 @@
     <div class="grid-x grid-margin-x">
         <div class="cell medium-4 medium-offset-2">
             <b>Bill To:</b><br>
-            <%= data.bill_to.street %><br>
-            <%= data.bill_to.city %><br>
-            <%= data.bill_to.state %><br>
-            <%= data.bill_to.zipcode %><br>
+            <%= data.bill_to.street %>, <%= data.bill_to.city %>,
+            <%= data.bill_to.state %>, <%= data.bill_to.zipcode %><br>
             <%= data.phone %>
         </div>
         <div class="cell medium-4">
             <b>Ship To:</b><br>
-            <%= data.shipping_address.street %><br>
-            <%= data.shipping_address.city %><br>
-            <%= data.shipping_address.state %><br>
-            <%= data.shipping_address.zipcode %><br>
+            <%= data.shipping_address.street %>, <%= data.shipping_address.city %>,
+            <%= data.shipping_address.state %>, <%= data.shipping_address.zipcode %><br>
             <%= data.phone %>
         </div>
         <div class="cell medium-2">&nbsp;</div>
@@ -138,7 +131,7 @@
                     <th colspan="3" class="medium-3 text-center">Quantity</th>
                     <th rowspan="2" class="medium-2 text-center">Item Code</th>
                     <th rowspan="2" class="medium-2 text-center">Description</th>
-                    <th rowspan="2" class="medium-2 text-center">Tax Unit Price</th>
+                    <th rowspan="2" class="medium-2 text-center">Tax | Unit Price</th>
                     <th rowspan="2" class="medium-2 text-center">Amount</th>
                     <th rowspan="2" class="medium-1 text-center">Return Qty Reason</th>
                 </tr>
@@ -171,7 +164,7 @@
             <table class="unstriped">
                 <tbody>
                 <tr>
-                    <td class="medium-8" style="border: 1px solid darkgray">
+                    <td class="medium-8" style="border: 1px solid darkgray; font-size: 0.22cm;">
                         <p>
                             Adjustment and quality must be reported within 24 hours of receipt
                             of merchandise by phone, fax or email. All phone requests must be
