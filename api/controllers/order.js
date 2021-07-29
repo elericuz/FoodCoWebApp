@@ -16,11 +16,11 @@ exports.listAll = async (req, res, next) => {
     let tokenDecoded = jwt.decode(token);
 
     let criteria = { status: 'open' };
-    if (req.userType !== 'admin' &&
-        req.userType !== 'seller' &&
-        req.userType !== 'manager' &&
-        req.userType !== 'supervisor' &&
-        req.userType !== 'developer') {
+    if (_.lowerCase(req.userType) !== _.lowerCase('admin') &&
+        _.lowerCase(req.userType) !== _.lowerCase('seller') &&
+        _.lowerCase(req.userType) !== _.lowerCase('manager') &&
+        _.lowerCase(req.userType) !== _.lowerCase('supervisor') &&
+        _.lowerCase(req.userType) !== _.lowerCase('developer')) {
         criteria = {...criteria, user: tokenDecoded.userId};
     }
 

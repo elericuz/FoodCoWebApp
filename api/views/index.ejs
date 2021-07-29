@@ -10,11 +10,14 @@
         </div>
     </div>
     <div class="grid-x grid-padding-x align-center-middle bordered shadow padding-3">
-        <div class="callout alert" data-closable id="alertContainer" style="display:none;">
-            <span id="message"></span>
-            <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
-                <span aria-hidden="true">&times;</span>
-            </button>
+        <div class="cell small-12">
+            <div class="callout alert" data-closable id="alertContainer" style="display:none;">
+                <h5>Ohh no!</h5><br>
+                <span id="message"></span>
+                <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         </div>
         <form class="medium-8 small-11 end" method="post" id="loginForm" action="/user/login" onsubmit="return false">
             <div class="medium-12 cell text-center">

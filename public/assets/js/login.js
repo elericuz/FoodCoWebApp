@@ -1,6 +1,5 @@
 const loginButton = document.getElementById('loginButton');
 loginButton.addEventListener('click', (e) => {
-    console.log('aca');
     const data = new URLSearchParams();
     const form = document.getElementById('loginForm');
     for (const pair of new FormData(form)) {
@@ -16,12 +15,15 @@ loginButton.addEventListener('click', (e) => {
             throw new Error('Something went wrong.');
         })
         .then((result) => {
-            location.assign('/orders');
+            if (_.lowerCase(result.status) === _.lowerCase('failed')) {
+                document.getElementById('message').innerHTML = result.message;
+                document.getElementById('alertContainer').style.display = 'block';
+            } else {
+                location.assign('/orders');
+            }
         })
         .catch(err => {
-            document.getElementById('message').innerHTML = result.message;
+            document.getElementById('message').innerHTML = err.message;
             document.getElementById('alertContainer').style.display = 'block';
-            console.log(err)
-            alert(err.message)
         });
 });

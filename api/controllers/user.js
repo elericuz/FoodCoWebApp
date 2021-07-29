@@ -27,34 +27,37 @@ exports.login = (req, res, next) => {
     User.find({email_address: req.body.email_address, status: true})
         .then((user) => {
             if (user.length < 1) {
-                return res.status(401).json({
-                    message: 'Auth failed'
+                return res.status(201).json({
+                    message: "We weren't able to find the user you wrote. Please contact try again or contact our support team.",
+                    status: "failed"
                 })
             }
             bcrypt.compare(req.body.password, user[0].password, (err, result) => {
                 if (err) {
-                    return res.status(401).json({
-                        message: 'Auth Failed'
+                    return res.status(201).json({
+                        message: 'Authentication Failed',
+                        status: 'failed'
                     })
                 }
                 if (result) {
                     const token = createToken(user[0]);
                     res.cookie('userToken', token, { httpOnly: true, maxAge: maxAge * 1000 });
                     res.status(200).json({
-                        message: "success"
+                        message: "Authenticated, welcome back!",
+                        status: 'success'
                     })
-                    // res.redirect('/orders');
                 } else {
-                    res.status(401).json({
-                        message: 'Auth Failed'
+                    res.status(201).json({
+                        message: "Authentication Failed.<br>Please check the username and password.",
+                        status: "failed"
                     });
                 }
             })
         })
         .catch(err => {
-            console.log(err)
             res.status(500).json({
-                error: err
+                message: "We found a problem. Contact our support team.<br>" + err,
+                status: "failed"
             });
         });
 };
