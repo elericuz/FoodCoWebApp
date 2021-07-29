@@ -94,7 +94,7 @@ exports.get = async (req, res, next) => {
 exports.update = async (req, res, next) => {
     let data = req.body;
     data.updated_by = await getCurrentUser(req.cookies.userToken);
-    data.inactive = (_.isUndefined(data.inactive)) ? false : true
+    data.inactive = data.inactive === "true"
     data.exclusive_item = (_.isUndefined(data.exclusive_item)) ? false : true;
     data.catch_wt_sgl = (_.isUndefined(data.catch_wt_sgl)) ? false : true;
     data.catch_wt_mutli = (_.isUndefined(data.catch_wt_mutli)) ? false : true;
@@ -131,7 +131,7 @@ exports.update = async (req, res, next) => {
 
     await updateProduct(data.idProduct, data)
         .then(async (response) => {
-            await savePrices(units, prices, productId)
+            return await savePrices(units, prices, productId)
                 .then(result => {
                     res.status(200).json({
                         message: "Product updated.",

@@ -1,7 +1,15 @@
 const saveButton = document.getElementById('saveButton');
 saveButton.addEventListener('click', (e) => {
+    $('#dashboard-tabs').foundation('selectTab', $('#generalPanel'));
     let validator = $( "#productForm" ).validate();
     if (validator.form() === false) {
+        return false;
+    }
+
+    var prices = $('#unitsPanel :checkbox:checked').length;
+    if (prices === 0) {
+        $('#dashboard-tabs').foundation('selectTab', $('#unitsPanel'));
+        alert("You have to enter a price for this product before save it.")
         return false;
     }
 
@@ -13,7 +21,7 @@ saveButton.addEventListener('click', (e) => {
 
     const endpoint = '/products/save';
     let method = 'PUT';
-    if ((document.getElementById('idProduct').value) == "") {
+    if ((document.getElementById('idProduct').value) === "") {
         method = 'POST';
     }
 
@@ -44,7 +52,7 @@ saveButton.addEventListener('click', (e) => {
 
 function addNewProduct(data) {
     let inactive = "&nbsp;"
-    if (data.inactive) {
+    if ($('#inactive').val() === "true") {
         inactive = "<div class=\"fi-check\"></div>"
     }
 
@@ -163,7 +171,7 @@ function getProduct(id) {
 
 function updateProduct(data) {
     let inactive = "&nbsp;"
-    if (data.inactive == true) {
+    if ($('#inactive').val() === "true") {
         inactive = "<div class=\"fi-check\"></div>"
     }
 
@@ -183,5 +191,16 @@ function updateProduct(data) {
 function resetProductForm() {
     document.getElementById('productForm').reset();
     document.getElementById('idProduct').value = '';
+    $('#unitsPanel :input').attr('disabled', true);
+    $('#unitsPanel :checkbox').attr('disabled', false);
     $('input:checkbox').removeAttr('checked');
+    $('#dashboard-tabs').foundation('selectTab', $('#generalPanel'));
+}
+
+function checkPrice(price, id) {
+    if (price < 0.001) {
+        $("#checkbox_" + id).prop('checked', false);
+        $("#unit_" + id).val("");
+        $("#unit_" + id).prop('disabled', true);
+    }
 }
