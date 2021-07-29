@@ -45,9 +45,7 @@ saveButton.addEventListener('click', (e) => {
     }
 
     let rowCount = $("#warehouseTable tbody tr").length;
-    if (rowCount >= 2) {
-        document.getElementById('clientForm').submit();
-    } else {
+    if (rowCount < 1) {
         alert("You must add at least one warehouse to this client.");
         return false;
     }
