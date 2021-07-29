@@ -11,6 +11,11 @@ $('#phonenumber').focusout(function() {
 
 const saveButton = document.getElementById('saveButton');
 saveButton.addEventListener('click', async (e) => {
+    let validator = $( "#userForm" ).validate();
+    if (validator.form() === false) {
+        return false;
+    }
+
     const data = new URLSearchParams();
     for (const pair of new FormData(document.getElementById('userForm'))) {
         data.append(pair[0], pair[1]);
@@ -53,6 +58,7 @@ function addNewUser(data) {
         "<td>" + data.lastname + "</td>" +
         "<td>" + data.email_address + "</td>" +
         "<td>" + data.type_id.name + "</td>" +
+        "<td>" + data.client_id.name + "</td>" +
         "<td><a href=\"#\" class=\"fi-page-edit\" " +
         "       style=\"margin-top: 10px\"" +
         "       onclick=\"$('#userModal').foundation('open'); getUser('" + data._id + "')\">" +
@@ -132,6 +138,6 @@ function updateUser(data) {
 
 function resetUserForm() {
     $('input:hidden').val('');
-    $('select').val('');
+    document.getElementById('userForm').reset();
     $('input:text').val('');
 }

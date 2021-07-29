@@ -22,6 +22,36 @@ $('#phone').focusout(function() {
 
 const saveButton = document.getElementById('saveButton');
 saveButton.addEventListener('click', (e) => {
+    let validator = $("#clientForm").validate({
+        rules: {
+            code: "required",
+            name: "required",
+            commercial_name: "required",
+            email: {
+                required: true,
+                email: true
+            },
+            contact: "required",
+            phone: "required",
+            street: "required",
+            city: "required",
+            state: "required",
+            zipcode: "required"
+        }
+    });
+    if (validator.form() === false) {
+        validator.destroy();
+        return false;
+    }
+
+    let rowCount = $("#warehouseTable tbody tr").length;
+    if (rowCount >= 2) {
+        document.getElementById('clientForm').submit();
+    } else {
+        alert("You must add at least one warehouse to this client.");
+        return false;
+    }
+
     const data = new URLSearchParams();
     const form = document.getElementById('clientForm');
     for (const pair of new FormData(form)) {
@@ -145,7 +175,27 @@ function updateClient(data) {
 
 const saveWarehouseButton = document.getElementById('saveWarehouseButton');
 saveWarehouseButton.addEventListener('click', (e) => {
+    let validator = $( "#clientForm" ).validate({
+        rules: {
+            nameWarehouse: "required",
+            streetWarehouse: "required",
+            cityWarehouse: "required",
+            stateWarehouse: "required",
+            zipcodeWarehouse: "required",
+            contactWarehouse: "required",
+            phoneWarehouse: "required",
+            emailWarehouse: {
+                required: true,
+                email: true
+            }
+        }
+    });
+    if (validator.form() === false) {
+        return false;
+    }
+
     const dataWarehouse = new URLSearchParams();
+
     dataWarehouse.append('idClient', document.getElementById('idClient').value);
     dataWarehouse.append('idWarehouse', document.getElementById('idWarehouse').value);
     dataWarehouse.append('idAddressWarehouse', document.getElementById('idAddressWarehouse').value);
@@ -174,16 +224,15 @@ saveWarehouseButton.addEventListener('click', (e) => {
             }
         })
         .then(result => {
-            console.log(result);
             let listIdWarehouses = (document.getElementById('idWarehousesList').value).split(',');
             listIdWarehouses.push(result.data._id);
             listIdWarehouses = listIdWarehouses.join(',').replace(/^(\,)/gim, '')
             document.getElementById('idWarehousesList').value = listIdWarehouses;
 
             if (method == 'POST') {
-                // addNewClient(result.data)
+                addWarehouseRow(result.data)
             } else {
-                updateWarehouse();
+                updateWarehouse(result.data);
             }
         })
         .catch(err => {
@@ -194,14 +243,13 @@ saveWarehouseButton.addEventListener('click', (e) => {
 });
 
 function addWarehouseRow(warehouse) {
-    let newRow = document.getElementById('warehouseTable').insertRow();
-    newRow.id = warehouse._id;
     let address = warehouse.address.street + ', ' +
         warehouse.address.city + ', ' +
         warehouse.address.state + ', ' +
         warehouse.address.zipcode;
 
-    newRow.innerHTML = "" +
+    let row = "" +
+        "<tr id='"+ warehouse._id + "'>" +
         "<td>" + warehouse.name + "</td>" +
         "<td>" + address + "</td>" +
         "<td>" + warehouse.contact + "</td>" +
@@ -209,7 +257,10 @@ function addWarehouseRow(warehouse) {
         "<td class=\"text-center\">" +
         "<div class=\"fi-page-edit display-inline padding-right-1\" onclick=\"getWarehouse('" + warehouse._id + "')\"></div>" +
         "<div class=\"fi-trash display-inline\" onclick=\"removeWarehouse('" + warehouse._id + "')\"></div>" +
-        "</td>";
+        "</td>" +
+        "</tr>";
+
+    $('#warehouseTable tbody:last-child').append(row);
 }
 
 function removeWarehouse(id) {
@@ -229,24 +280,22 @@ function removeWarehouse(id) {
         });
 }
 
-function updateWarehouse() {
-    let row = document.getElementById('idWarehouse');
-    let address = document.getElementById('streetWarehouse').value + ', ' +
-        document.getElementById('cityWarehouse').value + ', ' +
-        document.getElementById('stateWarehouse').value + ', ' +
-        document.getElementById('zipcodeWarehouse').value;
+function updateWarehouse(warehouse) {
+    let row = document.getElementById(warehouse._id);
+    let address = warehouse.address.street + ', ' +
+        warehouse.address.city + ', ' +
+        warehouse.address.state + ', ' +
+        warehouse.address.zipcode;
 
     row.innerHTML = "" +
-        "<td>" + document.getElementById('nameWarehouse').value + "</td>" +
+        "<td>" + warehouse.name + "</td>" +
         "<td>" + address + "</td>" +
-        "<td>" + document.getElementById('contactWarehouse').value + "</td>" +
-        "<td>" + document.getElementById('phoneWarehouse').value + "</td>" +
+        "<td>" + warehouse.contact + "</td>" +
+        "<td>" + warehouse.phone + "</td>" +
         "<td class=\"text-center\">" +
-        "<div class=\"fi-page-edit display-inline padding-right-1\" onclick=\"getWarehouse('" + document.getElementById('idWarehouse') + "')\"></div>" +
-        "<div class=\"fi-trash display-inline\" onclick=\"removeWarehouse('" + document.getElementById('idWarehouse') + "')\"></div>" +
+        "<div class=\"fi-page-edit display-inline padding-right-1\" onclick=\"getWarehouse('" + warehouse._id + "')\"></div>" +
+        "<div class=\"fi-trash display-inline\" onclick=\"removeWarehouse('" + warehouse._id + "')\"></div>" +
         "</td>";
-
-    console.log(address);
 }
 
 function getWarehouse(id) {
@@ -281,4 +330,5 @@ function resetClientForm() {
     document.getElementById('idAddress').value = '';
     document.getElementById('idWarehouse').value = '';
     document.getElementById('idWarehousesList').value = '';
+    $("#warehouseTable > tbody").empty();
 }
