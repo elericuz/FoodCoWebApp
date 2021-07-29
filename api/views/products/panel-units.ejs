@@ -2,7 +2,7 @@
     <div class="grid-x grid-margin-x">
         <% units.forEach(unit => { %>
             <div class="cell small-3 medium-2 text-right text-vertical-center">
-                <%= unit.name %> <input type="checkbox" name="units[]" id="checkbox_<%= unit._id %>" value="<%= unit._id %>" onclick="document.getElementById('unit_<%= unit._id %>').disabled = !this.checked;">
+                <%= unit.name %> <input type="checkbox" name="units[]" id="checkbox_<%= unit._id %>" value="<%= unit._id %>" onclick="focusPrice('<%= unit._id %>', !this.checked);">
             </div>
             <div class="cell small-3 medium-2 fix-default-cell-margin">
                 <input class="numeric input-text-2" type="number" min="0" id="unit_<%= unit._id %>" name="price[]" placeholder="Price" disabled required onfocusout="checkPrice(this.value, '<%= unit._id %>')">

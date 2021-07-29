@@ -204,3 +204,8 @@ function checkPrice(price, id) {
         $("#unit_" + id).prop('disabled', true);
     }
 }
+
+function focusPrice(id, checked) {
+    $("#unit_" + id).prop("disabled", checked);
+    $("#unit_" + id).focus();
+}
