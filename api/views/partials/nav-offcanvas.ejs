@@ -7,11 +7,11 @@
         </ul>
     </div>
 </div>
-<div class="off-canvas position-left body-sign-in-up" id="offCanvasRightPush" data-off-canvas data-transition="push">
-    <div class="cell small-12">
+<div class="off-canvas position-left" id="offCanvasRightPush" data-off-canvas data-transition="push">
+    <div class="cell small-12 off-canvas-menu-title text-center">
         Main Menu
     </div>
-    <ul class="vertical menu drilldown" data-drilldown>
+    <ul class="vertical menu drilldown off-canvas-menu-options" data-drilldown>
         <li><a href="/orders">Orders</a></li>
         <% if (adminUser) { %>
             <li><a href="/products">Products</a></li>
@@ -23,7 +23,9 @@
             <li><a disabled="true" href="/user">Users</a></li>
         <% }%>
         <li class="user-account">
-            <a href="#" class="user-account-in-canvas" style="color: #FFFFFF;"><%= user.email_address %></a>
+            <a href="#" class="user-account-in-canvas">
+                <div class="fi-torsos-male-female"> <%= user.email_address %></div>
+            </a>
             <ul class="menu vertical">
                 <li><a href="/user/profile">My Account</a></li>
                 <li class="logout"><a href="/user/logout">Logout</a></li>
