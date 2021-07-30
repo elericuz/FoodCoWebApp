@@ -252,7 +252,7 @@ function addWarehouseRow(warehouse) {
         "<td>" + address + "</td>" +
         "<td>" + warehouse.contact + "</td>" +
         "<td>" + warehouse.phone + "</td>" +
-        "<td class=\"text-center\">" +
+        "<td class=\"text-center actions\">" +
         "<div class=\"fi-page-edit display-inline padding-right-1\" onclick=\"getWarehouse('" + warehouse._id + "')\"></div>" +
         "<div class=\"fi-trash display-inline\" onclick=\"removeWarehouse('" + warehouse._id + "')\"></div>" +
         "</td>" +
