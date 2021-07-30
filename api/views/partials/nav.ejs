@@ -17,8 +17,10 @@
                 <li><a disabled="true" href="/user">Users</a></li>
             <% }%>
             <li class="user-account">
-                <a href="#" class="user-account-in-canvas" style="color: #ba5a00;"><%= user.email_address %></a>
-                <ul class="menu vertical">
+                <a href="#" class="user-account-in-canvas">
+                    <div class="fi-torsos-male-female"> <%= user.email_address %></div>
+                </a>
+                <ul class="menu vertical account">
                     <li><a href="/user/profile">My Account</a></li>
                     <li class="logout"><a href="/user/logout">Logout</a></li>
                 </ul>

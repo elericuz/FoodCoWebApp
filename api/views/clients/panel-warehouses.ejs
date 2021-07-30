@@ -3,47 +3,41 @@
     <input type="hidden" name="idWarehousesList" id="idWarehousesList" value="">
     <input type="hidden" name="idAddressWarehouse" id="idAddressWarehouse" value="">
     <div class="grid-x grid-margin-x">
-        <div class="cell small-12 medium-4">
+        <div class="cell small-12 medium-4 divider">
+            <h5 class="padding-bottom-1">Add or Edit a Warehouse</h5>
             <div class="grid-x grid-margin-x">
-                <div class="cell medium-12">Name</div>
                 <div class="cell medium-12">
                     <input type="text" name="nameWarehouse" id="nameWarehouse" class="input-text-2" placeholder="Name">
                 </div>
-                <div class="cell medium-12">Street</div>
                 <div class="cell medium-12">
-                    <input type="text" name="streetWarehouse" id="streetWarehouse" class="input-text-2" placeholder="The street">
+                    <input type="text" name="streetWarehouse" id="streetWarehouse" class="input-text-2" placeholder="Street">
                 </div>
-                <div class="cell medium-7">City</div>
-                <div class="cell medium-5">State</div>
                 <div class="cell medium-7">
-                    <input type="text" name="cityWarehouse" id="cityWarehouse" class="input-text-2" placeholder="The city">
+                    <input type="text" name="cityWarehouse" id="cityWarehouse" class="input-text-2" placeholder="City">
                 </div>
                 <div class="cell medium-5">
-                    <input type="text" name="stateWarehouse" id="stateWarehouse" class="input-text-2" placeholder="The state">
+                    <input type="text" name="stateWarehouse" id="stateWarehouse" class="input-text-2" placeholder="State">
                 </div>
-                <div class="cell medium-12">Zipcode</div>
                 <div class="cell medium-5">
-                    <input type="text" name="zipcodeWarehouse" id="zipcodeWarehouse" class="input-text-2" onfocusout="getCityWarehouse();" placeholder="The zipcode">
+                    <input type="text" name="zipcodeWarehouse" id="zipcodeWarehouse" class="input-text-2" onfocusout="getCityWarehouse();" placeholder="Zipcode">
                 </div>
                 <div class="cell-medium-7">&nbsp;</div>
-                <div class="cell medium-7">Contact Person</div>
-                <div class="cell medium-5">Phone number</div>
                 <div class="cell medium-7">
                     <input type="text" name="contactWarehouse" id="contactWarehouse" class="input-text-2" placeholder="Contact Person">
                 </div>
                 <div class="cell medium-5">
                     <input type="text" name="phoneWarehouse" id="phoneWarehouse" class="input-text-2" placeholder="Phone number">
                 </div>
-                <div class="cell medium-12">Email Address</div>
                 <div class="cell medium-12">
                     <input type="text" name="emailWarehouse" id="emailWarehouse" class="input-text-2" placeholder="Email Address">
                 </div>
                 <div class="cell medium-12 text-center">
-                    <button class="button secondary small" id="saveWarehouseButton">Save Warehouse</button>
+                    <button class="button secondary small padding-right-2 padding-left-2" id="saveWarehouseButton">Save Warehouse</button>
                 </div>
             </div>
         </div>
         <div class="cell small-12 medium-8">
+            <h5 class="padding-bottom-1">Warehouses</h5>
             <table class="stack" id="warehouseTable">
                 <thead>
                 <tr>

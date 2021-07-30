@@ -8,11 +8,11 @@
 <div class="grid-container">
     <div class="cell small-12">
         <div class="grid-x">
-            <div class="cell small-7 medium-10">
+            <div class="cell small-7 medium-9">
                 <h2 class="margin-bottom-0">Users</h2>
             </div>
-            <div class="cell small-5 medium-2 text-right padding-top-1">
-                <a href="#" onclick="resetUserForm(); $('#userModal').foundation('open');" class="button secondary small">Create new user</a>
+            <div class="cell small-5 medium-3 text-right padding-top-1">
+                <a href="#" onclick="resetUserForm(); $('#userModal').foundation('open');" class="button secondary small padding-right-2 padding-left-2">Create new user</a>
             </div>
         </div>
     </div>
@@ -44,9 +44,9 @@
                 <td><%= user.email_address %></td>
                 <td><%= client %></td>
                 <td><%= user.type_id.name %></td>
-                <td>
-                    <a href="#" class="fi-page-edit" style="margin-top: 10px" onclick="resetUserForm(); $('#userModal').foundation('open'); getUser('<%= user._id %>')">
-                    <a href="#" class="fi-trash" style="margin-top: 10px" onclick="deleteUser('<%= user._id %>')">
+                <td class="text-center actions">
+                    <div class="fi-page-edit display-inline padding-right-1" onclick="resetUserForm(); $('#userModal').foundation('open'); getUser('<%= user._id %>')"></div>
+                    <div class="fi-trash display-inline" onclick="deleteUser('<%= user._id %>')"></div>
                 </td>
             </tr>
             <% }); %>
@@ -54,7 +54,7 @@
         </table>
     </div>
 </div>
-<div class="reveal large" id="userModal" data-reveal>
+<div class="reveal medium" id="userModal" data-reveal>
     <%- include('./modal-user.ejs') %>
 </div>
 

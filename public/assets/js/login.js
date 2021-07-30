@@ -17,13 +17,13 @@ loginButton.addEventListener('click', (e) => {
         .then((result) => {
             if (_.lowerCase(result.status) === _.lowerCase('failed')) {
                 document.getElementById('message').innerHTML = result.message;
-                document.getElementById('alertContainer').style.display = 'block';
+                document.getElementById('alertContainer').style.visibility = 'visible';
             } else {
                 location.assign('/orders');
             }
         })
         .catch(err => {
             document.getElementById('message').innerHTML = err.message;
-            document.getElementById('alertContainer').style.display = 'block';
+            document.getElementById('alertContainer').style.visibility = 'visible';
         });
 });

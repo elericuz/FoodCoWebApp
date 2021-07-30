@@ -22,7 +22,7 @@
         </div>
         <div class="grid-x grid-margin-x">
             <div class="cell small-12 text-center padding-top-1">
-                <a href="#" id="personalFormButton" class="button secondary small">Save Changes</a>
+                <a href="#" id="personalFormButton" class="button secondary small padding-right-2 padding-left-2">Save Changes</a>
             </div>
         </div>
     </form>
@@ -34,7 +34,7 @@
             <h5>Address</h5>
         </div>
         <div class="float-right">
-            <button class="button secondary small" data-open="addAddressModal">Add Address</button>
+            <button class="button secondary small padding-right-2 padding-left-2" data-open="addAddressModal">Add Address</button>
         </div>
     </div>
     <div class="cell small-12">
@@ -52,7 +52,9 @@
             <tr id="<%= address._id %>">
                 <td><%= address.type %></td>
                 <td><%= address.street %></td>
-                <td><div class="fi-trash" onclick="removeAddress('<%= address._id %>')"></div></td>
+                <td class="actions">
+                    <div class="fi-trash" onclick="removeAddress('<%= address._id %>')"></div>
+                </td>
             </tr>
             <% }) %>
             </tbody>
@@ -95,11 +97,11 @@
                 <input type="text" name="zipcode" id="zipcode" class="input-text-2" onfocusout="getCity();" placeholder="The zipcode">
             </div>
         </div>
-        <div class="grid-x">
-            <div class="cell small-2 small-offset-8 text-right padding-right-1">
-                <a href="#" class="button alert small" data-close aria-label="Close modal">Cancel</a>
+        <div class="grid-x padding-top-2">
+            <div class="cell small-3 small-offset-6 text-right padding-right-1">
+                <a href="#" class="button alert small padding-right-2 padding-left-2" data-close aria-label="Close modal">Cancel</a>
             </div>
-            <div class="cell small-2"><a href="#" id="addAddressButton" class="button small secondary">Add</a></div>
+            <div class="cell small-3"><a href="#" id="addAddressButton" class="button small secondary padding-right-2 padding-left-2">Add</a></div>
         </div>
         <button class="close-button" data-close aria-label="Close modal" type="button">
             <span aria-hidden="true">&times;</span>

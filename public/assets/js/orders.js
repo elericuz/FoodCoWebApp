@@ -1,5 +1,5 @@
 $(function () {
-    $(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio').val('');
+    $(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio, #warehouse, #payment_method').val('');
     $(':checkbox, :radio').prop('checked', false);
 
     $('#date').fdatepicker({
@@ -143,9 +143,9 @@ function addNewRow(id, data) {
         "<td>" + data.quantity + "</td>" +
         "<td>" + data.unit_id.name + "</td>" +
         "<td>" + data.product_id.manufacturer_name + "</td>" +
-        "<td>" + data.unit_price + "</td>" +
-        "<td>" + data.total + "</td>" +
-        "<td>" +
+        "<td class='text-right'>" + data.unit_price.toFixed(2).toLocaleString() + "</td>" +
+        "<td class='text-right'>" + data.total.toFixed(2).toLocaleString() + "</td>" +
+        "<td class=\"actions\">" +
         "<div class=\"grid-x grid-margin-x\">" +
         "<div class=\"cell small-1\">" +
         "<div class=\"fi-trash\" onclick=\"removeRow('" + id + "')\"></div>" +

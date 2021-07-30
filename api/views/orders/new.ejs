@@ -15,6 +15,7 @@
     </div>
     <hr class="margin-bottom-1 hr-title-separator">
     <form method="POST" action="/orders/place/<%= order._id %>" id="placeOrderForm">
+        <input type="hidden" id="number" name="number" value="<%= _.padStart(order.number, 7, '0') %>">
         <div class="cell small-12">
             <div class="grid-x grid-margin-x">
                 <div class="cell medium-2 small-2 text-right text-vertical-center">Date</div>
@@ -22,8 +23,8 @@
                     <input type="text" id="date" name="date" class="input-text-1" required>
                 </div>
                 <div class="cell medium-2 small-2 text-right large-offset-3 text-vertical-center">Order #</div>
-                <div class="cell medium-2 small-3 fix-default-cell-margin">
-                    <input type="text" class="input-text-1" id="number" name="number" value="<%= _.padStart(order.number, 7, '0') %>" disabled>
+                <div class="cell medium-2 small-3 text-vertical-center font-bold">
+                    <%= _.padStart(order.number, 7, '0') %>
                 </div>
             </div>
             <div class="grid-x grid-margin-x margin-top-2 margin-bottom-2">
@@ -40,18 +41,20 @@
                 </div>
                 <div class="cell medium-2 small-2 text-right text-vertical-center">Warehouse</div>
                 <div class="cell medium-2 small-2 fix-default-cell-margin">
-                    <select id="warehouse" name="warehouse" class="input-text-2" onchange="getWarehouse();" required>
+                    <select id="warehouse" name="warehouse" class="input-text-2" autocomplete="off" onchange="getWarehouse();" required>
                         <option disabled selected>Select One</option>
                         <% warehouses.forEach(warehouse => { %>
                             <option value="<%= warehouse._id %>"><%= warehouse.name %></option>
                         <% }) %>
                     </select>
                 </div>
-                <div class="cell medium-3 small-2 text-vertical-center"><small>Select a Warehouse or add a custom address</small></div>
+                <div class="cell medium-3 small-2 text-vertical-center"><small>Select a Warehouse or add a custom
+                        address</small></div>
 
                 <div class="cell small-2 medium-2 text-right text-vertical-center">Shipping Address</div>
                 <div class="cell small-9 medium-9 fix-default-cell-margin">
-                    <input type="text" id="shipping_address" name="shipping_address" class="input-text-2" placeholder="Shipping Address" required>
+                    <input type="text" id="shipping_address" name="shipping_address" class="input-text-2"
+                           placeholder="Shipping Address" required>
                 </div>
                 <div class="cell small-1 medium-1"></div>
                 <div class="cell small-2 medium-2 text-right text-vertical-center">City</div>
@@ -64,22 +67,25 @@
                 </div>
                 <div class="cell small-2 medium-1 text-right text-vertical-center">Zipcode</div>
                 <div class="cell small-2 medium-2 text-vertical-center fix-default-cell-margin">
-                    <input type="text" name="zipcode" id="zipcode" placeholder="Zipcode" onfocusout="getCity();" class="input-text-2" required>
+                    <input type="text" name="zipcode" id="zipcode" placeholder="Zipcode" onfocusout="getCity();"
+                           class="input-text-2" required>
                 </div>
                 <div class="cell small-2 medium-2 text-right text-vertical-center">Contact</div>
                 <div class="cell small-4 medium-2 fix-default-cell-margin">
-                    <input type="text" id="contact" name="contact" class="input-text-2" placeholder="Contact Person" required>
+                    <input type="text" id="contact" name="contact" class="input-text-2" placeholder="Contact Person"
+                           required>
                 </div>
                 <div class="cell small-2 medium-2 text-right text-vertical-center">Phone Number</div>
                 <div class="cell small-3 medium-2 fix-default-cell-margin">
-                    <input type="text" id="phone" name="phone" class="input-text-2" placeholder="(xxx)xxx-xxxx" required>
+                    <input type="text" id="phone" name="phone" class="input-text-2" placeholder="(xxx)xxx-xxxx"
+                           required>
                 </div>
             </div>
             <div class="grid-x grid-margin-x">
                 <div class="cell small-2 medium-2 text-right text-vertical-center">Payment Method</div>
                 <div class="cell small-4 medium-2 fix-default-cell-margin">
-                    <select class="input-text-2" id="payment_method" name="payment_method" required>
-                        <option selected disabled>Select One</option>
+                    <select class="input-text-2" id="payment_method" name="payment_method" autocomplete="off" required>
+                        <option disabled selected>Select One</option>
                         <% paymentMethods.forEach(method => { %>
                             <option value="<%= method._id %>"><%= method.name %></option>
                         <% }) %>
@@ -92,9 +98,17 @@
                     <span class="label warning"><%= _.capitalize(order.status) %></span>
                 </div>
             </div>
-            <hr class="padding-top-1 margin-bottom-1 hr-title-separator">
-            <div class="cell small-12 text-right">
-                <a href="#" class="button small secondary" data-open="addProductModal" onclick="resetAddProductForm();">Add Products</a>
+            <hr class="padding-top-3 margin-bottom-3 hr-title-separator">
+            <div class="grid-x grid-margin-x">
+                <div class="cell small-7 medium-8">
+                    <h4 class="margin-bottom-0">
+                        <div class="fi-shopping-cart"> Products in the Order</div>
+                    </h4>
+                </div>
+                <div class="cell small-5 medium-4 text-right padding-top-1">
+                    <a class="button secondary small padding-right-2 padding-left-2" data-open="addProductModal"
+                       onclick="resetAddProductForm();">Add Products</a>
+                </div>
             </div>
             <div class="cell small-12">
                 <table class="table-striped" id="detailsTable">
@@ -103,8 +117,8 @@
                         <th class="small-1">Qty</th>
                         <th class="small-2">Unit</th>
                         <th class="small-6">Products</th>
-                        <th class="small-1">Unit Price</th>
-                        <th class="small-1">Price</th>
+                        <th class="small-1 text-center">Unit Price</th>
+                        <th class="small-1 text-center">Price</th>
                         <th class="small-1">&nbsp;</th>
                     </tr>
                     </thead>
@@ -116,7 +130,9 @@
         </div>
         <hr class="margin-bottom-1">
         <div class="cell small-2">
-            <button type="button" onclick="validateOrder();" class="button small secondary" id="placeOrderButton">Place Order</button>
+            <button type="button" onclick="validateOrder();" class="button small secondary" id="placeOrderButton">Place
+                Order
+            </button>
         </div>
     </form>
 </div>
@@ -128,7 +144,8 @@
         <div class="grid-x grid-margin-x">
             <div class="cell small-2 text-right text-vertical-center">Products</div>
             <div class="cell small-10 fix-default-cell-margin">
-                <select class="input-text-2" id="product" name="product_id" onselect="getUnits(this);" onchange="getUnits();" required data-msg="Please select a product">
+                <select class="input-text-2" id="product" name="product_id" onselect="getUnits(this);"
+                        onchange="getUnits();" required data-msg="Please select a product">
                     <option selected disabled>Select One</option>
                     <% products.forEach(product => { %>
                         <option value="<%= product._id %>"><%= product.manufacturer_name %></option>
@@ -139,11 +156,13 @@
         <div class="grid-x grid-margin-x">
             <div class="cell small-2 medium-2 text-right text-vertical-center">Quantity</div>
             <div class="cell small-4 medium-2">
-                <input type="number" min="1" id="quantity" name="quantity" class="input-text-1" value="1" onchange="if (this.value < 1) { this.value = 1; }" required>
+                <input type="number" min="1" id="quantity" name="quantity" class="input-text-1" value="1"
+                       onchange="if (this.value < 1) { this.value = 1; }" required>
             </div>
             <div class="cell small-1 medium-2 text-right text-vertical-center">Unit</div>
             <div class="cell small-3 medium-3 fix-default-cell-margin">
-                <select class="input-text-2" id="unit" name="unit_id" onchange="getPrice();" required data-msg="Please select a unit">
+                <select class="input-text-2" id="unit" name="unit_id" onchange="getPrice();" required
+                        data-msg="Please select a unit">
                     <option selected disabled>Select Unit</option>
                 </select>
             </div>
@@ -153,7 +172,8 @@
         </div>
         <div class="grid-x grid-margin-x">
             <div class="cell small-2 large-offset-8"><a href="#" class="button alert small" data-close
-                                                        aria-label="Close modal" onclick="resetAddProductForm();">Cancel</a></div>
+                                                        aria-label="Close modal"
+                                                        onclick="resetAddProductForm();">Cancel</a></div>
             <div class="cell small-2"><a href="#" id="addButton" class="button small secondary">Add</a></div>
         </div>
         <button class="close-button" data-close aria-label="Close modal" type="button" onclick="resetAddProductForm()">
