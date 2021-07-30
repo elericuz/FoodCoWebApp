@@ -6,9 +6,68 @@
     transform: translate(-50%, -50%);
 }
 
+.divider {
+    border-right: 1px solid #d4dadf;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #384D59;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #384D59;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #384D59;
+}
+
 body {
-    font-size: 0.8em;
-    color: #0D0D0D;
+    font-size: 12px;
+    color: #384D59;
+    font-family: 'Poppins', sans-serif;
+}
+
+.login-img-div {
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/img/thomas-le-pRJhn4MbsMM-unsplash.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 0;
+}
+
+.signup-img-div {
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/img/margaret-jaszowska-cdD6LIGQ2nY-unsplash.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 0;
+}
+
+h3.title {
+    font-family: 'Poppins', sans-serif;
+    color: #384D59 !important;
+}
+
+.callout.alert.login {
+    visibility: hidden;
+    min-height: 110px;
+    background-color: #f9f9f9;
+}
+
+input {
+    font-size: 13px !important;
+    padding: 0 !important;
+    background-color: transparent !important;
+    border: 0 !important;
+    border-bottom-color: currentcolor !important;
+    border-bottom-style: none !important;
+    border-bottom-width: 0px !important;
+    border-bottom: 1px solid #d4dadf !important;
+    box-shadow: 0 1px 0 transparent !important;
 }
 
 thead {
@@ -30,7 +89,7 @@ h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h4 small, .h4 sma
 }
 
 .sign-in-up-box {
-    background-color: #ffbb5e;
+    background-color: #FFF;
 }
 
 .sign-in-up-box h3 {
@@ -45,20 +104,24 @@ h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h4 small, .h4 sma
 }
 
 .sign-in-up-box .click-here {
-    color: #0D0D0D;
+    color: #e9e9e9;
 }
 
 .sign-in-up-box .logo-container {
     background-color: #FFFFFF;
 }
 
+div .click-here {
+    background-color: #1a82e2;
+}
+
 div .click-here a,
 div .click-here a:visited {
-    color: #ba5c00;
+    color: #fff;
 }
 
 div .click-here a:hover {
-    color: #ba5c00;
+    color: #fff;
 }
 
 .user-account {
@@ -129,11 +192,11 @@ div .click-here a:hover {
 }
 
 .button.secondary {
-    background-color: #f2882c;
+    background-color: #1a82e2;
 }
 
 .button.secondary:hover, .button.secondary:focus {
-    background-color: #ffb95c;
+    background-color: #085fb0;
 }
 
 .button.hollow,
