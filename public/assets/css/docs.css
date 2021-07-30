@@ -43,6 +43,17 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+h1, h2, h3, h4, h5, h6, h7 {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 0.5rem !important;
+    font-style: italic;
+    color: #094a85;
+}
+
+.button {
+    border-radius: 6px;
+}
+
 .login-img-div {
     width: 100%;
     height: 100%;
@@ -85,8 +96,51 @@ input {
 }
 
 thead {
-    background-color: #ba5a00;
-    color: #FFFFFF;
+    background-color: #FFF;
+    color: #384D59;
+    border: 0 !important;
+    vertical-align: bottom;
+}
+
+thead tr, tfoot tr {
+    height: 60px;
+    font-size: 13px;
+}
+
+tbody {
+    border: 1px solid #f1f1f1;
+    background-color: #ffffff;
+}
+
+tbody tr {
+    font-size: 13px;
+}
+
+tbody tr:nth-child(2n) {
+    background-color: #f7f7f7;
+}
+
+td.actions, td.features {
+    font-size: 16px;
+    color: #384D59;
+}
+
+td.actions a, td.actions:hover, td.actions:visited {
+    font-size: 16px;
+    color: #384D59;
+}
+
+td.actions div.fi-trash {
+    color: #92211f;
+    font-size: 16px;
+}
+
+td.actions div.fi-eye {
+    font-size: 20px;
+}
+
+td.actions div.fi-eye a {
+    font-size: 13px;
 }
 
 footer {
@@ -135,7 +189,7 @@ h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h4 small, .h4 sma
 }
 
 .sign-in-up-box .click-here {
-    color: #e9e9e9;
+    color: #384D59;
 }
 
 .sign-in-up-box .logo-container {
@@ -143,16 +197,16 @@ h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h4 small, .h4 sma
 }
 
 div .click-here {
-    background-color: #1a82e2;
+    background-color: #f7f7f7;
 }
 
 div .click-here a,
 div .click-here a:visited {
-    color: #fff;
+    color: #1a82e2;
 }
 
 div .click-here a:hover {
-    color: #fff;
+    color: #384D59;
 }
 
 .user-account {
@@ -171,7 +225,7 @@ div .click-here a:hover {
 }
 
 .top-bar a, a:hover, .top-bar a:focus {
-    color: #384D59;
+    color: #094a85;
 }
 
 .logout a, .logout a:hover, .logout a:focus {
