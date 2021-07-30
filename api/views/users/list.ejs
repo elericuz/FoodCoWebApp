@@ -44,9 +44,9 @@
                 <td><%= user.email_address %></td>
                 <td><%= client %></td>
                 <td><%= user.type_id.name %></td>
-                <td>
-                    <a href="#" class="fi-page-edit" style="margin-top: 10px" onclick="resetUserForm(); $('#userModal').foundation('open'); getUser('<%= user._id %>')">
-                    <a href="#" class="fi-trash" style="margin-top: 10px" onclick="deleteUser('<%= user._id %>')">
+                <td class="text-center actions">
+                    <div class="fi-page-edit display-inline padding-right-1" onclick="resetUserForm(); $('#userModal').foundation('open'); getUser('<%= user._id %>')"></div>
+                    <div class="fi-trash display-inline" onclick="deleteUser('<%= user._id %>')"></div>
                 </td>
             </tr>
             <% }); %>

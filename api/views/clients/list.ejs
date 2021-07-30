@@ -44,7 +44,7 @@
                     <td><%= client.commercial_name %></td>
                     <td><%= client.email %></td>
                     <td><%= client.phone %></td>
-                    <td class="text-center">
+                    <td class="text-center actions">
                         <div class="fi-page-edit display-inline padding-right-1" onclick="$('#addClientModal').foundation('open'); getClient('<%= client._id %>')"></div>
                         <div class="fi-trash display-inline" onclick="removeClient('<%= client._id %>')"></div>
                     </td>

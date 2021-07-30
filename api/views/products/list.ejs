@@ -12,7 +12,7 @@
                 <h2 class="margin-bottom-0">Products</h2>
             </div>
             <div class="cell small-5 medium-2 text-right padding-top-1">
-                <a class="button secondary small" data-open="addProductModal" onclick="resetProductForm();">Add new Product</a>
+                <a class="button secondary small padding-left-2 padding-right-2" data-open="addProductModal" onclick="resetProductForm();">Add new Product</a>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
         </button>
     </div>
     <div class="cell small-12">
-        <table class="stack" id="productTable">
+        <table class="stack margin-top-1" id="productTable">
             <thead>
             <tr>
                 <th class="small-2 medium-1">Code</th>
@@ -43,8 +43,8 @@
                     <td><%= product.manufacturer_id %></td>
                     <td><%= product.manufacturer_name %></td>
                     <td><%= product.manufacturer_brand_name %></td>
-                    <td class="text-center"><% if (product.inactive) { %><div class="fi-check"></div><% } else { %>&nbsp;<% } %></td>
-                    <td class="text-center">
+                    <td class="text-center features"><% if (product.inactive) { %><div class="fi-check"></div><% } else { %>&nbsp;<% } %></td>
+                    <td class="text-center actions">
                         <div class="fi-page-edit display-inline padding-right-1" onclick="$('#addProductModal').foundation('open'); getProduct('<%= product._id %>')"></div>
                         <div class="fi-trash display-inline" onclick="removeProduct('<%= product._id %>')"></div>
                     </td>
