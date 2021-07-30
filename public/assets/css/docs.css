@@ -424,3 +424,8 @@ table.table-condensed {
 .datepicker td span.active {
     background-color: #e9e9e9;
 }
+
+.callout.success {
+    background-color: #f7f7f7;
+    color: #0c3d5d;
+}

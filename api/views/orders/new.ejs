@@ -15,6 +15,7 @@
     </div>
     <hr class="margin-bottom-1 hr-title-separator">
     <form method="POST" action="/orders/place/<%= order._id %>" id="placeOrderForm">
+        <input type="hidden" id="number" name="number" value="<%= _.padStart(order.number, 7, '0') %>">
         <div class="cell small-12">
             <div class="grid-x grid-margin-x">
                 <div class="cell medium-2 small-2 text-right text-vertical-center">Date</div>
@@ -22,9 +23,8 @@
                     <input type="text" id="date" name="date" class="input-text-1" required>
                 </div>
                 <div class="cell medium-2 small-2 text-right large-offset-3 text-vertical-center">Order #</div>
-                <div class="cell medium-2 small-3 fix-default-cell-margin">
-                    <input type="text" class="input-text-1" id="number" name="number"
-                           value="<%= _.padStart(order.number, 7, '0') %>" disabled>
+                <div class="cell medium-2 small-3 text-vertical-center font-bold">
+                    <%= _.padStart(order.number, 7, '0') %>
                 </div>
             </div>
             <div class="grid-x grid-margin-x margin-top-2 margin-bottom-2">
@@ -117,8 +117,8 @@
                         <th class="small-1">Qty</th>
                         <th class="small-2">Unit</th>
                         <th class="small-6">Products</th>
-                        <th class="small-1">Unit Price</th>
-                        <th class="small-1">Price</th>
+                        <th class="small-1 text-center">Unit Price</th>
+                        <th class="small-1 text-center">Price</th>
                         <th class="small-1">&nbsp;</th>
                     </tr>
                     </thead>

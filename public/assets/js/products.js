@@ -65,7 +65,7 @@ function addNewProduct(data) {
         "<td>" + data.manufacturer_name + "</td>" +
         "<td>" + data.manufacturer_brand_name + "</td>" +
         "<td class=\"text-center\">" + inactive + "</td>" +
-        "<td class=\"text-center\">" +
+        "<td class=\"text-center actions\">" +
         "<div class=\"fi-page-edit display-inline padding-right-1\" onclick=\"$('#addProductModal').foundation('open'); getProduct('" + data._id + "')\"></div>" +
         "<div class=\"fi-trash display-inline\" onclick=\"removeProduct('" + data._id + "')\"></div>" +
         "</td>";
@@ -182,7 +182,7 @@ function updateProduct(data) {
         "<td>" + data.manufacturer_name + "</td>" +
         "<td>" + data.manufacturer_brand_name + "</td>" +
         "<td class=\"text-center\">" + inactive + "</td>" +
-        "<td class=\"text-center\">" +
+        "<td class=\"text-center actions\">" +
         "<div class=\"fi-page-edit display-inline padding-right-1\" onclick=\"$('#addProductModal').foundation('open'); getProduct('" + data._id + "')\"></div>" +
         "<div class=\"fi-trash display-inline\" onclick=\"removeProduct('" + data._id + "')\"></div>" +
         "</td>";

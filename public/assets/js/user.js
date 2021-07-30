@@ -59,10 +59,9 @@ function addNewUser(data) {
         "<td>" + data.email_address + "</td>" +
         "<td>" + data.type_id.name + "</td>" +
         "<td>" + data.client_id.name + "</td>" +
-        "<td><a href=\"#\" class=\"fi-page-edit\" " +
-        "       style=\"margin-top: 10px\"" +
-        "       onclick=\"$('#userModal').foundation('open'); getUser('" + data._id + "')\">" +
-        "   <a href=\"#\" class=\"fi-trash\" style=\"margin-top: 10px\" onclick=\"deleteUser('" + data._id + "')\">" +
+        "<td class='text-center actions'>" +
+        "   <div class=\"fi-page-edit display-inline padding-right-1\" onclick=\"resetUserForm(); $('#userModal').foundation('open'); getUser('" + data._id + "')\"></div>" +
+        "   <div class=\"fi-trash display-inline\" onclick=\"deleteUser('" + data._id + "')\"></div>" +
         "</td>" +
         "</td>";
 }
@@ -128,10 +127,9 @@ function updateUser(data) {
         "<td>" + data.email_address + "</td>" +
         "<td>" + data.type_id.name + "</td>" +
         "<td>" + client + "</td>" +
-        "<td><a href=\"#\" class=\"fi-page-edit\" " +
-        "       style=\"margin-top: 10px\"" +
-        "       onclick=\"$('#userModal').foundation('open'); getUser('" + data._id + "')\">" +
-        "   <a href=\"#\" class=\"fi-trash\" style=\"margin-top: 10px\" onclick=\"deleteUser('" + data._id + "')\">" +
+        "<td class='text-center actions'>" +
+        "   <div class=\"fi-page-edit display-inline padding-right-1\" onclick=\"resetUserForm(); $('#userModal').foundation('open'); getUser('" + data._id + "')\"></div>" +
+        "   <div class=\"fi-trash display-inline\" onclick=\"deleteUser('" + data._id + "')\"></div>" +
         "</td>" +
         "</td>";
 }

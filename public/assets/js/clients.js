@@ -40,7 +40,6 @@ saveButton.addEventListener('click', (e) => {
         }
     });
     if (validator.form() === false) {
-        validator.destroy();
         return false;
     }
 
@@ -98,7 +97,7 @@ function addNewClient(data) {
         "<td>" + data.commercial_name + "</td>" +
         "<td>" + data.email + "</td>" +
         "<td>" + data.phone + "</td>" +
-        "<td class=\"text-center\">" +
+        "<td class=\"text-center actions\">" +
         "<div class=\"fi-page-edit display-inline padding-right-1\" onclick=\"$('#addClientModal').foundation('open'); getClient('" + data._id + "')\"></div>" +
         "<div class=\"fi-trash display-inline\" onclick=\"removeClient('" + data._id + "')\"></div>" +
         "</td>";
@@ -165,7 +164,7 @@ function updateClient(data) {
         "<td>" + document.getElementById('commercial_name').value + "</td>" +
         "<td>" + document.getElementById('email').value + "</td>" +
         "<td>" + document.getElementById('phone').value + "</td>" +
-        "<td class=\"text-center\">" +
+        "<td class=\"text-center actions\">" +
         "<div class=\"fi-page-edit display-inline padding-right-1\" onclick=\"$('#addClientModal').foundation('open'); getClient('" + data._id + "')\"></div>" +
         "<div class=\"fi-trash display-inline\" onclick=\"removeClient('" + data._id + "')\"></div>" +
         "</td>";
