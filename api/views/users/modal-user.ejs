@@ -2,48 +2,41 @@
     <input type="hidden" name="idUser" id="idUser" value="">
     <h3>User</h3>
     <hr>
+    <h5 class="padding-bottom-1">Add or Edit a User</h5>
     <div class="grid-x grid-margin-x">
-        <div class="cell small-3 medium-2">Name</div>
-        <div class="cell small-3 medium-4">
+        <div class="cell small-3 medium-5 medium-offset-1">
             <input type="text" class="input-text-2" id="name" name="name" placeholder="Name" required>
         </div>
-        <div class="cell small-3 medium-2">Lastname</div>
-        <div class="cell small-3 medium-4">
+        <div class="cell small-3 medium-5 medium-offset-1">
             <input type="text" class="input-text-2" id="lastname" name="lastname" placeholder="Lastname">
         </div>
-        <div class="cell small-3 medium-2">Email Address</div>
-        <div class="cell small-3 medium-4">
-            <input type="text" class="input-text-2" id="email_address" name="email_address" placeholder="Email Address" required>
+        <div class="cell small-3 medium-5 medium-offset-1">
+            <input type="text" class="input-text-2" id="email_address" autocomplete="off" name="email_address" placeholder="Email Address" required>
         </div>
-        <div class="cell small-3 medium-2">Phone</div>
-        <div class="cell small-3 medium-4">
+        <div class="cell small-3 medium-5 medium-offset-1">
             <input type="text" class="input-text-2" id="phonenumber" name="phonenumber" placeholder="Phone">
         </div>
-        <div class="cell small-3 medium-2">New Password</div>
-        <div class="cell small-3 medium-4">
-            <input type="password" class="input-text-2" id="password" name="password" placeholder="New Password">
+        <div class="cell small-3 medium-5 medium-offset-1">
+            <input type="password" class="input-text-2" id="password" autocomplete="new-password" name="password" placeholder="New Password">
         </div>
-        <div class="cell small-6 medium-6">&nbsp;</div>
-        <div class="cell small-3 medium-2">User Type</div>
-        <div class="cell small-3 medium-4">
+        <div class="cell small-6 medium-7">&nbsp;</div>
+        <div class="cell small-3 medium-5 medium-offset-1">
             <select name="type_id" id="type_id" class="input-text-2" required>
-                <option selected disabled>Select One</option>
+                <option selected disabled>Select One User Type</option>
                 <% userTypes.forEach(type => { %>
                     <option value="<%= type._id %>"><%= type.name %></option>
                 <% }); %>
             </select>
         </div>
-        <div class="cell small-3 medium-2">Client</div>
-        <div class="cell small-3 medium-4">
+        <div class="cell small-3 medium-5 medium-offset-1">
             <select name="client_id" id="client_id" class="input-text-2" required>
-                <option selected disabled>Select One</option>
+                <option selected disabled>Select One Client</option>
                 <% clients.forEach(client => { %>
                     <option value="<%= client._id %>"><%= client.name %></option>
                 <% }); %>
             </select>
         </div>
-        <div class="cell small-3 medium-2">Status</div>
-        <div class="cell small-3 medium-4">
+        <div class="cell small-3 medium-5 medium-offset-1">
             <select name="status" id="status" class="input-text-2" required>
                     <option value="true" selected>Active</option>
                     <option value="false">Inactive</option>
@@ -51,10 +44,10 @@
         </div>
     </div>
     <div class="grid-x">
-        <div class="cell small-2 small-offset-8 text-right padding-right-1">
-            <a href="#" class="button alert small" data-close aria-label="Close modal">Cancel</a>
+        <div class="cell small-3 small-offset-6 text-right padding-right-1">
+            <a href="#" class="button alert small padding-left-2 padding-right-2" data-close aria-label="Close modal">Cancel</a>
         </div>
-        <div class="cell small-2"><a href="#" id="saveButton" class="button small secondary">Save</a></div>
+        <div class="cell small-3"><a href="#" id="saveButton" class="button small secondary padding-left-2 padding-right-2">Save</a></div>
     </div>
     <button class="close-button" data-close aria-label="Close modal" type="button">
         <span aria-hidden="true">&times;</span>
