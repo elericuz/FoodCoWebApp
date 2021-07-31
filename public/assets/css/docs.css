@@ -276,7 +276,7 @@ div .click-here a:hover {
     color: #cc4b37;
     border: 0;
     background-color: #f7f7f7 !important;
-    z-index: 200;
+    z-index: 400;
 }
 
 .tabs-title {
@@ -370,7 +370,7 @@ a.user-account-in-canvas {
 }
 
 .drilldown .is-drilldown-submenu-parent > a::after {
-    border-color: transparent transparent transparent #FFFFFF;
+    border-color: transparent transparent transparent #0c3d5d;
 }
 
 .drilldown .is-drilldown-submenu.is-active,
@@ -521,4 +521,8 @@ table.stack td {
 
 .close-main-result-container a:hover {
     color: #a4a4a4;
+}
+
+.elevate-navbar {
+    z-index: 250 !important;
 }
