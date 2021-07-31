@@ -197,6 +197,45 @@ exports.getProductPrice = async (req, res, next) => {
     })
 }
 
+exports.searchProduct = async (req, res, next) => {
+    let text = req.params.text;
+
+    const products = await Product.find({
+        $or: [
+            { 'manufacturer_id': { $regex: text, $options: 'i' } },
+            { 'spanish_name': { $regex: text, $options: 'i' } },
+            { 'manufacturer_name': { $regex: text, $options: 'i' } },
+            { 'manufacturer_brand_name': { $regex: text, $options: 'i' } },
+            { 'manufacturer_part_number': { $regex: text, $options: 'i' } }
+        ]
+    })
+        .select('manufacturer_name')
+        .sort({'manufacturer_name': 'asc'})
+        .limit(20)
+        .then(result => {
+            let response = {
+                status: 'no-results',
+                message: 'Product not found'
+            };
+
+            if (result.length > 0) {
+                response = {
+                    status: 'success',
+                    data: result
+                }
+
+            }
+
+            res.status(201).json(response)
+        })
+        .catch(err => {
+            res.status(400).json({
+                status: 'failed',
+                message: 'Something went wrong'
+            })
+        })
+}
+
 async function saveProduct(data) {
     let lastCodeNumber = await getLastCodeNumber();
     let nextCodeNumber = lastCodeNumber.code + 1;

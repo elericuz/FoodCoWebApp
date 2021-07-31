@@ -24,8 +24,8 @@
 }
 
 .off-canvas {
-    background: rgb(231,231,231);
-    background: linear-gradient(0deg, rgba(231,231,231,1) 0%, rgba(239,239,239,1) 35%, rgba(247,247,247,1) 45%, rgba(250,250,250,1) 100%);
+    background: rgb(231, 231, 231);
+    background: linear-gradient(0deg, rgba(231, 231, 231, 1) 0%, rgba(239, 239, 239, 1) 35%, rgba(247, 247, 247, 1) 45%, rgba(250, 250, 250, 1) 100%);
 }
 
 .off-canvas-menu-title {
@@ -183,8 +183,8 @@ h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h4 small, .h4 sma
 }
 
 .top-bar {
-    background: rgb(231,231,231);
-    background: linear-gradient(90deg, rgba(231,231,231,1) 0%, rgba(239,239,239,1) 35%, rgba(247,247,247,1) 45%, rgba(247,247,247,1) 100%);
+    background: rgb(231, 231, 231);
+    background: linear-gradient(90deg, rgba(231, 231, 231, 1) 0%, rgba(239, 239, 239, 1) 35%, rgba(247, 247, 247, 1) 45%, rgba(247, 247, 247, 1) 100%);
     padding: 6px 3px;
     font-size: 1.1em;
 }
@@ -256,7 +256,8 @@ div .click-here a:hover {
 
 .menu .is-active > a {
     background: #1a82e2;
-    color: #FFFFFF; }
+    color: #FFFFFF;
+}
 
 .dropdown.menu > li.is-dropdown-submenu-parent > a {
     color: #1a82e2;
@@ -279,12 +280,18 @@ div .click-here a:hover {
 }
 
 .tabs-title {
-    float: left; }
+    float: left;
+}
+
 .tabs-title > a {
-    color: #384D59; }
+    color: #384D59;
+}
+
 .tabs-title > a:hover {
     background-color: #dedede;
-    color: #384D59; }
+    color: #384D59;
+}
+
 .tabs-title > a:focus, .tabs-title > a[aria-selected='true'] {
     background-color: #dedede;
     color: #384D59;
@@ -375,7 +382,7 @@ a.user-account-in-canvas {
     padding-right: 20px;
 }
 
-.user-account a.wrapped-user-account-option{
+.user-account a.wrapped-user-account-option {
     background-color: #708690;
     border-top: solid #FFF 1px;
 }
@@ -428,4 +435,54 @@ table.table-condensed {
 .callout.success {
     background-color: #f7f7f7;
     color: #0c3d5d;
+}
+
+.latest-container {
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    border: 0.07em solid #c4c4c4;
+}
+
+.latest-list {
+    font-size: 15px;
+    margin: 7px 0;
+}
+
+.search-container {
+    font-size: 13px;
+    position: relative;
+}
+
+.search-icon {
+    width: 20%;
+    height: 20%;
+    background-image: url('/assets/img/search-icon.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 0;
+}
+
+#search-results-container {
+    visibility: hidden;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    max-height: 200px;
+    overflow-y: scroll;
+    background-color: #fcfcfc;
+    border: 0.07em solid #c4c4c4;
+}
+
+.search-result-item-container {
+    font-size: 15px;
+    margin: 7px 0;
+}
+
+a div.result-item {
+    color: #384D59;
+}
+
+a div.result-item:hover {
+    background:#1a82e2;
+    color: #FFFFFF;
 }
