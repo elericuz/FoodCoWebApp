@@ -19,7 +19,7 @@ loginButton.addEventListener('click', (e) => {
                 document.getElementById('message').innerHTML = result.message;
                 document.getElementById('alertContainer').style.visibility = 'visible';
             } else {
-                location.assign('/orders');
+                location.assign('/dashboard');
             }
         })
         .catch(err => {

@@ -1,10 +1,10 @@
 const morgan = require('morgan');
 const express = require('express');
-const Item = require('./api/models/items');
 const moment = require('moment');
 const lodash = require('lodash');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const checkAuth = require('./api/middleware/check-auth');
 
 // App
 const app = express();
@@ -38,31 +38,6 @@ app.use((req, res, next) => {
     next();
 })
 
-app.get('/show-items', (req, res, next) => {
-    const item = new Item({
-        name: 'apple',
-        code: '1234'
-    })
-
-    item.save()
-        .then((result) => {
-            res.send(result)
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-});
-
-app.get('/item/:id', (req, res, next) => {
-    Item.findById(req.params.id)
-        .then((result) => {
-            res.send(result);
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-});
-
 //static files
 app.use(express.static('public'));
 
@@ -71,7 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const HomeController = require('./api/controllers/home')
 app.get('/', HomeController.index)
-app.get('/dashboard', HomeController.dashboard);
+app.get('/dashboard', checkAuth, HomeController.dashboard);
 
 const userRoutes = require('./api/routes/user');
 app.use('/user', userRoutes);
