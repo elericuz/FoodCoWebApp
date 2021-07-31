@@ -13,14 +13,14 @@
         <hr>
         <div class="cell small-12">
             <div class="grid-x grid-padding-x">
-                <div class="cell small-8">
+                <div class="cell small-12 medium-8">
                     <div class="grid-x grid-padding-x">
-                        <div class="cell small-12">
+                        <div class="cell medium-12">
                             <h4>
                                 <div class="fi-clipboard-notes"> Last Orders</div>
                             </h4>
                         </div>
-                        <div class="cell small-12">
+                        <div class="cell medium-12">
                             <table class="stack">
                                 <thead>
                                 <tr>
@@ -48,7 +48,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="cell small-12">
+                        <div class="cell medium-12">
                             <div class="float-left"><a href="/orders/new">
                                     <div class="fi-plus"> Create a new Order</div>
                                 </a></div>
@@ -59,12 +59,12 @@
                     </div>
                     <hr>
                     <div class="grid-x grid-padding-x">
-                        <div class="cell small-12">
+                        <div class="cell medium-12">
                             <h4>
                                 <div class="fi-ticket"> Last Invoices</div>
                             </h4>
                         </div>
-                        <div class="cell small-12">
+                        <div class="cell medium-12">
                             <table class="stack">
                                 <thead>
                                 <tr>
@@ -93,64 +93,64 @@
                             </table>
                         </div>
                     </div>
-                    <div class="cell small-12 text-right">
+                    <div class="cell medium-12 text-right">
                         <a href="/orders">See More Invoices</a>
                     </div>
                 </div>
-                <div class="cell small-4">
+                <div class="cell medium-4">
                     <div class="grid-x grid-padding-x">
-                        <div class="cell small-12 padding-1">
+                        <div class="cell medium-12 padding-1">
                             <div class="grid-x grid-padding-x search-container">
-                                <div class="cell small-2 padding-top-1">Search</div>
-                                <div class="cell small-8 text-vertical-center">
+                                <div class="cell medium-2 padding-top-1">Search</div>
+                                <div class="cell medium-8 text-vertical-center">
                                     <input type="text" name="search" id="search" onclick="showResult();"
                                            onkeyup="showResult()" onfocusout="hideResults();" value=""
                                            autocomplete="off" placeholder="Product">
                                 </div>
-                                <div class="cell small-1 margin-top-1 search-icon">&nbsp;</div>
-                                <div class="cell small-8 small-offset-2 padding-0" id="search-results-container"></div>
+                                <div class="cell medium-1 margin-top-1 search-icon">&nbsp;</div>
+                                <div class="cell medium-8 medium-offset-2 padding-0 dashboard-results-container" id="search-results-container"></div>
                             </div>
                         </div>
-                        <div class="cell small-12 margin-bottom-1 padding-1 latest-container">
+                        <div class="cell medium-12 margin-bottom-1 padding-1 latest-container">
                             <h4 class="margin-0">
                                 <div class="fi-burst-new"> Latest Products Added</div>
                             </h4>
                             <% latestProducts.forEach((item, index) => { %>
                                 <div class="grid-x latest-list">
-                                    <div class="cell small-1 text-center"><%= index + 1 %></div>
-                                    <div class="cell small-8"><%= item.manufacturer_name %></div>
-                                    <div class="cell small-3 text-right"><%= moment(item.createdAt).format('MMM DD, YYYY') %></div>
+                                    <div class="cell medium-1 text-center"><%= index + 1 %></div>
+                                    <div class="cell medium-8"><%= item.manufacturer_name %></div>
+                                    <div class="cell medium-3 text-right"><%= moment(item.createdAt).format('MMM DD, YYYY') %></div>
                                 </div>
                             <% }) %>
                         </div>
-                        <div class="cell small-12 margin-bottom-1 padding-1 latest-container">
+                        <div class="cell medium-12 margin-bottom-1 padding-1 latest-container">
                             <h4 class="margin-0">
                                 <div class="fi-burst-sale"> Most Popular Products</div>
                             </h4>
                             <div class="grid-x latest-list">
-                                <div class="cell small-1 text-center">1</div>
-                                <div class="cell small-8">Cucumber</div>
-                                <div class="cell small-2">07-30-2021</div>
+                                <div class="cell medium-1 text-center">1</div>
+                                <div class="cell medium-8">Cucumber</div>
+                                <div class="cell medium-2">07-30-2021</div>
                             </div>
                             <div class="grid-x latest-list">
-                                <div class="cell small-1 text-center">2</div>
-                                <div class="cell small-8">Apple</div>
-                                <div class="cell small-2">07-30-2021</div>
+                                <div class="cell medium-1 text-center">2</div>
+                                <div class="cell medium-8">Apple</div>
+                                <div class="cell medium-2">07-30-2021</div>
                             </div>
                             <div class="grid-x latest-list">
-                                <div class="cell small-1 text-center">3</div>
-                                <div class="cell small-8">Potato Idaho</div>
-                                <div class="cell small-2">07-30-2021</div>
+                                <div class="cell medium-1 text-center">3</div>
+                                <div class="cell medium-8">Potato Idaho</div>
+                                <div class="cell medium-2">07-30-2021</div>
                             </div>
                             <div class="grid-x latest-list">
-                                <div class="cell small-1 text-center">4</div>
-                                <div class="cell small-8">Mushrooms</div>
-                                <div class="cell small-2">07-30-2021</div>
+                                <div class="cell medium-1 text-center">4</div>
+                                <div class="cell medium-8">Mushrooms</div>
+                                <div class="cell medium-2">07-30-2021</div>
                             </div>
                             <div class="grid-x latest-list">
-                                <div class="cell small-1 text-center">5</div>
-                                <div class="cell small-8">Pepper Jalapeno</div>
-                                <div class="cell small-2">07-30-2021</div>
+                                <div class="cell medium-1 text-center">5</div>
+                                <div class="cell medium-8">Pepper Jalapeno</div>
+                                <div class="cell medium-2">07-30-2021</div>
                             </div>
                         </div>
                     </div>
@@ -162,7 +162,7 @@
 
 <%- include('./partials/footer.ejs') %>
 <%- include('./partials/scripts.ejs') %>
-<script src="/assets/js/dashboard.js"></script>
+<script src="/assets/js/misc.js"></script>
 
 </body>
 </html>
