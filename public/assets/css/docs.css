@@ -462,15 +462,29 @@ table.table-condensed {
     border: 0;
 }
 
-#search-results-container {
+.dashboard-results-container {
     visibility: hidden;
     position: absolute;
     top: 50px;
     left: 0;
-    max-height: 200px;
-    overflow-y: scroll;
-    background-color: #fcfcfc;
+    z-index: 200;
+    background-color: #fbfbfb;
     border: 0.07em solid #c4c4c4;
+}
+
+#main-results-container {
+    visibility: hidden;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    z-index: 200;
+    background-color: #fbfbfb;
+    border: 0.07em solid #c4c4c4;
+}
+
+#search-results-container {
+    overflow-y: scroll;
+    max-height: 200px;
 }
 
 .search-result-item-container {
@@ -485,4 +499,26 @@ a div.result-item {
 a div.result-item:hover {
     background:#1a82e2;
     color: #FFFFFF;
+}
+
+table.stack td {
+    text-align: left !important;
+}
+
+.margin-top-half {
+    margin-top: 0.5rem !important
+}
+
+.close-main-result-container {
+    padding: 5px 10px;
+}
+
+.close-main-result-container a {
+    font-size: 14px;
+    text-decoration: underline;
+    color: #7a7a7a;
+}
+
+.close-main-result-container a:hover {
+    color: #a4a4a4;
 }
