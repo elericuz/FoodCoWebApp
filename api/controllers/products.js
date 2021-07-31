@@ -200,13 +200,17 @@ exports.getProductPrice = async (req, res, next) => {
 exports.searchProduct = async (req, res, next) => {
     let text = req.params.text;
 
-    const products = await Product.find({
-        $or: [
-            { 'manufacturer_id': { $regex: text, $options: 'i' } },
-            { 'spanish_name': { $regex: text, $options: 'i' } },
-            { 'manufacturer_name': { $regex: text, $options: 'i' } },
-            { 'manufacturer_brand_name': { $regex: text, $options: 'i' } },
-            { 'manufacturer_part_number': { $regex: text, $options: 'i' } }
+    await Product.find({
+        $and: [
+            { status: true },
+            { $or: [
+                    { 'manufacturer_id': { $regex: text, $options: 'i' } },
+                    { 'spanish_name': { $regex: text, $options: 'i' } },
+                    { 'manufacturer_name': { $regex: text, $options: 'i' } },
+                    { 'manufacturer_brand_name': { $regex: text, $options: 'i' } },
+                    { 'manufacturer_part_number': { $regex: text, $options: 'i' } }
+                ]
+            }
         ]
     })
         .select('manufacturer_name')
