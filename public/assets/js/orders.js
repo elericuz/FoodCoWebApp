@@ -1,5 +1,5 @@
 $(function () {
-    $(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio, #warehouse, #payment_method').val('');
+    $(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio, #client, #warehouse, #payment_method').val('');
     $(':checkbox, :radio').prop('checked', false);
 
     $('#date').fdatepicker({
@@ -99,6 +99,28 @@ function getWarehouse() {
             $('#zipcode').val(result.data.address.zipcode);
             $('#contact').val(result.data.contact);
             $('#phone').val(result.data.phone);
+        })
+        .catch(err => console.log(err));
+}
+
+function getWarehouseByClient() {
+    let selected = $('#client').val();
+    const endpoint = '/clients/warehouses/' + selected;
+    fetch(endpoint, {method: 'POST'})
+        .then(response => response.json())
+        .then((result) => {
+            let $dropdown = $("#warehouse");
+            $dropdown.empty();
+            $('#shipping_address').val("");
+            $('#city').val("");
+            $('#state').val("");
+            $('#zipcode').val("");
+            $dropdown.append($("<option selected disabled>Select One</option>"));
+            $.each(result.data, function() {
+                $dropdown.append($("<option />")
+                    .val(this._id)
+                    .text(this.name));
+            });
         })
         .catch(err => console.log(err));
 }

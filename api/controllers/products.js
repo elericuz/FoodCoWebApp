@@ -186,7 +186,6 @@ exports.getProductPrice = async (req, res, next) => {
     })
         .select('-_id price')
         .then(result => {
-            console.log(result);
             return result.price;
         })
         .catch(err => console.log(err));

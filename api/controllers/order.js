@@ -9,19 +9,31 @@ const Unit = require('../models/units');
 const PaymentMethod = require('../models/payment_method');
 const ProductPrices = require('../models/product_prices');
 const User = require('../models/users');
+const Client = require('../models/clients');
 const jwt = require('jsonwebtoken');
 
 exports.listAll = async (req, res, next) => {
     const token = req.cookies.userToken;
     let tokenDecoded = jwt.decode(token);
 
+    const clientUser = await User.findById(tokenDecoded.userId)
+        .select('client_id -_id')
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+
     let criteria = { status: 'open' };
-    if (_.lowerCase(req.userType) !== _.lowerCase('admin') &&
-        _.lowerCase(req.userType) !== _.lowerCase('seller') &&
-        _.lowerCase(req.userType) !== _.lowerCase('manager') &&
-        _.lowerCase(req.userType) !== _.lowerCase('supervisor') &&
-        _.lowerCase(req.userType) !== _.lowerCase('developer')) {
-        criteria = {...criteria, user: tokenDecoded.userId};
+    if (!req.admin) {
+        criteria = {
+            $and: [
+                { status: 'open' },
+                { $or: [
+                    { user: tokenDecoded.userId },
+                    { client: clientUser.client_id }
+                ]},
+            ]
+        }
     }
 
     res.setHeader('Content-Type', 'text/html');
@@ -91,8 +103,10 @@ exports.new = async (req, res, next) => {
         .catch(err => console.log(err));
 
     let client = user.client_id;
+
     let warehouses = user.client_id.warehouses;
     let paymentMethods = await getPaymentMethods();
+    let clients = await getClients();
     let products = await getProducts();
     let units = await getUnits();
     let order = await createEmptyOrder();
@@ -103,6 +117,7 @@ exports.new = async (req, res, next) => {
         today: moment().format('L'),
         units: units,
         clientData: client,
+        clients: clients,
         warehouses: warehouses,
         products: products,
         paymentMethods: paymentMethods
@@ -148,6 +163,17 @@ exports.placeOrder = async (req, res, next) => {
 
     providerorder = await placeOrder(req.params.id, body);
     res.redirect('/orders');
+}
+
+async function getClients() {
+    return await Client.find({status: true})
+        .select('name')
+        .sort({ name: 'asc' })
+        .sort({commercial_name: 'asc'})
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
 }
 
 async function getDetails(orderId) {
