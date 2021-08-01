@@ -16,6 +16,14 @@ exports.listAll = async (req, res, next) => {
     const token = req.cookies.userToken;
     let tokenDecoded = jwt.decode(token);
 
+    let page = req.params.page;
+    if (_.isUndefined(page) || !Number.isInteger(page*1)) {
+        page = 1;
+    }
+
+    const limit = 16;
+    const skip = (page === 1) ? 0 : (limit * (page-1))
+
     const clientUser = await User.findById(tokenDecoded.userId)
         .select('client_id -_id')
         .then(result => {
@@ -36,17 +44,19 @@ exports.listAll = async (req, res, next) => {
         }
     }
 
-    res.setHeader('Content-Type', 'text/html');
-    Order.find(criteria)
-        .sort({'date': 'desc', 'number': 'desc'})
-        .populate({
-            path: 'client',
-            model: 'Clients'
-        })
-        .then((result) => {
-            res.render('orders/list', { orders: result});
-        })
-        .catch((err) => console.log(err));
+    const orders = await getOrders(criteria, skip, limit);
+    const totalPages = Math.ceil(orders.count/limit)
+    if (page > totalPages) {
+        res.redirect('/orders');
+    }
+
+    res.render('orders/list', {
+        total: orders.count,
+        totalPages: totalPages,
+        currentPage: page,
+        orders: orders.data,
+        uri: 'orders'
+    });
 };
 
 exports.view = async (req, res, next) => {
@@ -336,4 +346,37 @@ async function getLastOrderNumber() {
         })
         .catch(err => console.log(err));
     return order
+}
+
+async function getOrders(criteria, skip, limit) {
+    return await Order.aggregate([
+        {
+            $match: criteria
+        },
+        {
+            $sort: {'date': -1, 'number': -1}
+        },
+        {
+            $lookup: {from: 'clients', localField: 'client', foreignField: '_id', as: 'client'}
+        },
+        {
+            $facet: {
+                "total": [{"$group": {_id: null, count: {$sum: 1}}}],
+                "data": [{"$skip": skip}, {"$limit": limit}]
+            }
+        },
+        {
+            $unwind: "$total"
+        },
+        {
+            $project: {
+                count: "$total.count",
+                data: "$data"
+            }
+        }
+    ])
+        .then(result => {
+            return result[0];
+        })
+        .catch(err => console.log(err));
 }

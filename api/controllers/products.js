@@ -5,10 +5,29 @@ const ProductPrices = require('../models/product_prices');
 const jwt = require('jsonwebtoken');
 
 exports.listAll = async (req, res, next) => {
-    const units = await getUnits();
-    const products = await getProducts();
+    let page = req.params.page;
+    if (_.isUndefined(page) || !Number.isInteger(page*1)) {
+        page = 1;
+    }
 
-    res.render('products/list', { products: products, units: units });
+    const limit = 16;
+    const skip = (page === 1) ? 0 : (limit * (page-1))
+    const products = await getProducts(skip, limit);
+    const totalPages = Math.ceil(products.count/limit)
+    if (page > totalPages) {
+        res.redirect('/products');
+    }
+
+    const units = await getUnits();
+
+    res.render('products/list', {
+        total: products.count,
+        totalPages: totalPages,
+        currentPage: page,
+        products: products.data,
+        units: units,
+        uri: 'products'
+    });
 };
 
 exports.save = async (req, res, next) => {
@@ -290,11 +309,32 @@ async function savePrices(units, data, productId) {
     });
 }
 
-async function getProducts() {
-    return Product.find({ status: true })
-        .sort({manufacturer_name: 'asc'})
+async function getProducts(skip = 1, limit = 30) {
+    return await Product.aggregate([
+        {
+            $match: { status: true }
+        },
+        {
+            $sort: { manufacturer_name: 1, code: 1 }
+        },
+        {
+            $facet: {
+                "total" : [ { "$group": {_id: null, count: { $sum:1 } } } ],
+                "data" : [ { "$skip": skip }, { "$limit": limit } ]
+            }
+        },
+        {
+            $unwind: "$total"
+        },
+        {
+            $project:{
+                count: "$total.count",
+                data: "$data"
+            }
+        }
+    ])
         .then(result => {
-            return result;
+            return result[0];
         })
         .catch(err => console.log(err));
 }
