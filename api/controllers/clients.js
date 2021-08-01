@@ -178,6 +178,24 @@ exports.getWarehouse = async (req, res, next) => {
         })
 }
 
+exports.getWarehouses = async (req, res, next) => {
+    await Warehouse.find({ client_id: req.params.id, status: true })
+        .select('name')
+        .sort({name: 'asc'})
+        .then(result => {
+            res.status(200).json({
+                message: 'success',
+                data: result
+            });
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: 'Something went wrong',
+                data: err
+            });
+        })
+}
+
 exports.updateWarehouse = async (req, res, next) => {
     let data = req.body;
 

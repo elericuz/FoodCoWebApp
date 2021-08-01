@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const checkAuth = require('../middleware/check-auth');
+const checkAdmin = require('../middleware/check-admin');
+const checkAdminJson = require('../middleware/check-admin-json');
 
 const UserController = require('../controllers/user')
 
@@ -10,7 +12,7 @@ router.get('/signup', (req, res, next) => {
 })
 router.post('/signup', UserController.signup);
 router.post('/login', UserController.login);
-router.delete('/:userId', checkAuth, UserController.delete);
+router.delete('/:userId', checkAuth, checkAdminJson, UserController.delete);
 router.get('/logout', (req, res, next) => {
     res.cookie('userToken', '', { maxAge: 1 });
     res.redirect('/');
@@ -21,10 +23,10 @@ router.post('/add-address', checkAuth, UserController.addAddress);
 router.delete('/remove-address/:id', checkAuth, UserController.removeAddress);
 router.post('/change-password', checkAuth, UserController.changePassword);
 
-router.get('/', checkAuth, UserController.listAll);
-router.get('/get/:id', checkAuth, UserController.get);
-router.post('/save', checkAuth, UserController.save);
-router.put('/save', checkAuth, UserController.update);
-router.delete('/delete/:id', checkAuth, UserController.delete);
+router.get('/', checkAuth, checkAdmin, UserController.listAll);
+router.get('/get/:id', checkAuth, checkAdminJson, UserController.get);
+router.post('/save', checkAuth, checkAdminJson, UserController.save);
+router.put('/save', checkAuth, checkAdminJson, UserController.update);
+router.delete('/delete/:id', checkAuth, checkAdminJson, UserController.delete);
 
 module.exports = router;

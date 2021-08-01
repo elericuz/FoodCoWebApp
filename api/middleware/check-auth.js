@@ -23,6 +23,7 @@ module.exports = (req, res, next) => {
                     .catch(err => console.log(err));
 
                 req.userType = userType;
+                req.admin = false;
 
                 if (_.lowerCase(userType) === _.lowerCase('admin') ||
                     _.lowerCase(userType) === _.lowerCase('seller') ||
@@ -30,6 +31,7 @@ module.exports = (req, res, next) => {
                     _.lowerCase(userType) === _.lowerCase('supervisor') ||
                     _.lowerCase(userType) === _.lowerCase('developer')) {
                     adminUser = true;
+                    req.admin = true;
                 }
 
                 res.locals.adminUser = adminUser;
