@@ -7,7 +7,6 @@ exports.get = async (req, res, next) => {
             model: 'Address'
         })
         .then(result => {
-            console.log(result);
             res.status(201).json({
                 status: 'success',
                 data: result

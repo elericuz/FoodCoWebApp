@@ -59,6 +59,9 @@ const orderSchema = new mongoose.Schema({
     client: {
         type: mongoose.Schema.Types.ObjectId,
     },
+    warehouse: {
+        type: mongoose.Schema.Types.ObjectId
+    },
     status: {
         type: String,
         default: 'pending'
