@@ -11,7 +11,8 @@
             <h2 class="margin-bottom-0">Products</h2>
         </div>
         <div class="float-right padding-top-1">
-            <a class="button secondary small margin-0 margin-top-half padding-left-2 padding-right-2" data-open="addProductModal"
+            <a class="button secondary small margin-0 margin-top-half padding-left-2 padding-right-2"
+               data-open="addProductModal"
                onclick="resetProductForm();">Add new Product</a>
         </div>
         <div class="float-right padding-top-1">
@@ -26,7 +27,9 @@
                 <div class="cell medium-8 medium-offset-2 padding-0" id="main-results-container">
                     <div class="grid-x">
                         <div class="cell text-right close-main-result-container">
-                            <a onclick="$('#search').val(''); $('#search').focus(); hideResults();"><div class="fi-x"> Close</div></a>
+                            <a onclick="$('#search').val(''); $('#search').focus(); hideResults();">
+                                <div class="fi-x"> Close</div>
+                            </a>
                         </div>
                     </div>
                     <div class="grid-x">
@@ -79,6 +82,7 @@
             <% }); %>
             </tbody>
         </table>
+        <%- include('../partials/pagination.ejs') %>
     </div>
 </div>
 <div class="reveal large" id="addProductModal" data-reveal>
