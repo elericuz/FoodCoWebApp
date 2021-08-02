@@ -557,3 +557,8 @@ table.stack td {
 .pagination .disabled a:visited {
     cursor: not-allowed;
 }
+
+.login-icons {
+    padding: 4px;
+    font-size: 20px;
+}
