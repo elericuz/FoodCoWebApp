@@ -526,3 +526,33 @@ table.stack td {
 .elevate-navbar {
     z-index: 250 !important;
 }
+
+.features div {
+    margin-left: 35px;
+}
+
+.pagination .current {
+    background: #1a82e2;
+    color: #f7f7f7;
+    padding: 5px;
+}
+
+.pagination .current a,
+.pagination .current a:hover,
+.pagination .current a:link,
+.pagination .current a:visited {
+    background: #1a82e2;
+    color: #f7f7f7;
+    padding: 3px 10px;
+}
+
+.pagination a, .pagination button {
+    color: #384D59;
+}
+
+.pagination .disabled a,
+.pagination .disabled a:hover,
+.pagination .disabled a:link,
+.pagination .disabled a:visited {
+    cursor: not-allowed;
+}
