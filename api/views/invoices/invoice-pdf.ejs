@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf8">
+    <meta http-equiv="content-language" content="en-US" />
     <title>Invoice</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.6.3/css/foundation.min.css"
           integrity="sha512-dMUQinc1gbNb95AFtKtP4q/g56T8r9oDxlWy0hrHyzfUbMq/vQztAqaR/FDY/bY0R1Ikc30aq94jyQH2Ix++ug=="
@@ -42,8 +43,8 @@
         </div>
         <div class="cell medium-4">
             <h3 class="margin-bottom-0">Invoice <%= data.number %></h3>
-            <p><span>Customer:</span> <%= data.client.code %> / <%= data.client.name %></p>
-            <p><span>Contact:</span> <%= data.contact %></p>
+            <p><span>Customer:</span> <%= data.client.code %> / <%= data.client.name.replace("'", "´"); %></p>
+            <p><span>Contact:</span> <%= data.contact.replace("'", "´"); %></p>
         </div>
     </div>
     <div class="cell clearfix"></div>
@@ -58,13 +59,13 @@
     <div class="grid-x grid-margin-x">
         <div class="cell medium-4 medium-offset-2">
             <b>Bill To:</b><br>
-            <%= data.bill_to.street %>, <%= data.bill_to.city %>,
+            <%= data.bill_to.street.replace("'", "´"); %>, <%= data.bill_to.city %>,
             <%= data.bill_to.state %>, <%= data.bill_to.zipcode %><br>
             <%= data.phone %>
         </div>
         <div class="cell medium-4">
             <b>Ship To:</b><br>
-            <%= data.shipping_address.street %>, <%= data.shipping_address.city %>,
+            <%= data.shipping_address.street.replace("'", "´"); %>, <%= data.shipping_address.city %>,
             <%= data.shipping_address.state %>, <%= data.shipping_address.zipcode %><br>
             <%= data.phone %>
         </div>
@@ -119,8 +120,8 @@
                 <tr>
                     <td class="medium-3 text-center">&nbsp;</td>
                     <td class="medium-2 text-center"><%= data.order_date %></td>
-                    <td class="medium-2 text-center"><%= data.salesperson %></td>
-                    <td class="medium-2 text-center"><%= data.ordertaker %></td>
+                    <td class="medium-2 text-center"><%= data.salesperson.replace("'", "´"); %></td>
+                    <td class="medium-2 text-center"><%= data.ordertaker.replace("'", "´"); %></td>
                     <td class="medium-3 text-center"><%= data.our_order_number %></td>
                 </tr>
                 </tbody>
@@ -146,9 +147,9 @@
                     <tr>
                         <td class="text-center"><%= item.ordered %></td>
                         <td class="text-center"><%= item.shipped %></td>
-                        <td class="text-center"><%= item.pack %></td>
+                        <td class="text-center"><%= item.pack.replace("'", "´"); %></td>
                         <td class="text-center"><%= item.item_code %></td>
-                        <td class="text-center"><%= item.description %></td>
+                        <td class="text-center"><%= item.description.replace("'", "´"); %></td>
                         <td class="text-center text-right"><%= item.unit_price %></td>
                         <td class="text-center text-right"><%= item.amount %></td>
                         <td class="text-center">&nbsp;</td>

@@ -70,9 +70,10 @@
                                 <tr>
                                     <th class="text-center medium-1">Number</th>
                                     <th class="text-center medium-1">Order #</th>
-                                    <th class="text-center medium-5">Client</th>
+                                    <th class="text-center medium-4">Client</th>
                                     <th class="text-center medium-3">Attended by</th>
                                     <th class="text-center medium-2">Shipping Date</th>
+                                    <th class="text-center medium-1">&nbsp;</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -87,6 +88,7 @@
                                         <td><%= _.capitalize(invoice.order_id.client.name) %></td>
                                         <td><%= _.capitalize(invoice.user.name + ' ' + invoice.user.lastname) %></td>
                                         <td class="text-right"><%= moment(invoice.shipping_date).format('MMM DD, YYYY') %></td>
+                                        <td><a onclick="downloadInvoice('<%= invoice._id %>'); return false;"><div class="fi-download"></div></a></td>
                                     </tr>
                                 <% }) %>
                                 </tbody>
@@ -94,7 +96,9 @@
                         </div>
                     </div>
                     <div class="cell medium-12 text-right">
-                        <a href="/orders">See More Invoices</a>
+                        <a href="/orders">
+                            <div class="fi-zoom-in"> See More Orders</div>
+                        </a>
                     </div>
                 </div>
                 <div class="cell medium-4">
@@ -163,6 +167,6 @@
 <%- include('./partials/footer.ejs') %>
 <%- include('./partials/scripts.ejs') %>
 <script src="/assets/js/misc.js"></script>
-
+<script src="/assets/js/invoice.js"></script>
 </body>
 </html>

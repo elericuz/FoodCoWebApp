@@ -5,6 +5,9 @@ const invoiceSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
+    client_id: {
+        type: mongoose.Schema.Types.ObjectId
+    },
     shipping_date: {
         type: Date,
         default: Date.now
