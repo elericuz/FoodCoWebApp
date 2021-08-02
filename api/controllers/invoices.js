@@ -57,6 +57,7 @@ exports.save = async (req, res, next) => {
     const nextNumber = await getLastInvoiceNumber();
     const data = {
         order_id: req.body.orderId,
+        client_id: req.body.clientId,
         shipping_date: req.body.date,
         number: nextNumber.number + 1,
         user: tokenDecoded.userId

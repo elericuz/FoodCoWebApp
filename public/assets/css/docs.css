@@ -307,6 +307,7 @@ div .click-here a:hover {
 
 .button.secondary {
     background-color: #1a82e2;
+    margin-bottom: 5px;
 }
 
 .button.secondary:hover, .button.secondary:focus {
@@ -438,7 +439,7 @@ table.table-condensed {
 }
 
 .latest-container {
-    background-color: #f7f7f7;
+    background-color: #fafafa;
     border-radius: 8px;
     border: 0.07em solid #c4c4c4;
 }

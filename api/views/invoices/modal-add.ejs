@@ -1,5 +1,6 @@
 <form method="POST" onsubmit="return false;" id="invoiceForm">
     <input type="hidden" name="orderId" value="<%= order._id %>">
+    <input type="hidden" name="clientId" value="<%= order.client._id %>">
     <h3>Invoices</h3>
     <hr>
     <div class="grid-x grid-margin-x">
