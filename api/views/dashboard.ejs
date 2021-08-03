@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('./partials/head.ejs') %>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/wordcloud.js"></script>
 <body>
 
 <%- include('./partials/nav.ejs') %>
@@ -115,6 +117,12 @@
                                 <div class="cell medium-8 medium-offset-2 padding-0 dashboard-results-container" id="search-results-container"></div>
                             </div>
                         </div>
+                        <div class="cell medium-12 margin-bottom-1 padding-1 latest-container most-popular">
+                            <h4 class="margin-0">
+                                <div class="fi-burst-sale"> Most Popular Products</div>
+                            </h4>
+                            <div id="productsCloud" class="medium-12"></div>
+                        </div>
                         <div class="cell medium-12 margin-bottom-1 padding-1 latest-container">
                             <h4 class="margin-0">
                                 <div class="fi-burst-new"> Latest Products Added</div>
@@ -127,42 +135,30 @@
                                 </div>
                             <% }) %>
                         </div>
-                        <div class="cell medium-12 margin-bottom-1 padding-1 latest-container">
-                            <h4 class="margin-0">
-                                <div class="fi-burst-sale"> Most Popular Products</div>
-                            </h4>
-                            <div class="grid-x latest-list">
-                                <div class="cell medium-1 text-center">1</div>
-                                <div class="cell medium-8">Cucumber</div>
-                                <div class="cell medium-2">07-30-2021</div>
-                            </div>
-                            <div class="grid-x latest-list">
-                                <div class="cell medium-1 text-center">2</div>
-                                <div class="cell medium-8">Apple</div>
-                                <div class="cell medium-2">07-30-2021</div>
-                            </div>
-                            <div class="grid-x latest-list">
-                                <div class="cell medium-1 text-center">3</div>
-                                <div class="cell medium-8">Potato Idaho</div>
-                                <div class="cell medium-2">07-30-2021</div>
-                            </div>
-                            <div class="grid-x latest-list">
-                                <div class="cell medium-1 text-center">4</div>
-                                <div class="cell medium-8">Mushrooms</div>
-                                <div class="cell medium-2">07-30-2021</div>
-                            </div>
-                            <div class="grid-x latest-list">
-                                <div class="cell medium-1 text-center">5</div>
-                                <div class="cell medium-8">Pepper Jalapeno</div>
-                                <div class="cell medium-2">07-30-2021</div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script lang="javascript">
+    const endpoint = '/products/most-popular';
+    fetch(endpoint, {method: 'GET'})
+        .then(response => response.json())
+        .then((result) => {
+            Highcharts.chart('productsCloud', {
+                series: [{
+                    type: 'wordcloud',
+                    data: result.products,
+                    name: 'Times bought'
+                }],
+                title: {
+                    text: ''
+                }
+            });
+        })
+        .catch(err => console.log(err));
+</script>
 
 <%- include('./partials/footer.ejs') %>
 <%- include('./partials/scripts.ejs') %>
