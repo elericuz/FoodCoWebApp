@@ -3,6 +3,7 @@ const Product = require('../models/products');
 const Orders = require('../models/orders');
 const jwt = require('jsonwebtoken');
 const Invoice = require('../models/invoices');
+const Detail = require('../models/details');
 
 exports.index = (req, res, next) => {
     const token = req.cookies.userToken;

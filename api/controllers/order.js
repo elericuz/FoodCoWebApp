@@ -157,6 +157,11 @@ exports.placeOrder = async (req, res, next) => {
 
     let total = 0;
     details.forEach(detail => {
+        Detail.findByIdAndUpdate(detail._id, {status: true})
+            .then(result => {
+                return result;
+            })
+            .catch(err => console.log(err))
         total += detail.total;
     })
 

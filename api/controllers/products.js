@@ -2,6 +2,7 @@ const _ = require('lodash');
 const Product = require('../models/products');
 const Unit = require('../models/units');
 const ProductPrices = require('../models/product_prices');
+const Detail = require('../models/details');
 const jwt = require('jsonwebtoken');
 
 exports.listAll = async (req, res, next) => {
@@ -258,6 +259,22 @@ exports.searchProduct = async (req, res, next) => {
         })
 }
 
+exports.getMostPopularProducts = async (req, res, next) => {
+    const products = await getMostPopularProducts();
+
+    let mostPopularProducts = []
+    products.forEach((product) => {
+        mostPopularProducts.push({
+            name: product._id[0],
+            weight: product.count
+        })
+    })
+
+    res.status(201).json({
+        products: mostPopularProducts
+    })
+}
+
 async function saveProduct(data) {
     let lastCodeNumber = await getLastCodeNumber();
     let nextCodeNumber = lastCodeNumber.code + 1;
@@ -374,6 +391,37 @@ async function getUnits() {
     return Unit.find()
         .sort({name: 'asc'})
         .then(result => { return result; })
+        .catch(err => console.log(err));
+}
+
+async function getMostPopularProducts() {
+    return await Detail.aggregate([
+        { $match: { "status": true }},
+        { $lookup: { from: 'products', localField: 'product_id', foreignField: '_id', as: 'product' }},
+        { $lookup: { from: 'orders', localField: 'order_id', foreignField: '_id', as: 'order' }},
+        { $addFields: {
+                "order": {
+                    "$arrayElemAt": [
+                        {
+                            "$filter": {
+                                "input": "$order",
+                                "as": "ord",
+                                "cond": {
+                                    "$eq": [ "$$ord.status", "open" ]
+                                }
+                            }
+                        }, 0
+                    ]
+                }
+            }  },
+        { $group: { _id: "$product.manufacturer_name", count: { $sum: "$quantity" }}},
+        { $sort: { count: -1 }},
+        { $project: { product: '$product', count: '$count' }},
+        { $limit: 32 }
+    ])
+        .then(result => {
+            return result;
+        })
         .catch(err => console.log(err));
 }
 
