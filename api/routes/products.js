@@ -13,6 +13,7 @@ router.post('/get/:id', checkAuth, checkAdminJson, ProductController.get);
 router.get('/units/:id', checkAuth, checkAdminJson, ProductController.getUnits);
 router.get('/get_price/:productId/:unitId', checkAuth, checkAdminJson, ProductController.getProductPrice);
 router.get('/search/:text', checkAuth, ProductController.searchProduct);
+router.get('/most-popular', checkAuth, ProductController.getMostPopularProducts);
 router.get('/:page*?', checkAuth, checkAdmin, ProductController.listAll);
 
 module.exports = router;

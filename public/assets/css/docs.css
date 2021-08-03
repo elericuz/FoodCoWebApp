@@ -444,6 +444,10 @@ table.table-condensed {
     border: 0.07em solid #c4c4c4;
 }
 
+.latest-container.most-popular {
+    background-color: #FFFFFF;
+}
+
 .latest-list {
     font-size: 15px;
     margin: 7px 0;
