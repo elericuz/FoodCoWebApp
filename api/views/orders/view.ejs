@@ -7,7 +7,14 @@
 
 <div class="grid-container">
     <div class="cell small-12">
-        <h2 class="margin-bottom-0">Order number <small><%= _.padStart(order.number, 6, '0')%></small></h2>
+        <div class="float-left">
+            <h2 class="margin-bottom-0">Order number <small><%= _.padStart(order.number, 6, '0')%></small></h2>
+        </div>
+        <% if (adminUser) { %>
+        <div class="float-right">
+            <a type="button" class="button alert small margin-top-1" onclick="deleteOrder('<%= order._id %>');">Delete Order</a>
+        </div>
+        <% } %>
     </div>
     <hr class="hr-title-separator">
     <div class="cell small-12">
@@ -43,7 +50,7 @@
         </div>
         <div class="grid-x grid-margin-x margin-top-1">
             <div class="cell small-4 medium-2 text-right font-bold">Payment Method:</div>
-            <div class="cell auto"><%= order.payment_method.name %></div>
+            <div class="cell auto"><%= order.payment_method?.name %></div>
         </div>
         <div class="grid-x grid-margin-x">
             <div class="cell small-4 medium-2 text-right font-bold">Created By:</div>
@@ -235,6 +242,26 @@
             });
     }
 
+    <% if (adminUser) { %>
+    function deleteOrder(id) {
+        if (confirm('Are you sure you want to delete this order?')) {
+            const endpoint = '/orders/delete/' + id;
+            fetch(endpoint, {method: 'DELETE'})
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Something went wrong.');
+                })
+                .then((result) => {
+                    window.location = '/orders';
+                })
+                .catch(err => {
+                    alert('Something went wrong.');
+                });
+        }
+    }
+    <% } %>
 </script>
 </body>
 </html>

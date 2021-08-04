@@ -21,7 +21,7 @@
                 <div class="cell small-8 medium-8 text-vertical-center">
                     <input type="text" name="search" id="search" onclick="showResult();"
                            onkeyup="showResult()" value=""
-                           autocomplete="off" placeholder="Product">
+                           autocomplete="off" placeholder="Id, Name or Brand Name">
                 </div>
                 <div class="cell medium-1 margin-top-1 hide-for-small-only search-icon">&nbsp;</div>
                 <div class="cell medium-8 medium-offset-2 padding-0" id="main-results-container">
@@ -48,6 +48,9 @@
         </button>
     </div>
     <div class="cell small-12">
+        <div class="float-right">
+            Showing <%= showing.from %> to <%= showing.to %> of <%= total %> products
+        </div>
         <table class="stack margin-top-1" id="productTable">
             <thead>
             <tr>
