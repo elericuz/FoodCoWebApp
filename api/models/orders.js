@@ -65,6 +65,9 @@ const orderSchema = new mongoose.Schema({
     status: {
         type: String,
         default: 'pending'
+    },
+    deletedBy: {
+        type: mongoose.Schema.Types.ObjectId
     }
 }, {
     timestamps: true
