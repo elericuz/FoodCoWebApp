@@ -23,6 +23,10 @@ exports.listAll = async (req, res, next) => {
 
     res.render('products/list', {
         total: products.count,
+        showing: {
+            from: ((page - 1) * limit) + 1,
+            to: ((page * limit) > products.count) ? products.count : page * limit
+        },
         totalPages: totalPages,
         currentPage: page,
         products: products.data,

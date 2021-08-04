@@ -52,6 +52,10 @@ exports.listAll = async (req, res, next) => {
 
     res.render('orders/list', {
         total: orders.count,
+        showing: {
+            from: ((page - 1) * limit) + 1,
+            to: ((page * limit) > orders.count) ? orders.count : page * limit
+        },
         totalPages: totalPages,
         currentPage: page,
         orders: orders.data,
@@ -178,6 +182,26 @@ exports.placeOrder = async (req, res, next) => {
 
     providerorder = await placeOrder(req.params.id, body);
     res.redirect('/orders');
+}
+
+exports.deleteOrder = async (req, res, next) => {
+    const token = req.cookies.userToken;
+    let tokenDecoded = jwt.decode(token);
+
+    await deleteOrder(req.params.id, tokenDecoded.userId)
+        .then(result => {
+            res.status(201).json({
+                status: 'success',
+                message: "Order deleted!"
+            })
+            return false;
+        })
+        .catch(err => {
+            res.status(401).json({
+                status: "failed",
+                message: err.message
+            })
+        })
 }
 
 async function getClients() {
@@ -382,6 +406,14 @@ async function getOrders(criteria, skip, limit) {
     ])
         .then(result => {
             return result[0];
+        })
+        .catch(err => console.log(err));
+}
+
+async function deleteOrder(id, userId) {
+    return await Order.findByIdAndUpdate(id, { status: 'deleted', deletedBy: userId})
+        .then(result => {
+            return result;
         })
         .catch(err => console.log(err));
 }
