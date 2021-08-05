@@ -168,16 +168,26 @@
                 <input type="number" min="1" id="quantity" name="quantity" class="input-text-1" value="1"
                        onchange="if (this.value < 1) { this.value = 1; }" required>
             </div>
-            <div class="cell small-1 medium-2 text-right text-vertical-center">Unit</div>
+            <div class="cell small-1 medium-1 text-right text-vertical-center margin-left-0">Unit</div>
             <div class="cell small-3 medium-3 fix-default-cell-margin">
-                <select class="input-text-2" id="unit" name="unit_id" onchange="getPrice();" required
+                <select class="input-text-2" id="unit" name="unit_id" onchange="getPrice(<%= (adminUser) %>);" required
                         data-msg="Please select a unit">
                     <option selected disabled>Select Unit</option>
                 </select>
             </div>
-            <div class="cell small-2 medium-3 text-vertical-center">
-                <span id="unitPrice">&nbsp;</span>
+            <% if (adminUser) { %>
+            <div class="cell small-2 medium-2 text-vertical-center margin-right-0 margin-left-0">
+                <span id="unit_price_text"></span>Price USD$
             </div>
+            <div class="cell small-3 medium-3 margin-0 text-vertical-center">
+                <input type="number" id="unitPrice" name="unit_price" value="" class="input-text-2" required>
+            </div>
+            <% } else { %>
+            <div class="cell small-2 medium-3 text-vertical-center">
+                <input type="hidden" id="unitPrice" name="unit_price" value="">
+                <span id="unit_price_text"></span>
+            </div>
+            <% } %>
         </div>
         <div class="grid-x grid-margin-x">
             <div class="cell small-2 large-offset-8"><a href="#" class="button alert small" data-close
