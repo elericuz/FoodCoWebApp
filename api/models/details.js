@@ -30,6 +30,11 @@ const detailsSchema = new mongoose.Schema({
         required: true,
         default: 0
     },
+    unit_price_list: {
+        type: Number,
+        required: true,
+        default: 0
+    },
     total: {
         type: Number,
         required: true,
