@@ -274,9 +274,9 @@ async function addProduct(data) {
         .catch(err => console.log(err));
 
     const quantity = _.toInteger(data.quantity)
-    const total = quantity * productPrice;
+    const total = (quantity * data.unit_price).toFixed(2);
 
-    data.unit_price = productPrice;
+    data.unit_price_list = productPrice;
     data.total = total;
     data.quantity_pending = quantity
 

@@ -57,7 +57,7 @@ function validateOrder() {
 }
 
 function getUnits() {
-    document.getElementById('unitPrice').innerHTML = "";
+    document.getElementById('unit_price_text').innerHTML = "";
     let selected = $('#product').val();
     const endpoint = '/products/units/' + selected;
     fetch(endpoint, {method: 'GET'})
@@ -75,14 +75,17 @@ function getUnits() {
         .catch(err => console.log(err));
 }
 
-function getPrice() {
+function getPrice(admin=false) {
     let productId = $('#product').val();
     let selected = $('#unit').val();
     const endpoint = '/products/get_price/' + productId + '/' + selected;
     fetch(endpoint, {method: 'GET'})
         .then(response => response.json())
         .then((result) => {
-            document.getElementById('unitPrice').innerHTML = 'Price: $' + result.price.toFixed(2);
+            $('#unitPrice').val(result.price.toFixed(2));
+            if (!admin) {
+                document.getElementById('unit_price_text').innerHTML = 'Price: USD$' + result.price.toFixed(2);
+            }
         })
         .catch(err => console.log(err));
 }
@@ -130,7 +133,7 @@ const addButton = document.getElementById('addButton');
 function resetAddProductForm() {
     $("#unit").empty();
     document.getElementById('addProductForm').reset();
-    document.getElementById('unitPrice').innerHTML = '';
+    document.getElementById('unit_price_text').innerHTML = '';
 
     let validator = $( "#addProductForm" ).validate();
     validator.resetForm();
