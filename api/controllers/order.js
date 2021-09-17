@@ -216,14 +216,39 @@ async function getClients() {
 }
 
 async function getDetails(orderId) {
-    return Detail.find({ order_id: orderId})
+    return Detail.find({
+        $and: [
+            { order_id: orderId },
+            { quantity_pending: { $gt: 0 }}
+        ]
+    })
         .select('_id unit_price total quantity_pending')
+        .populate({
+            path: 'product_id',
+            model: 'Products',
+            select: 'manufacturer_name'
+        })
+        .populate({
+            path: 'unit_id',
+            model: 'Units'
+        })
         .then(result => { return result; })
         .catch(err => console.log(err));
 }
 
 async function getInvoices(orderId) {
-    let invoices = await Invoice.find({order_id: orderId})
+
+    let criteria = {
+        $and: [
+            { order_id: orderId },
+            { $or: [
+                    { status: 'pending' },
+                    { status: 'open' }
+                ]},
+        ]
+    }
+
+    let invoices = await Invoice.find(criteria)
         .populate({
             path: 'user',
             model: 'User',

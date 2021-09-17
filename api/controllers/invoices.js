@@ -79,6 +79,7 @@ exports.save = async (req, res, next) => {
         let detail = {
             invoice_id: invoice._id,
             order_id: req.body.orderId,
+            detail_id: req.body.detail.detailId[index],
             quantity: req.body.detail.quantity[index],
             unit_id: req.body.detail.unitId[index],
             product_id: req.body.detail.productId[index],
@@ -122,6 +123,60 @@ exports.save = async (req, res, next) => {
         invoiceDetails: invoiceDetails,
         attended: tokenDecoded.name + " " + tokenDecoded.lastname
     })
+}
+
+async function getInvoiceDetails(id) {
+    return InvoiceDetails.find({invoice_id: id, status: true})
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+}
+
+async function restoreOrderDetail(detail, userId) {
+    for(const item of detail) {
+        const orderDetail = await Detail.findById(item.detail_id)
+            .then(result => {
+                return result;
+            })
+            .catch(err => console.log(err));
+
+        const quantityPending = (orderDetail.quantity_pending + item.quantity > orderDetail.quantity) ?
+            orderDetail.quantity : orderDetail.quantity_pending + item.quantity
+
+        await Detail.findByIdAndUpdate(item.detail_id, { quantity_pending: quantityPending})
+            .then(async result => {
+                return await InvoiceDetails.findByIdAndUpdate(item._id, { status: false, deletedBy: userId})
+                    .then(response => {
+                        return response;
+                    })
+                    .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
+    }
+}
+
+exports.deleteInvoice = async (req, res, next) => {
+    const token = req.cookies.userToken;
+    let tokenDecoded = jwt.decode(token);
+
+    let detail = await getInvoiceDetails(req.params.id);
+    await restoreOrderDetail(detail, tokenDecoded.userId);
+
+    await deleteInvoice(req.params.id, tokenDecoded.userId, req.body.number)
+        .then(result => {
+            res.status(201).json({
+                status: 'success',
+                message: "Invoice deleted!"
+            })
+            return false;
+        })
+        .catch(err => {
+            res.status(401).json({
+                status: "failed",
+                message: err.message
+            })
+        })
 }
 
 exports.downloadInvoice = async (req, res, next) => {
@@ -317,5 +372,13 @@ async function getLastInvoiceNumber() {
 async function getOrderDetail(id) {
     return Detail.findById(id)
         .then(result => { return result; })
+        .catch(err => console.log(err));
+}
+
+async function deleteInvoice(id, userId, number) {
+    return await Invoice.findByIdAndUpdate(id, { status: 'deleted', deletedBy: userId, number: -1, oldNumberDeleted: number})
+        .then(result => {
+            return result;
+        })
         .catch(err => console.log(err));
 }

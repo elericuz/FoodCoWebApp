@@ -7,6 +7,9 @@ const invoiceDetailsSchema = new mongoose.Schema({
     order_id: {
         type: mongoose.Schema.Types.ObjectId,
     },
+    detail_id: {
+        type: mongoose.Schema.Types.ObjectId,
+    },
     quantity: {
         type: Number,
         required: true,
@@ -36,6 +39,10 @@ const invoiceDetailsSchema = new mongoose.Schema({
         default: true
     },
     user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    deletedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }

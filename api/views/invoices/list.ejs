@@ -11,12 +11,14 @@
 <hr class="hr-title-separator">
 <div class="cell small-12" id="invoicesTable">
     <% invoices.forEach((invoice, index) => { %>
+    <div id="invoice-<%= invoice.id %>">
     <div class="float-left">
         <span>Invoice Number: <small><a id="<%= invoice._id %>" href="#<%= invoice._id %>"><b><%= _.padStart(invoice.number, 6, '0') %></b></a></small></span><br>
         <span>Shipping Date: <small><b><%= moment(invoice.shipping_date).format('MMM Do, YYYY') %></b></small></span>
     </div>
     <div class="float-right">
         <a href="#" class="button secondary small" onclick="downloadInvoice('<%= invoice._id %>'); return false;"><span class="fi-download"></span> Download Invoice</a>
+        <a href="#" class="button alert small margin-top-1" onclick="deleteInvoice('<%= invoice._id %>', <%= invoice.number %>); return false;"><span class="fi-trash"></span> Delete Invoice</a>
     </div>
     <table>
         <thead>
@@ -46,6 +48,7 @@
     </div>
         <% } %>
     <hr class="margin-top-3">
+    </div>
     <% }) %>
 </div>
 <div class="reveal medium" id="invoiceModal" data-reveal>
