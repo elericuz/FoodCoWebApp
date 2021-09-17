@@ -20,28 +20,7 @@
                 <th class="small-2">Price</th>
             </tr>
             </thead>
-            <tbody>
-            <% order.details.forEach(product => { %>
-            <tr id="<%= product._id %>">
-                <input type="hidden" id="detail-<%= product._id %>" name="detail[detailId]" value="<%= product._id %>">
-                <input type="hidden" id="unit-<%= product._id %>" name="detail[unitId]" value="<%= product.unit_id._id %>">
-                <input type="hidden" id="product-<%= product._id %>" name="detail[productId]" value="<%= product.product_id._id %>">
-                <input type="hidden" id="price-<%= product._id %>" name="detail[unitPrice]" value="<%= product.unit_price %>">
-                <input type="hidden" id="total-<%= product._id %>" name="detail[total]" value="<%= product.total %>">
-                <td><%= product.product_id.manufacturer_name %></td>
-                <td><%= product.unit_id.name %></td>
-                <td>
-                    <input type="number" min="0" max="<%= product.quantity_pending %>" id="quantity-<%= product._id %>" name="detail[quantity]" value="<%= product.quantity_pending %>" class="input-text-2 text-vertical-center">
-                </td>
-                <td>
-                    $<%= product.unit_price.toFixed(2).toLocaleString() %>
-                </td>
-                <td>
-                    <span id="totaltext-<%= product._id %>">aa$<%= product.total.toFixed(2).toLocaleString() %></span>
-                </td>
-            </tr>
-            <% }) %>
-            </tbody>
+            <tbody id="invoiceDetailsContainer"></tbody>
         </table>
         </div>
     </div>
