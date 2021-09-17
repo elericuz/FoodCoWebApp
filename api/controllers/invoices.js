@@ -133,26 +133,49 @@ async function getInvoiceDetails(id) {
         .catch(err => console.log(err));
 }
 
+async function getProductInDetails(orderId, productId, unitId, unitPrice, total) {
+    return await Detail.findOne({
+        $and: [
+            { order_id: orderId },
+            { product_id: productId },
+            { unit_id: unitId },
+            { total: { $eq: total }},
+            { status: true}
+        ]
+    })
+    .then(result => { return result; })
+    .catch(err => console.log(err));
+}
+
 async function restoreOrderDetail(detail, userId) {
     for(const item of detail) {
-        const orderDetail = await Detail.findById(item.detail_id)
+        let orderDetail = await Detail.findById(item.detail_id)
             .then(result => {
                 return result;
             })
             .catch(err => console.log(err));
 
-        const quantityPending = (orderDetail.quantity_pending + item.quantity > orderDetail.quantity) ?
-            orderDetail.quantity : orderDetail.quantity_pending + item.quantity
+        if (_.isNull(orderDetail)) {
+            orderDetail = await getProductInDetails(item.order_id, item.product_id, item.unit_id, item.unit_price, item.total);
+            if (!_.isNull(orderDetail)) {
+                item.detail_id = orderDetail._id;
+            }
+        }
 
-        await Detail.findByIdAndUpdate(item.detail_id, { quantity_pending: quantityPending})
-            .then(async result => {
-                return await InvoiceDetails.findByIdAndUpdate(item._id, { status: false, deletedBy: userId})
-                    .then(response => {
-                        return response;
-                    })
-                    .catch(err => console.log(err));
-            })
-            .catch(err => console.log(err));
+        if (!_.isNull(orderDetail)) {
+            const quantityPending = (orderDetail.quantity_pending + item.quantity > orderDetail.quantity) ?
+                orderDetail.quantity : orderDetail.quantity_pending + item.quantity
+
+            await Detail.findByIdAndUpdate(item.detail_id, {quantity_pending: quantityPending})
+                .then(async result => {
+                    return await InvoiceDetails.findByIdAndUpdate(item._id, {status: false, deletedBy: userId})
+                        .then(response => {
+                            return response;
+                        })
+                        .catch(err => console.log(err));
+                })
+                .catch(err => console.log(err));
+        }
     }
 }
 

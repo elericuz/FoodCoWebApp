@@ -566,3 +566,7 @@ table.stack td {
     padding: 4px;
     font-size: 20px;
 }
+
+.mt-2 {
+    margin-top: 2px;
+}

@@ -165,7 +165,7 @@
         let shippingDateRow = document.createElement("div");
         shippingDateRow.setAttribute("class", "float-right");
         shippingDateRow.innerHTML = "" +
-            "<a href=\"#\" class=\"button secondary small\" onclick=\"downloadInvoice('" + invoice._id + "'); return false;\"><span class=\"fi-download\"></span> Download Invoice</a> " +
+            "<a href=\"#\" class=\"button secondary small mt-2\" onclick=\"downloadInvoice('" + invoice._id + "'); return false;\"><span class=\"fi-download\"></span> Download Invoice</a> " +
             "<a href=\"#\" class=\"button alert small margin-top-1\" onclick=\"deleteInvoice('" + invoice._id + "', " + invoice.number + "); return false;\"><span class=\"fi-trash\"></span> Delete Invoice</a>";
         invoiceRowContainer.appendChild(shippingDateRow);
 
