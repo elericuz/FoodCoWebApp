@@ -216,7 +216,7 @@ async function getClients() {
 }
 
 async function getDetails(orderId) {
-    return Detail.find({
+    return await Detail.find({
         $and: [
             { order_id: orderId },
             { quantity_pending: { $gt: 0 }}

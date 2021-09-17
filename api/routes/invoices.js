@@ -7,6 +7,6 @@ const InvoiceController = require('../controllers/invoices')
 
 router.post('/save', checkAuth, checkAdminJson, InvoiceController.save);
 router.get('/download/:id', checkAuth, InvoiceController.downloadInvoice);
-router.delete('/remove/:id', checkAuth, InvoiceController.deleteInvoice);
+router.delete('/remove/:id', checkAuth, checkAdminJson, InvoiceController.deleteInvoice);
 
 module.exports = router;

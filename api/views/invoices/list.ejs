@@ -17,8 +17,10 @@
         <span>Shipping Date: <small><b><%= moment(invoice.shipping_date).format('MMM Do, YYYY') %></b></small></span>
     </div>
     <div class="float-right">
-        <a href="#" class="button secondary small" onclick="downloadInvoice('<%= invoice._id %>'); return false;"><span class="fi-download"></span> Download Invoice</a>
+        <a href="#" class="button secondary small mt-2" onclick="downloadInvoice('<%= invoice._id %>'); return false;"><span class="fi-download"></span> Download Invoice</a>
+        <% if (adminUser) { %>
         <a href="#" class="button alert small margin-top-1" onclick="deleteInvoice('<%= invoice._id %>', <%= invoice.number %>); return false;"><span class="fi-trash"></span> Delete Invoice</a>
+        <% } %>
     </div>
     <table>
         <thead>
