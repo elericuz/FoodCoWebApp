@@ -141,6 +141,7 @@
                 } else {
                     addNewInvoiceRow(result.invoice, result.invoiceDetails, result.attended)
                     $('#invoiceModal').foundation('close');
+                    document.getElementById("invoiceDetailsContainer").innerHTML = "";
                 }
             })
             .catch(err => {
@@ -150,19 +151,23 @@
     });
 
     function addNewInvoiceRow(invoice, details, attended) {
+        let invoiceRowContainer = document.createElement("div");
+        invoiceRowContainer.setAttribute('id', 'invoice-' + invoice._id);
+
         let invoiceNumberRow = document.createElement("div");
         invoiceNumberRow.setAttribute("class", "float-left");
         invoiceNumberRow.innerHTML = "" +
             "<span>Invoice Number: <small><b>" + _.padStart(invoice.number, 6, '0') + "</b></small></span><br>" +
             "<span>Shipping Date: <small><b>" + moment(invoice.shipping_date).format("MMM Do, YYYY") + "</b></small></span>" +
             "";
-        document.getElementById("invoicesTable").appendChild(invoiceNumberRow);
+        invoiceRowContainer.appendChild(invoiceNumberRow);
 
         let shippingDateRow = document.createElement("div");
         shippingDateRow.setAttribute("class", "float-right");
         shippingDateRow.innerHTML = "" +
-            "<a href=\"#\" class=\"button secondary small\" onclick=\"downloadInvoice('" + invoice._id + "'); return false;\"><span class=\"fi-download\"></span> Download Invoice</a>";
-        document.getElementById("invoicesTable").appendChild(shippingDateRow);
+            "<a href=\"#\" class=\"button secondary small\" onclick=\"downloadInvoice('" + invoice._id + "'); return false;\"><span class=\"fi-download\"></span> Download Invoice</a> " +
+            "<a href=\"#\" class=\"button alert small margin-top-1\" onclick=\"deleteInvoice('" + invoice._id + "', " + invoice.number + "); return false;\"><span class=\"fi-trash\"></span> Delete Invoice</a>";
+        invoiceRowContainer.appendChild(shippingDateRow);
 
         let table = document.createElement("table");
         let thead = document.createElement("thead");
@@ -201,16 +206,18 @@
                 "<td class=\"text-right\">$" + detail.total.toFixed(2).toLocaleString() + "</td>"
         });
         table.appendChild(tbody);
-        document.getElementById("invoicesTable").appendChild(table);
+        invoiceRowContainer.appendChild(table);
 
         let attendedRow = document.createElement("div");
         attendedRow.setAttribute("class", "float-right");
-        attendedRow.innerHTML = "<h6>Attended by <small><b>" + attended + "</b></small></h6>";
-        document.getElementById("invoicesTable").appendChild(attendedRow);
+        attendedRow.innerHTML = "<h7>Attended by " + attended + "</h7>";
+        invoiceRowContainer.appendChild(attendedRow);
 
         let hrSeparator = document.createElement("hr");
         hrSeparator.setAttribute("class", "margin-top-3");
-        document.getElementById("invoicesTable").appendChild(hrSeparator);
+        invoiceRowContainer.appendChild(hrSeparator);
+
+        document.getElementById("invoicesTable").appendChild(invoiceRowContainer);
     }
 
     function getOrder(id) {
@@ -223,18 +230,61 @@
                 throw new Error('Something went wrong.');
             })
             .then((result) => {
+                document.getElementById("invoiceDetailsContainer").innerHTML = "";
                 result.forEach(detail => {
-                    document.getElementById('quantity-' + detail._id).value = detail.quantity_pending;
-                    document.getElementById('totaltext-' + detail._id).innerText = "$" + (detail.unit_price * detail.quantity_pending).toFixed(2).toLocaleString();
-                    if (detail.quantity_pending === 0) {
-                        $('#detail-' + detail._id).attr('disabled', true);
-                        $('#unit-' + detail._id).attr('disabled', true);
-                        $('#product-' + detail._id).attr('disabled', true);
-                        $('#price-' + detail._id).attr('disabled', true);
-                        $('#total-' + detail._id).attr('disabled', true);
-                        $('#quantity-' + detail._id).attr('disabled', true);
-                        $('#' + detail._id).attr('style', 'display: none');
-                    }
+                    const trContainer = document.createElement("tr");
+                    trContainer.id = detail._id;
+
+                    const hiddenDetail = document.createElement("input");
+                    hiddenDetail.id = "detail-" + detail._id;
+                    hiddenDetail.name = "detail[detailId]"
+                    hiddenDetail.type = "hidden";
+                    hiddenDetail.value = detail._id;
+                    const hiddenUnit = document.createElement("input");
+                    hiddenUnit.id = "unit-" + detail._id;
+                    hiddenUnit.name = "detail[unitId]";
+                    hiddenUnit.type = "hidden";
+                    hiddenUnit.value = detail.unit_id._id;
+                    const hiddenProduct = document.createElement("input");
+                    hiddenProduct.id = "product-" + detail._id;
+                    hiddenProduct.name = "detail[productId]";
+                    hiddenProduct.type = "hidden";
+                    hiddenProduct.value = detail.product_id._id;
+                    const hiddenPrice = document.createElement("input");
+                    hiddenPrice.id = "price-" + detail._id;
+                    hiddenPrice.name = "detail[unitPrice]";
+                    hiddenPrice.type = "hidden";
+                    hiddenPrice.value = detail.unit_price;
+                    const hiddenTotal = document.createElement("input");
+                    hiddenTotal.id = "total-" + detail._id;
+                    hiddenTotal.name = "detail[total]";
+                    hiddenTotal.type = "hidden";
+                    hiddenTotal.value = detail.total;
+
+                    const tdName = document.createElement("td");
+                    const tdUnit = document.createElement("td");
+                    const tdQuantity = document.createElement("td");
+                    const tdUnitPrice = document.createElement("td");
+                    const tdTotal = document.createElement("td");
+
+                    tdName.innerHTML = detail.product_id.manufacturer_name;
+                    tdUnit.innerHTML = detail.unit_id.name;
+                    tdQuantity.innerHTML = '<input type="number" min="0" max="' + detail.quantity_pending + '" id="quantity-' + detail._id + '" name="detail[quantity]" value="' + detail.quantity_pending + '" class="input-text-2 text-vertical-center">'
+                    tdUnitPrice.innerHTML = "$" + detail.unit_price.toFixed(2).toLocaleString();
+                    tdTotal.innerHTML = "$" + detail.total.toFixed(2).toLocaleString();
+
+                    trContainer.appendChild(hiddenDetail);
+                    trContainer.appendChild(hiddenUnit);
+                    trContainer.appendChild(hiddenProduct);
+                    trContainer.appendChild(hiddenPrice);
+                    trContainer.appendChild(hiddenTotal);
+                    trContainer.appendChild(tdName);
+                    trContainer.appendChild(tdUnit);
+                    trContainer.appendChild(tdQuantity);
+                    trContainer.appendChild(tdUnitPrice);
+                    trContainer.appendChild(tdTotal);
+
+                    document.getElementById("invoiceDetailsContainer").appendChild(trContainer);
                 });
             })
             .catch(err => {
