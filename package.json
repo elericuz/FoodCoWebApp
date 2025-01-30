@@ -8,17 +8,17 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "bcrypt": "^5.0.1",
+    "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.5",
     "dateformat": "^4.5.1",
-    "ejs": "^3.1.6",
-    "express": "^4.16.1",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
     "foundation-datepicker": "^1.5.6",
     "html-pdf": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "moment": "^2.29.1",
-    "mongoose": "^5.12.14",
+    "moment": "^2.29.4",
+    "mongoose": "^8.9.5",
     "morgan": "^1.10.0",
     "puppeteer": "^10.1.0",
     "request": "^2.88.2"
