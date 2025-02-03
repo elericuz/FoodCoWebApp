@@ -141,14 +141,18 @@ function getClient(id) {
             document.getElementById('email').value = result.data.client.email;
             document.getElementById('phone').value = result.data.client.phone;
             document.getElementById('contact').value = result.data.client.contact;
-            document.getElementById('idAddress').value = result.data.client.address._id;
-            document.getElementById('street').value = result.data.client.address.street;
-            document.getElementById('city').value = result.data.client.address.city;
-            document.getElementById('state').value = result.data.client.address.state;
-            document.getElementById('zipcode').value = result.data.client.address.zipcode;
+            if (result.data.client.address != null) {
+                document.getElementById('idAddress').value = result.data.client.address._id;
+                document.getElementById('street').value = result.data.client.address.street;
+                document.getElementById('city').value = result.data.client.address.city;
+                document.getElementById('state').value = result.data.client.address.state;
+                document.getElementById('zipcode').value = result.data.client.address.zipcode;
+            }
 
             result.data.warehouses.forEach((warehouse) => {
-                addWarehouseRow(warehouse);
+                if (warehouse.address != null) {
+                    addWarehouseRow(warehouse);
+                }
             })
         })
         .catch(err => {

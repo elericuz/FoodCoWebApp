@@ -51,7 +51,7 @@ exports.dashboard = async (req, res, next) => {
         .select('number client shipping_date total user status')
         .populate({
             path: 'client',
-            model: 'Clients',
+            model: 'Client',
             select: 'name -_id'
         })
         .populate({
@@ -86,11 +86,11 @@ exports.dashboard = async (req, res, next) => {
         })
         .populate({
             path: 'order_id',
-            model: 'Orders',
+            model: 'Order',
             select: 'number client status',
             populate: {
                 path: 'client',
-                model: 'Clients',
+                model: 'Client',
                 select: 'name -_id'
             }
         })

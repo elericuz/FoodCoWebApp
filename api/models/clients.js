@@ -13,7 +13,8 @@ const clientSchema = new Schema({
         type: String
     },
     address: {
-        type: mongoose.Schema.Types.ObjectId
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Address'
     },
     contact: {
         type: String
@@ -26,12 +27,11 @@ const clientSchema = new Schema({
         type: String,
         default: ""
     },
-    warehouses: {
-        type: Array(
-            mongoose.Schema.Types.ObjectId
-        ),
+    warehouses: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Warehouse',
         required: false
-    },
+    }],
     status: {
         type: Boolean,
         required: true,
@@ -41,5 +41,5 @@ const clientSchema = new Schema({
     timestamps: true
 });
 
-const Client = mongoose.model('Clients', clientSchema);
+const Client = mongoose.model('Client', clientSchema);
 module.exports = Client;

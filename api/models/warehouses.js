@@ -7,7 +7,8 @@ const warehouseSchema = new Schema({
         required: true
     },
     address: {
-        type: mongoose.Schema.Types.ObjectId
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Address',
     },
     phone: {
         type: String
@@ -20,6 +21,7 @@ const warehouseSchema = new Schema({
     },
     client_id: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'Client',
         required: false
     },
     status: {
@@ -31,5 +33,5 @@ const warehouseSchema = new Schema({
     timestamps: true
 });
 
-const Warehouse = mongoose.model('Warehouses', warehouseSchema);
+const Warehouse = mongoose.model('Warehouse', warehouseSchema);
 module.exports = Warehouse;
