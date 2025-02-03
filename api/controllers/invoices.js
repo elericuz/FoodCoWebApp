@@ -232,7 +232,7 @@ exports.downloadInvoice = async (req, res, next) => {
         })
         .populate({
             path: 'client',
-            model: 'Clients',
+            model: 'Client',
             populate: {
                 path: 'address',
                 model: 'Address'
@@ -346,9 +346,7 @@ exports.downloadInvoice = async (req, res, next) => {
 
     let page = await browser.newPage();
 
-    await page.goto(`data:text/html;charset=UTF-8,${html}`, {
-        waitUntil: 'networkidle0'
-    });
+    await page.setContent(html, { waitUntil: 'networkidle0' });
 
     await page.pdf(options);
     await browser.close();

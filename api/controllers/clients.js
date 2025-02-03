@@ -356,8 +356,8 @@ async function getClient(id) {
             model: 'Address'
         })
         .populate([{
-            path: 'warehouse',
-            model: 'Warehouses'
+            path: 'warehouses',
+            model: 'Warehouse'
         }])
         .then(result => {
             return result;

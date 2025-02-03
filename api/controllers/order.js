@@ -45,20 +45,21 @@ exports.listAll = async (req, res, next) => {
     }
 
     const orders = await getOrders(criteria, skip, limit);
-    const totalPages = Math.ceil(orders.count/limit)
+    const count = _.isUndefined(orders) ? 1 : orders.count;
+    const totalPages = Math.ceil(count/limit);
     if (page > totalPages) {
         res.redirect('/orders');
     }
 
     res.render('orders/list', {
-        total: orders.count,
+        total: count,
         showing: {
             from: ((page - 1) * limit) + 1,
-            to: ((page * limit) > orders.count) ? orders.count : page * limit
+            to: ((page * limit) > count) ? count : page * limit
         },
         totalPages: totalPages,
         currentPage: page,
-        orders: orders.data,
+        orders: _.isUndefined(orders) ? [] : orders.data,
         uri: 'orders'
     });
 };
@@ -101,12 +102,12 @@ exports.new = async (req, res, next) => {
         .select('client_id -_id')
         .populate({
             path: 'client_id',
-            model: 'Clients',
+            model: 'Client',
             select: '_id name warehouses',
             populate: [
                 {
                     path: 'warehouses',
-                    model: 'Warehouses',
+                    model: 'Warehouse',
                     select: 'name'
                 }
             ]
@@ -381,7 +382,7 @@ async function getOrder(id) {
         })
         .populate({
             path: 'client',
-            model: 'Clients'
+            model: 'Client'
         })
         .then((result) => { return result; })
         .catch((err) => { console.log(err); });

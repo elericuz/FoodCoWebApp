@@ -58,9 +58,11 @@ const orderSchema = new mongoose.Schema({
     },
     client: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'Client'
     },
     warehouse: {
-        type: mongoose.Schema.Types.ObjectId
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Warehouse'
     },
     status: {
         type: String,
@@ -73,5 +75,5 @@ const orderSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const Order = mongoose.model('Orders', orderSchema);
+const Order = mongoose.model('Order', orderSchema);
 module.exports = Order;

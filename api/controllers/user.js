@@ -421,7 +421,7 @@ async function getUser(userId, admin=false) {
             })
             .populate({
                 path: 'client_id',
-                model: 'Clients'
+                model: 'Client'
             })
             .then(result => { return result; })
             .catch(err => console.log(err));
@@ -442,7 +442,7 @@ async function getUsers() {
         })
         .populate({
             path: 'client_id',
-            model: 'Clients'
+            model: 'Client'
         })
         .then(result => {
             return result;
